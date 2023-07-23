@@ -1,7 +1,8 @@
 
 # epiCleanr: The epidemiologist's Swiss army knife #
 
-[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/epiCleanr)](https://cran.r-project.org/package=epiCleanr)
+[![R build status](https://github.com/truenomad/epicleanr/workflows/R-CMD-check/badge.svg)](https://github.com/truenomad/epicleanr/actions)
+[![CodeFactor](https://www.codefactor.io/repository/github/truenomad/epicleanr/badge)](https://www.codefactor.io/repository/github/truenomad/epicleanr)
 [![GitHub](https://img.shields.io/github/license/truenomad/epiCleanr)](https://github.com/truenomad/epiCleanr/blob/main/LICENSE)
 [![R-CMD-check](https://github.com/truenomad/epiCleanr/workflows/R-CMD-check/badge.svg)](https://github.com/truenomad/epiCleanr/actions)
 [![Codecov test coverage](https://codecov.io/gh/truenomad/epiCleanr/branch/main/graph/badge.svg)](https://codecov.io/gh/truenomad/epiCleanr?branch=main)
