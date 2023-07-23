@@ -1,0 +1,27 @@
+Package: epiCleanr
+Type: Package
+Title: Data Cleaning and Transformation Tools for Epidemiologists
+Version: 0.1.0
+Authors@R: 
+  c(person(given = "Mohamed",
+           family = "Yusuf",
+           role = c("aut", "cre"),
+           email = "mohamedayusuf87@gmail.com",
+           comment = c(ORCID = "0000-0002-9339-4613")))
+Description: epiCleanr is an R package tailored for epidemiologists, offering 
+             functionalities for importing and cleaning data prevalent in 
+             epidemiological studies. epiCleanr includes utilities for data 
+             cleaning and preprocessing, specifically designed for common 
+             challenges in epidemiological datasets, thereby enhancing the 
+             efficiency and reproducibility of epidemiological research.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports:
+  rio, 
+  dplyr, 
+  tidyr, 
+  stringr, 
+  lubridate, 
+  tools, 
+  stats
