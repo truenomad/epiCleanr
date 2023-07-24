@@ -10,10 +10,11 @@
 ## Description ##
 
 **epiCleanr** is an R package tailored for epidemiologists, 
-offering functionalities for importing and cleaning data prevalent in epidemiological studies. The 
-package includes utilities for data cleaning and preprocessing, specifically 
-designed for common challenges in epidemiological datasets, thereby enhancing 
-the efficiency and reproducibility of epidemiological research.
+offering functionalities for importing and cleaning data prevalent in 
+epidemiological studies. The package includes utilities for data cleaning and 
+preprocessing, specifically designed for common challenges in epidemiological 
+datasets, thereby enhancing the efficiency and reproducibility of 
+epidemiological research.
 
 ## Installation ##
 

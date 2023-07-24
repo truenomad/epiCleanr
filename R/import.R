@@ -54,10 +54,10 @@ import <- function(file_path, ...) {
   # Extract the file extension from the input file path
   file_ext <- tools::file_ext(file_path)
 
-  # Hardcoded list of supported formats
+  # List of supported formats
   supported_formats <- c(
-    "csv", "tsv", "txt", "csvy", "sas7bdat", "sav", "zsav",
-    "dta", "xpt", "por", "xls", "xlsx", "R", "RData", "rds"
+    "csv", "tsv", "txt", "csvy", "sas7bdat", "sav",
+    "dta", "xpt", "xlsx", "RData", "rds", "tsv"
   )
 
   if (file_ext %in% supported_formats) {

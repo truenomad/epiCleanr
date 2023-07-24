@@ -24,4 +24,5 @@ Imports:
   stringr, 
   lubridate, 
   tools, 
-  stats
+  stats,
+  testthat
