@@ -1,8 +1,5 @@
-# Load the 'testthat' package for testing
-library(testthat)
-
 # Define the test cases for the 'import' function
-test_that("Function imports supported file formats correctly", {
+testthat::test_that("Function imports supported file formats correctly", {
   # List of supported file formats to test
   supported_formats <- c(
     "csv", "tsv", "txt", "csvy", "sas7bdat", "sav",
@@ -18,7 +15,7 @@ test_that("Function imports supported file formats correctly", {
     imported_data <- import(file_path)
 
     # Check if the imported data has the expected structure and values
-    test_that(paste("Imports data from", toupper(format), "correctly"), {
+    testthat::test_that(paste("Imports data from", toupper(format), "correctly"), {
       expect_true("ID" %in% names(imported_data))
       expect_true("Name" %in% names(imported_data))
       expect_true("Age" %in% names(imported_data))
@@ -32,7 +29,7 @@ test_that("Function imports supported file formats correctly", {
   }
 })
 
-test_that("Function correctly extracts file extension", {
+testthat::test_that("Function correctly extracts file extension", {
 
   get_file_extension <- function(file_path) {
     # Use regex to extract the file extension from the file path
@@ -58,7 +55,7 @@ test_that("Function correctly extracts file extension", {
 })
 
 
-test_that("Function handles invalid file name gracefully", {
+testthat::test_that("Function handles invalid file name gracefully", {
   # Provide an invalid file path that does not exist
   invalid_file_path <- "tests/testdata/dataset.csv"
 

@@ -1,4 +1,4 @@
-test_that("export correctly exports to csv, rds, dta, xlsx, RData formats", {
+testthat::test_that("export correctly exports to csv, rds, dta, xlsx, RData formats", {
 
   test_dir <- "tests/testdata"
 
