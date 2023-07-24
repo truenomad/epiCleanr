@@ -25,4 +25,5 @@ Imports:
   lubridate, 
   tools, 
   stats,
-  testthat
+  testthat,
+  blogdown
