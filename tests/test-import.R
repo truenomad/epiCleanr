@@ -12,19 +12,19 @@ testthat::test_that("Function imports supported file formats correctly", {
     file_path <- paste0("testdata/test_data.", format)
 
     # Import the data using the 'import' function
-    imported_data <- import(file_path)
+    imported_data <- epiCleanr::import(file_path)
 
     # Check if the imported data has the expected structure and values
     testthat::test_that(paste("Imports data from", toupper(format), "correctly"), {
-      expect_true("ID" %in% names(imported_data))
-      expect_true("Name" %in% names(imported_data))
-      expect_true("Age" %in% names(imported_data))
-      expect_true("Score" %in% names(imported_data))
+      testthat::expect_true("ID" %in% names(imported_data))
+      testthat::expect_true("Name" %in% names(imported_data))
+      testthat::expect_true("Age" %in% names(imported_data))
+      testthat::expect_true("Score" %in% names(imported_data))
 
-      expect_equal(as.integer(imported_data$ID), 1:5)
-      expect_equal(as.character(imported_data$Name), c("Alice", "Bob", "Charlie", "David", "Eva"))
-      expect_equal(as.integer(imported_data$Age), c(25, 30, 28, 22, 27))
-      expect_equal(as.integer(imported_data$Score), c(85, 90, 78, 95, 88))
+      testthat::expect_true(as.integer(imported_data$ID), 1:5)
+      testthat::expect_true(as.character(imported_data$Name), c("Alice", "Bob", "Charlie", "David", "Eva"))
+      testthat::expect_true(as.integer(imported_data$Age), c(25, 30, 28, 22, 27))
+      testthat::expect_true(as.integer(imported_data$Score), c(85, 90, 78, 95, 88))
     })
   }
 })
@@ -46,11 +46,11 @@ testthat::test_that("Function correctly extracts file extension", {
 
   # Test with a valid file path containing an extension
   file_path_with_extension <- "tests/testdata/test_data.csv"
-  expect_equal(get_file_extension(file_path_with_extension), "csv")
+  testthat::expect_true(get_file_extension(file_path_with_extension), "csv")
 
   # Test with a valid file path without an extension
   file_path_without_extension <- "tests/testdata/test_data"
-  expect_error(get_file_extension(file_path_without_extension),
+  testthat::expect_true(get_file_extension(file_path_without_extension),
                "File extension not found in the path.")
 })
 
@@ -60,7 +60,7 @@ testthat::test_that("Function handles invalid file name gracefully", {
   invalid_file_path <- "tests/testdata/dataset.csv"
 
   # Call the 'import' function and expect an error
-  expect_error(import(invalid_file_path), "No such file")
+  testthat::expect_true(epiCleanr::import(invalid_file_path), "No such file")
 
 })
 

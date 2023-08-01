@@ -1,5 +1,5 @@
 
-# epiCleanr: The epidemiologist's Swiss army knife #
+# epiCleanr: A Tidy Solution for Epidemiological Data #
 
 [![R build status](https://github.com/truenomad/epicleanr/workflows/R-CMD-check/badge.svg)](https://github.com/truenomad/epicleanr/actions)
 [![CodeFactor](https://www.codefactor.io/repository/github/truenomad/epicleanr/badge)](https://www.codefactor.io/repository/github/truenomad/epicleanr)
@@ -9,12 +9,14 @@
 
 ## Description ##
 
-**epiCleanr** is an R package tailored for epidemiologists, 
-offering functionalities for importing and cleaning data prevalent in 
-epidemiological studies. The package includes utilities for data cleaning and 
-preprocessing, specifically designed for common challenges in epidemiological 
-datasets, thereby enhancing the efficiency and reproducibility of 
-epidemiological research.
+**epiCleanr** is an all-inclusive R package developed not just for researchers, 
+but also for those working on the front lines of public health. Intuitively 
+tailored to address the needs of epidemiologists, it boasts a range of 
+functionalities for importing, cleaning, and preprocessing data, which are 
+commonly found in epidemiological studies. With a special focus on resolving the 
+unique challenges of epidemiological datasets, this package amplifies the 
+efficiency and reproducibility of your work, whether it's in-depth research or 
+actionable public health interventions.
 
 ## Installation ##
 
