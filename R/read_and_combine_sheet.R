@@ -49,7 +49,7 @@ read_and_combine_sheet <- function(excel_path, id_cols, sheet, rows) {
   cleaned_data_longer <- cleaned_data |>
     tidyr::pivot_longer(
       cols = -dplyr::all_of(id_cols),
-      names_to = c("columns_headers"),
+      names_to = "columns_headers",
       values_to = "values"
     ) |>
     tidyr::separate(columns_headers,

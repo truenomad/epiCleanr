@@ -40,7 +40,7 @@ combine_column_names <- function(df, name_row_count,
   # Reshape the data frame to long format to create a single row of combined
   # column names.
   reshaped_names_df <- df |>
-    dplyr::slice(dplyr::seq_len(name_row_count)) |>
+    dplyr::slice(seq_len(name_row_count)) |>
     dplyr::mutate(
       row_id = 1:name_row_count,
       across(everything(), as.character)
@@ -85,7 +85,7 @@ combine_column_names <- function(df, name_row_count,
   # Replace the original column names in the data frame with the combined names.
   df <- df |>
     dplyr::slice(-(1:name_row_count)) |>
-    base::setNames(as.character(wide_combined_names_df[1, ]))
+    setNames(as.character(wide_combined_names_df[1, ]))
 
   # Warn the user if any of the new column names are NA.
   if (any(base::grepl("^NA$", base::names(df)))) {
