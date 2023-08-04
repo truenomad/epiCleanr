@@ -14,6 +14,7 @@
 #' @return A data frame or appropriate R object containing the imported data.
 #'
 #' @examples
+#' \dontrun{
 #' # Import a CSV file
 #' data_csv <- import("path/to/your/file.csv")
 #'
@@ -40,8 +41,10 @@
 #'
 #' # Import a dataset from a website (e.g., GitHub)
 #' data_web <- import("https://github.com/your_username/your_dataset.xlsx")
+#'}
 #'
-#' @importFrom rio
+#' @importFrom rio import
+#' @importFrom rio install_formats
 #' @importFrom tools file_ext
 #'
 #' @export

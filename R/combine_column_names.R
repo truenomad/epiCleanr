@@ -19,14 +19,25 @@
 #' @return A data frame with combined column names.
 #'
 #' @examples
+#' \dontrun{
+#' df <- mtcars
 #' combine_column_names(df,
 #'   name_row_count = 2, retain_original_names = TRUE,
 #'   slide_headers = TRUE, separator = "_"
 #' )
-#'
+#'}
 #' @seealso \code{\link[epiCleanr]{read_and_combine_sheet}} for a function
 #' that uses this one.
-#'
+#' @importFrom dplyr slice
+#' @importFrom dplyr mutate
+#' @importFrom dplyr across
+#' @importFrom dplyr everything
+#' @importFrom dplyr group_by
+#' @importFrom dplyr ungroup
+#' @importFrom dplyr summarize
+#' @importFrom tidyr pivot_longer
+#' @importFrom tidyr fill
+#' @importFrom tidyr pivot_wider
 #' @export
 combine_column_names <- function(df, name_row_count,
                                  retain_original_names = TRUE,
@@ -43,10 +54,10 @@ combine_column_names <- function(df, name_row_count,
     dplyr::slice(seq_len(name_row_count)) |>
     dplyr::mutate(
       row_id = 1:name_row_count,
-      across(everything(), as.character)
+      dplyr::across(dplyr::everything(), as.character)
     ) |>
     tidyr::pivot_longer(
-      cols = -row_id, names_to = "original_columns",
+      cols = row_id, names_to = "original_columns",
       values_to = "values"
     ) |>
     dplyr::mutate(

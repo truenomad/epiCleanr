@@ -18,20 +18,16 @@ Description: is an all-inclusive R package developed not just for researchers,
              amplifies the  efficiency and reproducibility of your work, 
              whether it's in-depth research or  actionable public health 
              analytics.
-License: GPL-3
-Encoding: UTF-8
+License: file LICENSE
 LazyData: true
+Encoding: UTF-8
 Imports:
   rio, 
   dplyr, 
   tidyr, 
-  stringr, 
-  lubridate, 
   tools, 
-  stats,
-  testthat,
-  blogdown,
   janitor,
-  purrr,
-  DescTools
-  
+  purrr
+Suggests: 
+    testthat
+RoxygenNote: 7.2.3

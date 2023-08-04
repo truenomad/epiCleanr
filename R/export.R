@@ -31,7 +31,8 @@
 #' export(list(mtcars = mtcars, iris = iris), "path/to/your/file.RData")
 #'}
 #'
-#' @importFrom rio
+#' @importFrom rio import
+#' @importFrom rio install_formats
 #' @importFrom tools file_ext
 #'
 #' @export

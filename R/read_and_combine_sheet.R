@@ -16,14 +16,23 @@
 #' @return A tidied data frame with combined column names and reshaped data.
 #'
 #' @examples
+#' \dontrun{
 #' # assuming that you have an Excel file 'data.xlsx' and the sheet 'Sheet1'
-#' has column names broken across the first 3 rows
+#' # has column names broken across the first 3 rows
 #' read_and_combine_sheet("data.xlsx", c("id", "year"), "Sheet1", 3)
-#'
+#'}
 #' @seealso \code{\link[epiCleanr]{clean_names}},
 #' \code{\link[epiCleanr]{combine_column_names}}
 #' for functions used within this one.
 #'
+#' @importFrom dplyr all_of
+#' @importFrom tidyr pivot_longer
+#' @importFrom tidyr separate
+#' @importFrom tidyr pivot_wider
+#' @importFrom purrr map
+#' @importFrom rio import
+#' @importFrom janitor remove_empty
+
 #' @export
 read_and_combine_sheet <- function(excel_path, id_cols, sheet, rows) {
   # Import the specified sheet from the Excel file
@@ -36,7 +45,7 @@ read_and_combine_sheet <- function(excel_path, id_cols, sheet, rows) {
   cleaned_data <- janitor::remove_empty(sheet_data, which = c("rows", "cols"))
 
   # Combine column names using the combine_column_names function
-  cleaned_data <- combine_column_names(
+  cleaned_data <- epiCleanr::combine_column_names(
     cleaned_data,
     name_row_count = rows,
     retain_original_names = FALSE,
