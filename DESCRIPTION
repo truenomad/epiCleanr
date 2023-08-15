@@ -3,21 +3,19 @@ Type: Package
 Title: Data Cleaning and Transformation Tools for Epidemiologists
 Version: 0.1.0
 Authors@R: 
-  c(person(given = "Mohamed",
+  c(person(given = "Mohamed", 
            family = "Yusuf",
            role = c("aut", "cre"),
            email = "mohamedayusuf87@gmail.com",
            comment = c(ORCID = "0000-0002-9339-4613")))
-Description: is an all-inclusive R package developed not just for researchers, 
-             epiCleanr but also for those working on the front lines of public 
-             health. Intuitively  tailored to address the needs of 
-             epidemiologists, it boasts a range of functionalities for 
-             importing, cleaning, and preprocessing data, which are commonly 
-             found in epidemiological studies. With a special focus on resolving 
-             the  unique challenges of epidemiological datasets, this package 
-             amplifies the  efficiency and reproducibility of your work, 
-             whether it's in-depth research or  actionable public health 
-             analytics.
+Description: epiCleanr is intuitively tailored to address the needs of 
+             epidemiologists and public health data wizards, it boasts a range 
+             of functionalities for importing, cleaning, and preprocessing data, 
+             which are commonly found in epidemiological analyses. With a 
+             special focus on resolving the  unique challenges of 
+             epidemiological datasets, this package  amplifies the  efficiency 
+             and reproducibility of your work, whether it's in-depth research 
+             or  actionable public health analytics.
 License: file LICENSE
 LazyData: true
 Encoding: UTF-8
@@ -28,7 +26,7 @@ Imports:
   tools, 
   janitor,
   purrr,
-  httr
+  stats
 Suggests: 
     testthat
 RoxygenNote: 7.2.3
