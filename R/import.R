@@ -49,6 +49,10 @@
 #'
 #' @export
 import <- function(file_path, ...) {
+
+  # Install formats
+  rio::install_formats()
+
   # Check if the input file path is a URL and if so, read from URL directly
   if (grepl("^http[s]?://", file_path, ignore.case = TRUE)) {
     return(rio::import(file_path, ...))
@@ -63,21 +67,22 @@ import <- function(file_path, ...) {
     "dta", "xpt", "xlsx", "RData", "rds", "tsv"
   )
 
+  # If there is no file extension
+  if (file_ext == "") {
+    stop(paste("The provided file has no extension.",
+               "Please specify a file with a valid extension."))
+  }
+
+  # If the file extension is unsupported
   if (file_ext %in% supported_formats) {
     return(rio::import(file_path, ...))
   } else {
     stop(
-      paste(
-        "File format '", file_ext, "' not supported by 'rio'.",
+      paste0(
+        "File format '", file_ext, "' not supported by 'rio'. ",
         "Please refer to the package documentation for a full list",
         "of supported formats."
       )
     )
   }
-}
-
-
-#' @importFrom rio install_formats
-.onLoad <- function(libname, pkgname) {
-  rio::install_formats()
 }

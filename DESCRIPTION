@@ -27,7 +27,8 @@ Imports:
   tidyr, 
   tools, 
   janitor,
-  purrr
+  purrr,
+  httr
 Suggests: 
     testthat
 RoxygenNote: 7.2.3

@@ -37,6 +37,10 @@
 #'
 #' @export
 export <- function(data, file_path, ...) {
+
+  # Install formats
+  rio::install_formats()
+
   # Extract the file extension from the input file path
   file_ext <- tools::file_ext(file_path)
 
@@ -56,9 +60,4 @@ export <- function(data, file_path, ...) {
       )
     )
   }
-}
-
-#' @importFrom rio install_formats
-.onLoad <- function(libname, pkgname) {
-  rio::install_formats()
 }
