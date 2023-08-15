@@ -85,11 +85,12 @@ testthat::test_that("Function imports data from URLs correctly", {
 
 
 # 5. Test to see if the relevant packages for the formats exist
-testthat::test_that("All supported formats by rio are installed on package load", {
-
-  installed_format <- rio::install_formats()
+testthat::test_that("All supported formats by rio can be installed on package load", {
+  installed_format <-  withr::with_options(list(repos = "https://cran.rstudio.com"), {
+    rio::install_formats()
+  })
 
   # Check if rio::install_formats() returns TRUE
   testthat::expect_true(installed_format)
-})
 
+})
