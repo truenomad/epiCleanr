@@ -87,14 +87,6 @@ testthat::test_that("Function imports data from URLs correctly", {
 # 5. Test to see if the relevant packages for the formats exist
 testthat::test_that("All supported formats by rio are installed on package load", {
 
-  # Unload the package if it's already loaded (to ensure the .onLoad function runs again)
-  if ("epiCleanr" %in% loadedNamespaces()) {
-    unloadNamespace("epiCleanr")
-  }
-
-  # Load the package
-  library(epiCleanr)
-
   installed_format <- rio::install_formats()
 
   # Check if rio::install_formats() returns TRUE
