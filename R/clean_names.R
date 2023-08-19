@@ -18,9 +18,9 @@
 #' clean_names("My variable NAME")
 #' clean_names(c("var1", "Another Variable", "SOME_VAR"))
 #'}
-#' @seealso \code{\link[janitor]{clean_names}} for the function that inspired
+#' @seealso \preformatted{\link[janitor]{clean_names}} for the function that inspired
 #' this one.
-#' \code{\link[epiCleanr]{combine_column_names}} for the function that uses this one.
+#' \preformatted{\link[epiCleanr]{combine_column_names}} for the function that uses this one.
 #'
 #' @export
 
