@@ -24,10 +24,11 @@ Imports:
   dplyr, 
   tidyr, 
   tools, 
-  janitor,
-  purrr,
-  stats,
-  withr
+  withr,
+  ggplot2, 
+  stringr, 
+  tidyselect,
+  rlang
 Suggests: 
     testthat
 RoxygenNote: 7.2.3
