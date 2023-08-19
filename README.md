@@ -1,7 +1,6 @@
 
-# epiCleanr: A Tidy Solution for Epidemiological Data #
+# epiCleanr: A Tidy Solution for Epidemiological Data 
 
-[![R build status](https://github.com/truenomad/epicleanr/workflows/R-CMD-check/badge.svg)](https://github.com/truenomad/epicleanr/actions)
 [![CodeFactor](https://www.codefactor.io/repository/github/truenomad/epicleanr/badge)](https://www.codefactor.io/repository/github/truenomad/epicleanr)
 [![GitHub](https://img.shields.io/github/license/truenomad/epiCleanr)](https://github.com/truenomad/epiCleanr/blob/main/LICENSE)
 [![Codecov test coverage](https://codecov.io/gh/truenomad/epiCleanr/branch/main/graph/badge.svg)](https://codecov.io/gh/truenomad/epiCleanr?branch=main)
