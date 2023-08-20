@@ -7,18 +7,18 @@
 #'  manipulated to one's needs.
 #'
 #' @param data A data frame containing the data to be visualized. Must include
-#' columns specified in 'time_var', 'group_var', and 'vars'.
-#' @param time_var A character string specifying the time variable in 'data'
+#' columns specified in 'x_var', 'y_var', and 'vars'.
+#' @param x_var A character string specifying the time variable in 'data'
 #' (e.g., "year", "month"). Must be provided.
-#' @param group_var An optional character string specifying the grouping
+#' @param y_var An optional character string specifying the grouping
 #' variable in 'data' (e.g., "state"). If provided, only one variable can be
 #' specified in 'vars'.
-#' @param vars An optional character vector specifying the variables to be
-#' visualized in 'data'. If NULL, all variables except 'time_var' and
-#' 'group_var' will be used.
+#' @param  miss_vars An optional character vector specifying the variables
+#' to be visualized in 'data'. If NULL, all variables except 'x_var' and
+#' 'y_var' will be used.
 #' @param use_rep_rate A logical value. If TRUE, the reporting rate is
 #' visualized; otherwise, the proportion of missing data is visualized.
-#' Defaults to TRUE.
+#' Defaults to FALSE
 #' @return A ggplot2 object representing the tile plot.
 #'
 #' @importFrom ggplot2 ggplot aes geom_tile scale_fill_viridis_c labs theme_bw
@@ -52,26 +52,27 @@
 #'   ))
 #'
 #' # Example function usage
-#' plot_missing_data(fake_data,
-#'   time_var = "year",
-#'   vars = "polio",
-#'   group_var = "state",
+#' missing_plot(fake_data,
+#'   x_var = "year",
+#'   miss_value = "polio",
+#'   y_var = "state",
 #'   use_rep_rate = T
 #' )
 #' }
-plot_missing_rates <- function(data, time_var, group_var = NULL,
-                               vars = NULL, use_rep_rate = TRUE) {
 
-  # Check if 'time_var' is provided and exists in the data
-  if (is.null(time_var) || !time_var %in% names(data)) {
-    stop("A valid 'time_var' must be provided and must exist in the data.")
+missing_plot <- function(data, x_var, y_var = NULL,
+                         miss_vars = NULL, use_rep_rate = FALSE) {
+
+  # Check if 'x_var' is provided and exists in the data
+  if (is.null(x_var) || !x_var %in% names(data)) {
+    stop("A valid 'x_var' must be provided and must exist in the data.")
   }
 
-  # If 'group_var' is provided, ensure only one variable is specified in 'vars'
-  if (!is.null(group_var) && length(vars) != 1) {
+  # If 'y_var' is provided, ensure only one variable is specified in 'miss_vars'
+  if (!is.null(y_var) && length(miss_vars) != 1) {
     stop(paste(
-      "When 'group_var' is provided",
-      "only one variable can be specified in 'vars'."
+      "When 'y_var' is provided",
+      "only one variable can be specified in 'miss_vars'."
     ))
   }
 
@@ -79,9 +80,9 @@ plot_missing_rates <- function(data, time_var, group_var = NULL,
   fill_var <- ifelse(use_rep_rate, "rep_rate", "propmiss")
   fill_label <- ifelse(use_rep_rate, "Reporting rate (%)", "Missing rate (%)")
 
-  # Determine y-axis label based on 'group_var'
-  y_axis_label <- if (!is.null(group_var)) {
-    tools::toTitleCase(group_var)
+  # Determine y-axis label based on 'y_var'
+  y_axis_label <- if (!is.null(y_var)) {
+    tools::toTitleCase(y_var)
   } else {
     "Variable"
   }
@@ -95,38 +96,38 @@ plot_missing_rates <- function(data, time_var, group_var = NULL,
 
   max_vars_in_title <- 5 # Set a threshold
 
-  title_vars <- if (!is.null(vars)) {
-    paste(paste(vars, collapse = ", "), "by", time_var)
+  title_vars <- if (!is.null(miss_vars)) {
+    paste(paste(miss_vars, collapse = ", "), "by", x_var)
   } else {
-    remaining_vars <- setdiff(names(data), c(time_var, group_var))
+    remaining_vars <- setdiff(names(data), c(x_var, y_var))
     if (length(remaining_vars) <= max_vars_in_title) {
       paste(
         paste(remaining_vars[-length(remaining_vars)], collapse = ", "),
         "and",
         remaining_vars[length(remaining_vars)],
         "by",
-        time_var
+        x_var
       )
     } else {
-      paste("various variables by", time_var)
+      paste("various variables by", x_var)
     }
   }
 
   # If 'vars' is not provided, use all variables
-  # except 'time_var' and 'group_var'
-  if (is.null(vars)) {
-    vars <- setdiff(names(data), c(time_var, group_var))
+  # except 'x_var' and 'y_var'
+  if (is.null(miss_vars)) {
+    miss_vars <- setdiff(names(data), c(x_var, y_var))
   }
 
-  title_suffix <- if (!is.null(group_var)) paste("and", group_var) else ""
+  title_suffix <- if (!is.null(y_var)) paste("and", y_var) else ""
 
   # Select relevant columns and mutate missing values
   plot_data <- data |>
-    dplyr::select(all_of(c(time_var, group_var, vars))) |>
+    dplyr::select(tidyselect::all_of(c(x_var, y_var, miss_vars))) |>
     dplyr::mutate(dplyr::across(
       .cols = -c(
-        !!sym(time_var),
-        if (!is.null(group_var)) all_of(group_var) else NULL
+        !!rlang::sym(x_var),
+        if (!is.null(y_var)) tidyselect::all_of(y_var) else NULL
       ),
       .fns = ~ ifelse(is.na(.), 1, 0),
       .names = "miss_{.col}"
@@ -141,41 +142,41 @@ plot_missing_rates <- function(data, time_var, group_var = NULL,
     ) |>
     dplyr::mutate(variable = stringr::str_remove(variable, "miss_"))
 
-  # If 'group_var' is not NULL, group by 'time_var', 'group_var', and 'variable'
-  if (!is.null(group_var)) {
+  # If 'y_var' is not NULL, group by 'x_var', 'y_var', and 'variable'
+  if (!is.null(y_var)) {
     plot_data <- plot_data |>
-      dplyr::group_by(!!sym(time_var), !!sym(group_var), variable)
+      dplyr::group_by(.data[[x_var]], .data[[y_var]], variable)
   } else {
     plot_data <- plot_data |>
-      dplyr::group_by(!!sym(time_var), variable)
+      dplyr::group_by(.data[[x_var]], variable)
   }
 
   # Summarize missing data
   plot_data <- plot_data |>
     dplyr::summarise(
-      miss = sum(miss_value, na.rm = TRUE),
+      miss = sum(.data$miss_value, na.rm = TRUE),
       tot = dplyr::n()
     ) |>
     dplyr::mutate(
-      propmiss = miss / tot * 100,
-      rep_rate = 100 - propmiss
+      propmiss = .data$miss / .data$tot * 100,
+      rep_rate = 100 - .data$propmiss
     )
 
-  # Determine the y-axis variable based on the presence of 'group_var'
-  if (!is.null(group_var)) {
-    y_axis_var <- as.name(group_var)
+  # Determine the y-axis variable based on the presence of 'y_var'
+  if (!is.null(y_var)) {
+    y_axis_var <- as.name(y_var)
   } else {
     y_axis_var <- "variable"
   }
 
   # Plot the data using ggplot2
   ggplot2::ggplot(plot_data,
-                  aes(x = as.factor(!!sym(time_var)),
-                      y = !!as.name(y_axis_var), fill = !!sym(fill_var))) +
+                  aes(x = as.factor(!!rlang::sym(x_var)),
+                      y = !!as.name(y_axis_var), fill = !!rlang::sym(fill_var))) +
     ggplot2::geom_tile(colour = "white", linewidth = .2) +
     ggplot2::scale_fill_viridis_c(option = "E") +
     ggplot2::labs(
-      title = paste(title_prefix, title_vars, title_suffix),
+      title  = trimws(paste(title_prefix, title_vars, title_suffix)),
       x = "", y = y_axis_label, fill = fill_label
     ) +
     ggplot2::theme_bw() +
@@ -200,7 +201,7 @@ plot_missing_rates <- function(data, time_var, group_var = NULL,
       plot.title = ggplot2::element_text(
         size = 12, face = "bold",
         family = "Arial",
-        margin = ggplot2::margin(t = 20)
+        margin = ggplot2::margin(b = 10)
       ),
       axis.text = ggplot2::element_text(family = "Arial"),
       axis.title = ggplot2::element_text(family = "Arial"),
@@ -219,4 +220,5 @@ plot_missing_rates <- function(data, time_var, group_var = NULL,
       key.width = ggplot2::unit(1, "lines")
     ))
 }
+
 

@@ -3,7 +3,7 @@
 export(clean_names)
 export(export)
 export(import)
-export(plot_missing_rates)
+export(missing_plot)
 importFrom(dplyr,across)
 importFrom(dplyr,group_by)
 importFrom(dplyr,mutate)
