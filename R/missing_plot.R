@@ -60,10 +60,8 @@
 #'   use_rep_rate = T
 #' )
 #' }
-
 missing_plot <- function(data, x_var, y_var = NULL,
                          miss_vars = NULL, use_rep_rate = FALSE) {
-
   # Check if 'x_var' is provided and exists in the data
   if (is.null(x_var) || !x_var %in% names(data)) {
     stop("A valid 'x_var' must be provided and must exist in the data.")
@@ -171,13 +169,17 @@ missing_plot <- function(data, x_var, y_var = NULL,
   }
 
   # Plot the data using ggplot2
-  ggplot2::ggplot(plot_data,
-                  aes(x = as.factor(!!rlang::sym(x_var)),
-                      y = !!as.name(y_axis_var), fill = !!rlang::sym(fill_var))) +
+  ggplot2::ggplot(
+    plot_data,
+    aes(
+      x = as.factor(!!rlang::sym(x_var)),
+      y = !!as.name(y_axis_var), fill = !!rlang::sym(fill_var)
+    )
+  ) +
     ggplot2::geom_tile(colour = "white", linewidth = .2) +
     ggplot2::scale_fill_viridis_c(option = "E") +
     ggplot2::labs(
-      title  = trimws(paste(title_prefix, title_vars, title_suffix)),
+      title = trimws(paste(title_prefix, title_vars, title_suffix)),
       x = "", y = y_axis_label, fill = fill_label
     ) +
     ggplot2::theme_bw() +
@@ -221,5 +223,3 @@ missing_plot <- function(data, x_var, y_var = NULL,
       key.width = ggplot2::unit(1, "lines")
     ))
 }
-
-
