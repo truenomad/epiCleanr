@@ -1,8 +1,9 @@
 #' Export Data to Various File Formats
 #'
 #' This function provides a unified interface for exporting data to various
-#' file formats supported by the 'rio' package. The format is automatically
-#' detected from the file extension to simplify the exporting process.
+#' file formats supported by the \code{\link[rio:export]{rio::export()}}
+#' function. The format is automatically detected from the file extension to
+#' simplify the exporting process.
 #'
 #' @param data The dataset to be exported.
 #' @param file_path Character string specifying the path to the output file.
@@ -30,6 +31,7 @@
 #' # Export an RData file
 #' export(list(mtcars = mtcars, iris = iris), "path/to/your/file.RData")
 #'}
+#'
 #'
 #' @importFrom rio import
 #' @importFrom rio install_formats

@@ -4,3 +4,8 @@
 ^\.Rproj\.user$
 ^\.gitignore
 ^\.github$
+^codemeta\.json$
+^codecov\.yml$
+^README\.Rmd$
+^LICENSE\.md$
+^codemeta\.json$

@@ -1,7 +1,7 @@
 #' Import Data from Various File Formats
 #'
 #' This function provides a unified interface for importing data from various
-#' file formats supported by the 'rio' package. The format is automatically
+#' file formats supported by the `rio` package. The format is automatically
 #' detected from the file extension to simplify the importing process.
 #'
 #' @param file_path Character string specifying the path to the input file or
@@ -43,10 +43,14 @@
 #' data_web <- import("https://github.com/your_username/your_dataset.xlsx")
 #'}
 #'
+#' @seealso \code{\link[rio:import]{foo::import()}},  which this function
+#' is based on.
+#'
 #' @importFrom rio import
 #' @importFrom rio install_formats
 #' @importFrom tools file_ext
 #' @importFrom withr with_options
+#'
 #' @export
 import <- function(file_path, ...) {
 

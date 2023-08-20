@@ -17,23 +17,24 @@ columns specified in 'x_var', 'y_var', and 'vars'.}
 variable in 'data' (e.g., "state"). If provided, only one variable can be
 specified in 'vars'.}
 
+\item{miss_vars}{An optional character vector specifying the variables
+to be visualized in 'data'. If NULL, all variables except 'x_var' and
+'y_var' will be used.}
+
 \item{use_rep_rate}{A logical value. If TRUE, the reporting rate is
 visualized; otherwise, the proportion of missing data is visualized.
 Defaults to FALSE}
-
-\item{miss_value}{An optional character vector specifying the variables
-to be visualized in 'data'. If NULL, all variables except 'x_var' and
-'y_var' will be used.}
 }
 \value{
 A ggplot2 object representing the tile plot.
 }
 \description{
 This function visualizes the proportion of missing data or reporting rate for
- specified variables in a dataset. It creates a tile plot using ggplot2 where
- the x-axis represents time (e.g., year, month), and the y-axis represents
- either variables or groupings (e.g., state). The output can further be
- manipulated to one's needs.
+ specified variables in a dataset. It creates a tile plot using
+ \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}; where the x-axis can
+ represent any categorical time such as time (e.g., year, month), and the
+ y-axis can represents either variables or groupings (e.g., state). The
+ output can further be manipulated to one's needs.
 }
 \examples{
 \dontrun{
@@ -57,7 +58,7 @@ fake_data <- expand_grid(
 # Example function usage
 missing_plot(fake_data,
   x_var = "year",
-  miss_value = "polio",
+  miss_vars = "polio",
   y_var = "state",
   use_rep_rate = T
 )

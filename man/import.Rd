@@ -20,7 +20,7 @@ A data frame or appropriate R object containing the imported data.
 }
 \description{
 This function provides a unified interface for importing data from various
-file formats supported by the 'rio' package. The format is automatically
+file formats supported by the `rio` package. The format is automatically
 detected from the file extension to simplify the importing process.
 }
 \examples{
@@ -53,4 +53,8 @@ data_dt <- import("path/to/your/file.dt")
 data_web <- import("https://github.com/your_username/your_dataset.xlsx")
 }
 
+}
+\seealso{
+\code{\link[rio:import]{foo::import()}},  which this function
+is based on.
 }

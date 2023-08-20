@@ -1,22 +1,24 @@
 Package: epiCleanr
 Type: Package
-Title: Data Cleaning and Transformation Tools for Epidemiologists
+Title: A Tidy Solution for Epidemiological Data
 Version: 0.1.0
 Authors@R: 
-  c(person(given = "Mohamed", 
+  c(person(given = "Mohamed A.", 
            family = "Yusuf",
            role = c("aut", "cre"),
            email = "mohamedayusuf87@gmail.com",
            comment = c(ORCID = "0000-0002-9339-4613")))
-Description: epiCleanr is intuitively tailored to address the needs of 
-             epidemiologists and public health data wizards, it boasts a range 
-             of functionalities for importing, cleaning, and preprocessing data, 
-             which are commonly found in epidemiological analyses. With a 
-             special focus on resolving the  unique challenges of 
-             epidemiological datasets, this package  amplifies the  efficiency 
-             and reproducibility of your work, whether it's in-depth research 
-             or  actionable public health analytics.
-License: file LICENSE
+Description: epiCleanr is specifically designed to meet the requirements of 
+             epidemiologists and public health data experts. It offers a 
+             comprehensive suite of functionalities for importing, cleaning, 
+             unit testing, visualizing, and preprocessing data—tasks that are 
+             frequently encountered in epidemiological analysis. By focusing on 
+             addressing the unique challenges inherent in epidemiological 
+             datasets, epiCleanr enhances both the efficiency and 
+             reproducibility of your work.
+License: MIT + file LICENSE
+URL: https://github.com/truenomad/epiCleanr
+BugReports: https://github.com/truenomad/epiCleanr/issues
 LazyData: true
 Encoding: UTF-8
 Imports:
@@ -29,6 +31,7 @@ Imports:
   stringr, 
   tidyselect,
   rlang
-Suggests: 
-    testthat
+Suggests: testthat, knitr
 RoxygenNote: 7.2.3
+VignetteBuilder: 
+    knitr

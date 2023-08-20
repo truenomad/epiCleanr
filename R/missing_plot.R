@@ -1,10 +1,11 @@
 #' Plot Missing data over time
 #'
 #' This function visualizes the proportion of missing data or reporting rate for
-#'  specified variables in a dataset. It creates a tile plot using ggplot2 where
-#'  the x-axis represents time (e.g., year, month), and the y-axis represents
-#'  either variables or groupings (e.g., state). The output can further be
-#'  manipulated to one's needs.
+#'  specified variables in a dataset. It creates a tile plot using
+#'  \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}; where the x-axis can
+#'  represent any categorical time such as time (e.g., year, month), and the
+#'  y-axis can represents either variables or groupings (e.g., state). The
+#'  output can further be manipulated to one's needs.
 #'
 #' @param data A data frame containing the data to be visualized. Must include
 #' columns specified in 'x_var', 'y_var', and 'vars'.
@@ -54,7 +55,7 @@
 #' # Example function usage
 #' missing_plot(fake_data,
 #'   x_var = "year",
-#'   miss_value = "polio",
+#'   miss_vars = "polio",
 #'   y_var = "state",
 #'   use_rep_rate = T
 #' )
@@ -145,21 +146,21 @@ missing_plot <- function(data, x_var, y_var = NULL,
   # If 'y_var' is not NULL, group by 'x_var', 'y_var', and 'variable'
   if (!is.null(y_var)) {
     plot_data <- plot_data |>
-      dplyr::group_by(.data[[x_var]], .data[[y_var]], variable)
+      dplyr::group_by(!!rlang::sym(x_var), !!rlang::sym(y_var), variable)
   } else {
     plot_data <- plot_data |>
-      dplyr::group_by(.data[[x_var]], variable)
+      dplyr::group_by(!!rlang::sym(x_var), variable)
   }
 
   # Summarize missing data
   plot_data <- plot_data |>
     dplyr::summarise(
-      miss = sum(.data$miss_value, na.rm = TRUE),
+      miss = sum(miss_value, na.rm = TRUE),
       tot = dplyr::n()
     ) |>
     dplyr::mutate(
-      propmiss = .data$miss / .data$tot * 100,
-      rep_rate = 100 - .data$propmiss
+      propmiss = miss / tot * 100,
+      rep_rate = 100 - propmiss
     )
 
   # Determine the y-axis variable based on the presence of 'y_var'

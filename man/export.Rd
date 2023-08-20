@@ -21,8 +21,9 @@ No return value, called for side effects.
 }
 \description{
 This function provides a unified interface for exporting data to various
-file formats supported by the 'rio' package. The format is automatically
-detected from the file extension to simplify the exporting process.
+file formats supported by the \code{\link[rio:export]{rio::export()}}
+function. The format is automatically detected from the file extension to
+simplify the exporting process.
 }
 \examples{
 \dontrun{
@@ -41,5 +42,6 @@ export(mtcars, "path/to/your/file.rds")
 # Export an RData file
 export(list(mtcars = mtcars, iris = iris), "path/to/your/file.RData")
 }
+
 
 }
