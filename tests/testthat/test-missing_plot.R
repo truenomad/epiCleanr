@@ -94,7 +94,6 @@ testthat::test_that("Title construction with and without 'miss_vars'", {
 # Test 11: Check title construction when there are more than one var
 testthat::test_that("Title is constructed correctly with remaining variables", {
 
-
   # Call your function with appropriate arguments
   plot <- epiCleanr::missing_plot(dplyr::select(fake_data, -polio),
                                   x_var = "year", miss_vars = NULL,
