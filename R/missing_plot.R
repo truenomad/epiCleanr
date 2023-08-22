@@ -2,7 +2,7 @@
 #'
 #' This function visualizes the proportion of missing data or reporting rate for
 #'  specified variables in a dataset. It creates a tile plot using
-#'  \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}; where the x-axis can
+#'  \code{ggplot2::ggplot()}; where the x-axis can
 #'  represent any categorical time such as time (e.g., year, month), and the
 #'  y-axis can represents either variables or groupings (e.g., state). The
 #'  output can further be manipulated to one's needs.
@@ -30,6 +30,7 @@
 #' @importFrom stringr str_remove
 #' @importFrom tools toTitleCase
 #' @importFrom rlang sym
+#' @importFrom rlang .data
 #'
 #' @export
 #'
@@ -139,26 +140,26 @@ missing_plot <- function(data, x_var, y_var = NULL,
       names_to = "variable",
       values_to = "miss_value"
     ) |>
-    dplyr::mutate(variable = stringr::str_remove(variable, "miss_"))
+    dplyr::mutate(variable = stringr::str_remove(.data$variable, "miss_"))
 
   # If 'y_var' is not NULL, group by 'x_var', 'y_var', and 'variable'
   if (!is.null(y_var)) {
     plot_data <- plot_data |>
-      dplyr::group_by(!!rlang::sym(x_var), !!rlang::sym(y_var), variable)
+      dplyr::group_by(!!rlang::sym(x_var), !!rlang::sym(y_var), .data$variable)
   } else {
     plot_data <- plot_data |>
-      dplyr::group_by(!!rlang::sym(x_var), variable)
+      dplyr::group_by(!!rlang::sym(x_var), .data$variable)
   }
 
   # Summarize missing data
   plot_data <- plot_data |>
     dplyr::summarise(
-      miss = sum(miss_value, na.rm = TRUE),
+      miss = sum(.data$miss_value, na.rm = TRUE),
       tot = dplyr::n()
     ) |>
     dplyr::mutate(
-      propmiss = miss / tot * 100,
-      rep_rate = 100 - propmiss
+      propmiss = .data$miss / .data$tot * 100,
+      rep_rate = 100 - .data$propmiss
     )
 
   # Determine the y-axis variable based on the presence of 'y_var'

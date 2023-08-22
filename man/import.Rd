@@ -55,6 +55,6 @@ data_web <- import("https://github.com/your_username/your_dataset.xlsx")
 
 }
 \seealso{
-\code{\link[rio:import]{foo::import()}},  which this function
+\code{\link[https://project.org/web/packages/rio/readme/README.html]{foo::import()}},  which this function
 is based on.
 }

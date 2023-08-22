@@ -18,8 +18,8 @@ The transformation includes converting to lower case, replacing spaces and
 punctuation with underscores, replacing uppercase characters following
 lowercase characters (camel case) with lowercase characters separated by an
 underscore, and removing leading or trailing underscores.  The function is
-inspired by the \code{\link[janitor:clean_names]{janitor::clean_names()}}
-function from the janitor package.
+inspired by the \code{janitor::clean_names()} function from the janitor
+package.
 }
 \examples{
 \donttest{
@@ -28,6 +28,6 @@ clean_names(c("var1", "Another Variable", "SOME_VAR"))
 }
 }
 \seealso{
-\code{\link[janitor:clean_names]{janitor::clean_names()}} for the
+\code{\link[https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html]{janitor::clean_names()}} for the
 function that inspired this one.
 }
