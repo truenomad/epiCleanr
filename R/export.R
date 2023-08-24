@@ -1,7 +1,7 @@
 #' Export Data to Various File Formats
 #'
 #' This function provides a unified interface for exporting data to various
-#' file formats supported by the \code{\link[rio:export]{rio::export()}}
+#' file formats supported by the \code{\link[https://cran.r-project.org/web/packages/rio/readme/README.html]{rio::export()}}
 #' function. The format is automatically detected from the file extension to
 #' simplify the exporting process.
 #'

@@ -19,7 +19,7 @@ testthat::test_that("export function works correctly", {
     imported_df <- epiCleanr::import(file_path)
 
     # Test: Check if the data read back is the same as the original data
-    testthat::expect_equivalent(dummy_df, imported_df)
+    testthat::expect_equal(dummy_df, imported_df, ignore_attr = TRUE)
   }
 
   # Test: Check if the function raises an error for unsupported formats

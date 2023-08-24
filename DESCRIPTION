@@ -19,11 +19,11 @@ Description: epiCleanr is specifically designed to meet the requirements of
 License: MIT + file LICENSE
 URL: https://github.com/truenomad/epiCleanr
 BugReports: https://github.com/truenomad/epiCleanr/issues
-LazyData: true
 Encoding: UTF-8
 Imports:
   rio, 
   dplyr, 
+  scales,
   tidyr, 
   tools, 
   withr,
@@ -33,7 +33,11 @@ Imports:
   rlang,
   glue,
   crayon,
-  countrycode
+  countrycode,
+  purrr, 
+  stringdist, 
+  stringi,
+  ggtext
 Suggests: testthat, knitr
 RoxygenNote: 7.2.3
 VignetteBuilder: 
