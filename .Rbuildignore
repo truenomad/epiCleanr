@@ -9,3 +9,4 @@
 ^README\.Rmd$
 ^LICENSE\.md$
 ^codemeta\.json$
+^images$
