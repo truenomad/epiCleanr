@@ -23,6 +23,7 @@ Encoding: UTF-8
 Imports:
   rio, 
   dplyr, 
+  tibble,
   scales,
   tidyr, 
   tools, 
