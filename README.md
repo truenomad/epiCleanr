@@ -1,5 +1,5 @@
 
-# epiCleanr <a <img src="images/testlogo.png" align="right" height="138" /></a>
+# epiCleanr <a href="#"><img src="images/testlogo.png" align="right" height="138" /></a>
 
 <!-- badges: start -->
 [![R build status](https://github.com/truenomad/epicleanr/workflows/R-CMD-check/badge.svg)](https://github.com/truenomad/epicleanr/actions)
