@@ -36,6 +36,22 @@
 create_test <- function(dimension_test = NULL, combinations_test = NULL,
                         row_duplicates = F, col_duplicates = F,
                         min_threshold_test = NULL, max_threshold_test = NULL) {
+
+
+  # praise emoji function
+  praise <- function() {
+    emoji <- c(
+      "\U0001f600", # smile
+      "\U0001f973", # party face
+      "\U0001f638", # cat grin
+      "\U0001f308", # rainbow
+      "\U0001f947", # gold medal
+      "\U0001f389", # party popper
+      "\U0001f38a" # confetti ball
+    )
+    sample(emoji, 1)
+  }
+
   # Function to format big numbers
   big_mark <- function(value) {
     return(formatC(value, format = "d", big.mark = ","))
@@ -78,7 +94,7 @@ create_test <- function(dimension_test = NULL, combinations_test = NULL,
     if (row_duplicates) {
       total_tests <- total_tests + 1
       duplicate_rows <- data[duplicated(data) | duplicated(data,
-        fromLast = TRUE
+                                                           fromLast = TRUE
       ), ]
       if (nrow(duplicate_rows) > 0) {
         result$duplicate_rows <- duplicate_rows
@@ -232,7 +248,7 @@ create_test <- function(dimension_test = NULL, combinations_test = NULL,
       total_tests > 0) {
       tests_passed / total_tests * 100
     } else {
-      NULL
+      stop("No tests have been carried out!")
     }
 
     if (tests_passed == total_tests) {
@@ -240,7 +256,7 @@ create_test <- function(dimension_test = NULL, combinations_test = NULL,
         crayon::blue(
           glue::glue(
             "Congratulations! All tests passed: {tests_passed}/{total_tests}",
-            " ({round(result$percentage_passed)}%) \\U1F973"
+            " ({round(result$percentage_passed)}%) {praise()}"
           )
         )
       )

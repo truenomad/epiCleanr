@@ -28,6 +28,5 @@ clean_names(c("var1", "Another Variable", "SOME_VAR"))
 }
 }
 \seealso{
-\code{\link[https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html]{janitor::clean_names()}} for the
-function that inspired this one.
+\code{\link[https://shorturl.at/mCFQV]{janitor::clean_names()}}
 }

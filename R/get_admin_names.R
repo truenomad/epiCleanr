@@ -8,7 +8,9 @@
 #' country for which administrative names are to be retrieved. This can be in
 #' various formats such as country name, ISO codes, UN codes, etc., see
 #' \code{\link[https://github.com/vincentarelbundock/countrycode]{countrycode::codelist()}} for the full
-#' list of codes and naming conventions taken
+#' list of codes and naming conventions used.
+#' @param silent_mode A logical indicating whether to suppress messages.
+#'         Default is TRUE.
 #'
 #' @return A list containing administrative region names and details for
 #'         different administrative levels (e.g., ADM1, ADM2, etc.). Each
@@ -21,11 +23,11 @@
 #'   # example using different naming/code conventions
 #'   somalia_admins <- get_admin_names("SOM")       # using 3 digit iso codes
 #'   kenya_admins <- get_admin_names("KE")          # using 2 digit iso codes
-#'   albania_admins <- get_admin_names("KE")        # using UN codes
+#'   albania_admins <- get_admin_names(008)         # using UN codes
 #'   usa_admis <-  get_admin_names("United States") # using full names
 #' }
 #'
-#' @seealso \url{https://download.geonames.org} for the source of admin
+#' @seealso \url{https://geonames.org} for the source of admin
 #' names data
 #'
 #' @importFrom dplyr select filter mutate all_of
@@ -33,11 +35,11 @@
 #' @importFrom tidyr pivot_wider
 #' @importFrom utils download.file unzip
 #' @importFrom rlang .data
-#'
+#' @importFrom withr with_tempfile
 #'
 #' @export
 
-get_admin_names <- function(country_name_or_code) {
+get_admin_names <- function(country_name_or_code, silent_mode = TRUE) {
 
   # Convert name/code to ISO code to use for districtr name data----------------
 
@@ -76,33 +78,44 @@ get_admin_names <- function(country_name_or_code) {
 
   # retrieve admin names from geonames website ---------------------------------
 
-  # time out after 3 min if not responding
-  options(timeout = 180)
 
-  url <- paste0("https://download.geonames.org/export/dump/",
-                iso_code, ".zip")
-  temp_file <- tempfile(fileext = ".zip")
-  download.file(url, destfile = temp_file,  quiet = TRUE)
+  tmpdir <- tempfile()
+  dir.create(tmpdir)
 
-  temp_dir <- tempdir()
 
-  unzip(temp_file, exdir = temp_dir)
+  withr::with_dir(tmpdir, {
+    # Construct the URL for the requested ISO code
+    url <- paste0("https://download.geonames.org/export/dump/", iso_code, ".zip")
 
-  # Read the data file into a data frame
-  data <- epiCleanr::import(paste0(temp_dir, "/", iso_code, ".txt"))
+    # Set the timeout option
+    # old_options <- options(timeout = 320)
 
-  on.exit(unlink(temp_file)) # Remove the temporary file when done
+    # Download the ZIP file
+    download.file(url, "geonames.zip", quiet = silent_mode, mode = "wb")
+
+    # Unzip the file to a subdirectory
+    unzip("geonames.zip", exdir = "geonames")
+
+
+    txt_file <- paste0("geonames/", iso_code, ".txt")
+
+    data <- epiCleanr::import(txt_file)
+
+  })
+
+  # Remove the temporary directory and its contents
+  unlink(tmpdir, recursive = TRUE)
 
   # Select required columns
   data <- data |>
     dplyr::select(
-      country_code = .data$V9,
-      asciiname = .data$V3, alternatenames = .data$V4,
-      latitude = .data$V5, longitude = .data$V6,
-      feature_code = .data$V8, name = .data$V2,
-      admin1_code = .data$V11, admin2_code = .data$V12,
-      admin3_code = .data$V13, admin4_code = .data$V14,
-      last_updated = .data$V19
+      "country_code" = "V9",
+      "asciiname" = "V3", "alternatenames" = "V4",
+      "latitude" = "V5", "longitude" = "V6",
+      "feature_code" = "V8", "name" = "V2",
+      "admin1_code" = "V11", "admin2_code" = "V12",
+      "admin3_code" = "V13", "admin4_code" = "V14",
+      "last_updated" = "V19"
     )
 
   # Manipulate datasets
@@ -130,15 +143,15 @@ get_admin_names <- function(country_name_or_code) {
     if (adm_column %in% colnames(data)) {
       admin_names[[paste0("adm", i)]] <- data |>
         dplyr::select(
-          .data$country_code, .data$asciiname, .data$alternatenames,
+          "country_code", "asciiname", "alternatenames",
           dplyr::all_of(adm_column),
-          .data$latitude, .data$longitude, .data$last_updated) |>
+          "latitude", "longitude", "last_updated") |>
         dplyr::filter(!is.na(.data[[adm_column]])) |>
-        as.data.frame()
+        as.data.frame() |>
+        dplyr::rename_with(tolower)
     }
   }
 
   return(admin_names)
 
 }
-

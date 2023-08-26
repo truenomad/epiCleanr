@@ -30,37 +30,37 @@ A ggplot2 object representing the tile plot.
 }
 \description{
 This function visualizes the proportion of missing data or reporting rate for
- specified variables in a dataset. It creates a tile plot using
- \code{ggplot2::ggplot()}; where the x-axis can
- represent any categorical time such as time (e.g., year, month), and the
- y-axis can represents either variables or groupings (e.g., state). The
- output can further be manipulated to one's needs.
+specified variables in a dataset. It creates a tile plot using
+\code{ggplot2::ggplot()}; where the x-axis can
+represent any categorical time such as time (e.g., year, month), and the
+y-axis can represents either variables or groupings (e.g., state). The
+output can further be manipulated to one's needs.
 }
 \examples{
 \dontrun{
 # Create a data frame with all combinations of states and years
 fake_data <- expand_grid(
-  state = state.name,
-  month = 1:12, year = 2000:2023
+ state = state.name,
+ month = 1:12, year = 2000:2023
 ) |>
-  mutate(
-    measles = sample(0:1000, size = n(), replace = TRUE),
-    polio = sample(0:500, size = n(), replace = TRUE),
-    malaria = sample(0:300, size = n(), replace = TRUE),
-    cholera = sample(0:700, size = n(), replace = TRUE)
-  ) |>
-  # Randomly set 10\% of the data in each disease column to NA
-  mutate(across(
-    c(measles, polio, malaria, cholera),
-    ~ replace(., sample(1:n(), size = n() * 0.4), NA)
-  ))
+ mutate(
+   measles = sample(0:1000, size = n(), replace = TRUE),
+   polio = sample(0:500, size = n(), replace = TRUE),
+   malaria = sample(0:300, size = n(), replace = TRUE),
+   cholera = sample(0:700, size = n(), replace = TRUE)
+ ) |>
+ # Randomly set 10\% of the data in each disease column to NA
+ mutate(across(
+   c(measles, polio, malaria, cholera),
+   ~ replace(., sample(1:n(), size = n() * 0.4), NA)
+ ))
 
 # Example function usage
 missing_plot(fake_data,
-  x_var = "year",
-  miss_vars = "polio",
-  y_var = "state",
-  use_rep_rate = T
+ x_var = "year",
+ miss_vars = "polio",
+ y_var = "state",
+ use_rep_rate = T
 )
 }
 }
