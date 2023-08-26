@@ -39,7 +39,24 @@ Imports:
   stringdist, 
   stringi,
   ggtext
-Suggests: testthat, knitr
+Suggests: 
+    testthat, 
+    knitr,
+    haven,
+    readxl,
+    openxlsx,
+    foreign,
+    xml2,
+    yaml,
+    clipr,
+    xml2,  
+    readODS, 
+    rmatio, 
+    jsonlite, 
+    fst, 
+    feather,
+    arrow, 
+    data.table
 RoxygenNote: 7.2.3
 VignetteBuilder: 
     knitr

@@ -54,11 +54,6 @@
 #' @export
 import <- function(file_path, ...) {
 
-  # Install formats
-  withr::with_options(list(repos = "https://cran.rstudio.com"), {
-    rio::install_formats()
-  })
-
   # Check if the input file path is a URL and if so, read from URL directly
   if (grepl("^http[s]?://", file_path, ignore.case = TRUE)) {
     return(rio::import(file_path, ...))

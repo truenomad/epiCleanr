@@ -40,11 +40,6 @@
 #' @export
 export <- function(data, file_path, ...) {
 
-  # Install formats
-  withr::with_options(list(repos = "https://cran.rstudio.com"), {
-    rio::install_formats()
-  })
-
   # Extract the file extension from the input file path
   file_ext <- tools::file_ext(file_path)
 
