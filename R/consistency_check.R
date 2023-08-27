@@ -34,7 +34,7 @@
 #' theme_minimal theme scale_x_continuous scale_y_continuous element_text margin
 #' @importFrom glue glue
 #' @importFrom crayon green red
-#' @importFrom scales comma_format
+#' @importFrom scales comma
 #' @importFrom ggtext element_markdown
 #'
 #' @export
@@ -56,7 +56,10 @@ consistency_check <- function(data, tests, cases) {
     case_column <- cases[i]
 
     # Rows where there are more cases than tests
-    inconsistency <- data[data[[case_column]] > data[[test_column]], ]
+    inconsistency <- data |>
+      filter(!is.na(!!sym(case_column)), !is.na(!!sym(test_column))) |>
+      filter(!!sym(case_column) > !!sym(test_column))
+
     inconsistent_count <- nrow(inconsistency)
     inconsistent_prop <- inconsistent_count / nrow(data) * 100
     inconsistent_rows[[i]] <- inconsistency
@@ -80,8 +83,9 @@ consistency_check <- function(data, tests, cases) {
         crayon::red(
           glue::glue(
             "Consistency test failed for {disease_name}: ",
-            "There are {inconsistent_count} ({round(inconsistent_prop, 2)}%) ",
-            "rows where tests are less than cases.")
+            "There are {scales::comma(inconsistent_count)} ",
+            "({round(inconsistent_prop, 2)}%) ",
+            "rows where cases are greater than tests.")
         )
       )
     }
@@ -96,8 +100,8 @@ consistency_check <- function(data, tests, cases) {
     ggplot2::theme_bw() +
     ggplot2::facet_wrap(~ disease, scales = "free") +
     ggplot2::labs(
-      x = "Cases",
-      y = "Tests",
+      y = "Cases",
+      x = "Tests",
       title = paste("<span style = 'font-size:10pt'><b style='color",
                     ":#526A83'>Consistency Check</b>: Comparing",
                     "the number of tests and cases</span>")) +

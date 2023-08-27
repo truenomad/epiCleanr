@@ -10,3 +10,5 @@
 ^LICENSE\.md$
 ^codemeta\.json$
 ^images$
+^togo_admin\.R$
+^simulated_data\.R$
