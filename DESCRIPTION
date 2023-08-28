@@ -41,7 +41,8 @@ Imports:
   stringi,
   ggtext,
   ggdist,
-  zoo
+  zoo,
+  wesanderson
 Suggests: 
     testthat, 
     knitr,
