@@ -271,6 +271,5 @@ create_test <- function(dimension_test = NULL, combinations_test = NULL,
       )
     }
 
-    return(result)
   })
 }

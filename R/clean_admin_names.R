@@ -64,6 +64,7 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
                               admin_level = "adm2",
                               user_base_admin_names = NULL,
                               report_mode = FALSE) {
+
   if (is.null(country_code) && is.null(admin_names_to_clean)) {
     stop("Both 'country_code' and 'admin_names_to_clean' must be provided.")
   } else if (is.null(country_code)) {
@@ -183,6 +184,7 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
       # remove cols Inf values
       dplyr::filter(!is.na(max_distances) | !is.na(min_distances)) |>
       dplyr::select(-"matched_indic", -"max_distances", -"min_distances") |>
+      dplyr::distinct() |>
       dplyr::rename(match_prop_user_base_admin_names = match_prop) |>
       tidyr::pivot_wider(
         id_cols = c("admin_names_to_clean"),
@@ -252,7 +254,7 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
     dplyr::rename(column_names = 1) |>
     dplyr::mutate(column_names = stringr::str_replace(
       column_names, "\\..*", ""
-    )) |>
+    )) |> dplyr::distinct() |>
     dplyr::mutate(column_names = paste(column_names, method, sep = "_")) |>
     dplyr::select(-"method") |>
     tidyr::pivot_wider(
@@ -344,23 +346,24 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
         TRUE ~ admin_cols
       )
     ) |>
-    dplyr::select("admin_names_to_clean",
-                  "final_cleaned_column",
+    dplyr::select("names_to_clean" = "admin_names_to_clean",
+                  "final_names" = "final_cleaned_column",
                   "source_of_cleaned_name" = "admin_cols",
-                  "proportion_matched" = "match_prop",
+                  "prop_matched" = "match_prop",
                   "matching_algorithm"
-    )
+    ) |> dplyr::distinct()
 
   # Calculate matching stats
   total_dist <- nrow(best_match_result[1])
-  perfect_match <- sum(best_match_result$proportion_matched == 100)
+  perfect_match <- sum(best_match_result$prop_matched == 100)
   prop <- round((perfect_match / total_dist) * 100)
 
   # Common message part
   common_message <- glue::glue(
     crayon::blue(
-      "There are {perfect_match}",
-      "out of {total_dist} ({prop}%) admins that have been perfectly matched!"
+      "There are {scales::comma(perfect_match)}",
+      "out of {scales::comma(total_dist)} ({prop}%)",
+      "admins that have been perfectly matched!"
     )
   )
 
@@ -377,9 +380,9 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
 
     # Match the cleaned names with the original order
     ordered_cleaned_names <-
-      best_match_result$final_cleaned_column[match(
+      best_match_result$final_names[match(
         admin_names_to_clean,
-        best_match_result$admin_names_to_clean
+        best_match_result$names_to_clean
       )]
 
     return(ordered_cleaned_names)

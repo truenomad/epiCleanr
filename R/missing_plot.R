@@ -29,8 +29,8 @@
 #' @importFrom tidyselect starts_with all_of
 #' @importFrom stringr str_remove
 #' @importFrom tools toTitleCase
-#' @importFrom rlang sym
-#' @importFrom rlang .data
+#' @importFrom rlang sym .data
+#' @importFrom wesanderson wes_palette
 #'
 #' @export
 #'
@@ -155,7 +155,7 @@ missing_plot <- function(data, x_var, y_var = NULL,
   plot_data <- plot_data |>
     dplyr::summarise(
       miss = sum(.data$miss_value, na.rm = TRUE),
-      tot = dplyr::n()
+      tot = dplyr::n(), .groups = 'drop'
     ) |>
     dplyr::mutate(
       propmiss = .data$miss / .data$tot * 100,
@@ -169,6 +169,17 @@ missing_plot <- function(data, x_var, y_var = NULL,
     y_axis_var <- "variable"
   }
 
+
+  # reverse colours if reporting rate is used
+  if (use_rep_rate) {
+    color_pal <-  rev(wesanderson::wes_palette("Zissou1", 100,
+                                               type = "continuous"))
+  } else {
+    color_pal <-
+      wesanderson::wes_palette("Zissou1", 100, type = "continuous")
+  }
+
+
   # Plot the data using ggplot2
   ggplot2::ggplot(
     plot_data,
@@ -178,7 +189,9 @@ missing_plot <- function(data, x_var, y_var = NULL,
     )
   ) +
     ggplot2::geom_tile(colour = "white", linewidth = .2) +
-    ggplot2::scale_fill_viridis_c(option = "E") +
+    ggplot2::scale_fill_gradientn(
+      colours = color_pal
+    ) +
     ggplot2::labs(
       title = trimws(paste(title_prefix, title_vars, title_suffix)),
       x = "", y = y_axis_label, fill = fill_label
@@ -203,7 +216,8 @@ missing_plot <- function(data, x_var, y_var = NULL,
       legend.margin = ggplot2::margin(t = 0, unit = "cm"),
       legend.text = ggplot2::element_text(size = 8, family = "Arial"),
       plot.title = ggplot2::element_text(
-        size = 12, face = "bold",
+        size = 12,
+        # face = "bold",
         family = "Arial",
         margin = ggplot2::margin(b = 10)
       ),

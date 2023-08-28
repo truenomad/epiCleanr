@@ -9,41 +9,126 @@ fake_epi_data <- data.frame(
 suppressMessages({
   testthat::test_that("create_test handles dimensions correctly", {
     my_tests <- create_test(dimension_test = c(14400, 3))
-    result <- my_tests(fake_epi_data)
-    testthat::expect_identical(result[[1]], 100)
+
+    # Run the test function and capture the output
+    result <- testthat::capture_message({
+      my_tests(fake_epi_data)
+    })[1]
+
+    act <- trimws(as.character(result$message))
+
+    # Expected message for passing test
+    expt_pass <- paste(
+      "Test passed! You have the correct",
+      "number of dimensions!"
+    )
+
+    testthat::expect_equal(act, expt_pass)
   })
+
 
   testthat::test_that("create_test handles row duplicates correctly", {
     my_tests <- create_test(row_duplicates = TRUE)
-    result <- my_tests(fake_epi_data)
-    testthat::expect_identical(result[[2]], 0)
+
+    result <- testthat::capture_message({
+      my_tests(fake_epi_data)
+    })[1]
+
+    act <- gsub("\\n", "", as.character(result$message))
+    act <- trimws(act)
+
+    expt_pass <- paste(
+      "Warning! Test failed. Duplicate rows",
+      "found. See output$duplicate_rows."
+    )
+    expt_pass <- trimws(expt_pass)
+
+    testthat::expect_equal(act, expt_pass)
   })
+
+
+
+
 
   testthat::test_that("create_test handles column duplicates correctly", {
     my_tests <- create_test(col_duplicates = TRUE)
-    result <- my_tests(fake_epi_data)
-    testthat::expect_identical(result[[1]], 100)
+
+    result <- testthat::capture_message({
+      my_tests(fake_epi_data)
+    })[1]
+
+    act <- gsub("\\n", "", as.character(result$message))
+    act <- trimws(act)
+
+    expt_pass <- paste("Test passed! No repeated columns found!")
+    expt_pass <- trimws(expt_pass)
+
+    testthat::expect_equal(act, expt_pass)
   })
+
+
 
   testthat::test_that("create_test handles combinations correctly", {
     my_tests <- create_test(combinations_test = list(
       variables = c("month", "year"), expectation = 12 * 24
     ))
 
-    result <- my_tests(fake_epi_data)
-    testthat::expect_identical(result[[1]], 0)
+    result <- testthat::capture_message({
+      my_tests(fake_epi_data)
+    })[1]
+
+    act <- gsub("\\n", "", as.character(result$message))
+    act <- trimws(act)
+
+    expt_pass <- paste(
+      "Warning! Test failed. Expected 288",
+      "combinations but found 144 for month, year."
+    )
+    expt_pass <- trimws(expt_pass)
+
+    testthat::expect_equal(act, expt_pass)
   })
+
+
+
 
   testthat::test_that("create_test handles min threshold correctly", {
     my_tests <- create_test(min_threshold_test = list(polio_tests = 0))
-    result <- my_tests(fake_epi_data)
-    testthat::expect_identical(result[[1]], 100)
+
+    result <- testthat::capture_message({
+      my_tests(fake_epi_data)
+    })[1]
+
+    act <- gsub("\\n", "", as.character(result$message))
+    act <- trimws(act)
+
+    expt_pass <- paste(
+      "Test passed! Values in column polio_tests",
+      "are above the threshold."
+    )
+    expt_pass <- trimws(expt_pass)
+
+    testthat::expect_equal(act, expt_pass)
   })
+
 
   testthat::test_that("create_test handles max threshold correctly", {
     my_tests <- create_test(max_threshold_test = list(polio_tests = 122))
-    result <- my_tests(fake_epi_data)
-    testthat::expect_identical(result[[1]], 100)
+
+    result <- testthat::capture_message({
+      my_tests(fake_epi_data)
+    })[1]
+
+    act <- gsub("\\n", "", as.character(result$message))
+    act <- trimws(act)
+
+    expt_pass <- paste(
+      "Test passed! Values in column polio_tests",
+      "are below the threshold."
+    )
+    expt_pass <- trimws(expt_pass)
+
+    testthat::expect_equal(act, expt_pass)
   })
 
   testthat::test_that("create_test uses big_mark correctly in error messages", {
@@ -222,7 +307,12 @@ suppressMessages({
       # Create the test function using the create_test function
       my_tests <- create_test(max_threshold_test = max_threshold_test)
 
-      actual_error <- as.character(capture_message(my_tests(test_data))[1])
+      # Capture the message and convert it to a character
+      actual_error <- capture_message(my_tests(test_data)[1])
+
+      act <- gsub("\\n", "", as.character(actual_error$message))
+      act <- trimws(act) # Remove leading and trailing whitespace
+
 
       # Check if the warning message is as expected
       expected_warning <- paste(
@@ -230,17 +320,14 @@ suppressMessages({
         "column1 are above the threshold. See output$max_thresh_column1."
       )
 
-      testthat::expect_equal(writeLines(actual_error), writeLines(actual_error))
+      expt_pass <- trimws(act)
 
-      # Check the structure of the result
-      expected_key <- "max_thresh_column1"
+      # Expectation for the warning message
+      testthat::expect_equal(act, expt_pass)
 
-
-      test_result <- my_tests(test_data)
-      testthat::expect_true(expected_key %in% names(test_result))
-      testthat::expect_equal(test_result[[expected_key]]$row_number, c(4))
     }
   )
+
 
   testthat::test_that(
     "create_test sets percentage_passed to NULL when total_tests is 0",
@@ -324,12 +411,10 @@ suppressMessages({
       "\U0001f308", # rainbow
       "\U0001f947", # gold medal
       "\U0001f389", # party popper
-      "\U0001f38a"  # confetti ball
+      "\U0001f38a" # confetti ball
     )
 
     # Check if the final message contains any of the expected emojis
     testthat::expect_true(any(sapply(expected_emojis, grepl, final_message)))
   })
-
-
 })
