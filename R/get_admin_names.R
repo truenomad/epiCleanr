@@ -7,8 +7,8 @@
 #' @param country_name_or_code Character or numeric. The name or code of the
 #' country for which administrative names are to be retrieved. This can be in
 #' various formats such as country name, ISO codes, UN codes, etc., see
-#' \code{\link[https://github.com/vincentarelbundock/countrycode]{countrycode::codelist()}} for the full
-#' list of codes and naming conventions used.
+#' [countrycode::codelist()] for the full list of codes and naming conventions
+#' used.
 #' @param silent_mode A logical indicating whether to suppress messages.
 #'         Default is TRUE.
 #'

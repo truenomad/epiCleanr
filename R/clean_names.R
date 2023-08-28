@@ -5,7 +5,7 @@
 #' punctuation with underscores, replacing uppercase characters following
 #' lowercase characters (camel case) with lowercase characters separated by an
 #' underscore, and removing leading or trailing underscores.  The function is
-#' inspired by the \code{janitor::clean_names()} function from the janitor
+#' inspired by the [janitor::clean_names()] function from the janitor
 #' package.
 #'
 #' @param var Character vector representing the variable name(s) to be cleaned.
@@ -17,7 +17,7 @@
 #' clean_names("My variable NAME")
 #' clean_names(c("var1", "Another Variable", "SOME_VAR"))
 #'}
-#' @seealso \code{\link[https://shorturl.at/mCFQV]{janitor::clean_names()}}
+#' @seealso [janitor::clean_names()]
 #'
 #' @export
 
