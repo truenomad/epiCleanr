@@ -1,5 +1,5 @@
 
-# epiCleanr <img src="images/logo.png" align="right" height="138" />
+# epiCleanr <img src="man/figures/logo.png" align="right" height="138" />
 
 <!-- badges: start -->
 [![R build status](https://github.com/truenomad/epicleanr/workflows/R-CMD-check/badge.svg)](https://github.com/truenomad/epicleanr/actions)
@@ -194,7 +194,7 @@ consistency_check(fake_epi_df_togo,
                   
 ```
 
-<img src="images/consistency_plot.png" align="center" height="545" />
+<img src="man/figures/consistency_plot.png" align="center" height="545" />
 
 
 ### Detecting and handling outliers
@@ -231,7 +231,7 @@ outliers$report
 outliers$plot
 
 # you can even save it if you want
-# ggplot2::ggsave("images/outliers_plot.png", width = 10, 
+# ggplot2::ggsave("man/figures/outliers_plot.png", width = 10, 
 #                height = 7, scale = 0.95, dpi = 400)
 
 # if happy, create a dataframe with the outliers handled 
@@ -242,7 +242,7 @@ fake_epi_df_togo_no_outliers <- handle_outliers(
 
 ```
 
-<img src="images/outliers_plot.png" align="center" height="575" />
+<img src="man/figures/outliers_plot.png" align="center" height="575" />
 
 ### Checking missing data and reporting rates over factors
 
@@ -263,7 +263,7 @@ missing_plot(fake_epi_df_togo2, miss_vars = variables,
 
 ```
 
-<img src="images/missing_plot_a.png" align="center" height="635" />
+<img src="man/figures/missing_plot_a.png" align="center" height="635" />
 
 
 ```R
@@ -271,4 +271,4 @@ missing_plot(fake_epi_df_togo2, miss_vars = variables,
 missing_plot(fake_epi_df_togo2, miss_vars = "malaria_cases", 
               x_var = "date", y_var = "district", use_rep_rate = T)
 ```
-<img src="images/missing_plot_b.png" align="center" height="635" />
+<img src="man/figures/missing_plot_b.png" align="center" height="635" />

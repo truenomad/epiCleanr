@@ -8,16 +8,11 @@ Authors@R:
            role = c("aut", "cre"),
            email = "mohamedayusuf87@gmail.com",
            comment = c(ORCID = "0000-0002-9339-4613")))
-Description: epiCleanr is specifically designed to meet the requirements of 
-             epidemiologists and public health data experts. It offers a 
-             comprehensive suite of functionalities for importing, cleaning, 
-             unit testing, visualizing, and preprocessing data—tasks that are 
-             frequently encountered in epidemiological analysis. By focusing on 
-             addressing the unique challenges inherent in epidemiological 
-             datasets, epiCleanr enhances both the efficiency and 
-             reproducibility of your work.
+Description: This package offers a tidy solution for epidemiological data. It 
+             houses a range of functions for epidemiologists and public health 
+             data wizards for data management and cleaning.
 License: MIT + file LICENSE
-URL: https://github.com/truenomad/epiCleanr
+URL: https://github.com/truenomad/epiCleanr, https://truenomad.github.io/epiCleanr/
 BugReports: https://github.com/truenomad/epiCleanr/issues
 Encoding: UTF-8
 Depends: R (>= 3.6)
