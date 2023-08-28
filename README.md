@@ -112,23 +112,23 @@ clean_admin_names(
 
 #> There are 15 out of 15 (100%) admins that have been perfectly matched!
 #>   # A tibble: 15 × 5
-#>  names_to_clean   final_names      source_of_cleaned_name         prop_matched  matching_algorithm  
-#>    <chr>          <chr>            <chr>                           <dbl>        <chr>               
-#>  1 Bas-Mono       Bas-Mono         User base admin names           100          Levenshtein Distance
-#>  2 Bliita         Blitta           Main admin name from geodata    100          Soundex             
-#>  3 Centrale       Centrale         User base admin names           100          Levenshtein Distance
-#>  4 Cinkaasi       Cinkassé         User base admin names           100          Soundex             
-#>  5 Dankben        Dankpen          Main admin name from geodata    100          Soundex             
-#>  6 East-Mono      Est-Mono         Main admin name from geodata    100          Soundex             
-#>  7 Kaloto         Kloto            Main admin name from geodata    100          Soundex             
-#>  8 Keéran         Keran            Alternative name from geodata   100          Soundex             
-#>  9 Lomé           Lomé             User base admin names           100          Levenshtein Distance
-#> 10 Ogou           Ogou             Main admin name from geodata    100          Levenshtein Distance
-#> 11 Sotouboua      Sotouboua        Main admin name from geodata    100          Levenshtein Distance
-#> 12 Tchamaba       Tchamba          Main admin name from geodata    100          Soundex             
-#> 13 Vo             Vo Prefecture    Main admin name from geodata    100          Levenshtein Distance
-#> 14 Yotto          Yoto             Main admin name from geodata    100          Soundex    
-#> 15 Zioo           Zio Prefecture   Main admin name from geodata    100          Soundex         
+#>  names_to_clean  final_names     ource_of_cleaned_name       prop_matched  matching_algorithm  
+#>    <chr>         <chr>           <chr>                         <dbl>       <chr>               
+#>  1 Bas-Mono      Bas-Mono        User base admin names         100         Levenshtein Distance
+#>  2 Bliita        Blitta          Main admin name from geodata  100         Soundex             
+#>  3 Centrale      Centrale        User base admin names         100         Levenshtein Distance
+#>  4 Cinkaasi      Cinkassé        User base admin names         100         Soundex             
+#>  5 Dankben       Dankpen         Main admin name from geodata  100         Soundex             
+#>  6 East-Mono     Est-Mono        Main admin name from geodata  100         Soundex             
+#>  7 Kaloto        Kloto           Main admin name from geodata  100         Soundex             
+#>  8 Keéran        Keran           Alternative name from geodata 100         Soundex             
+#>  9 Lomé          Lomé            User base admin names         100         Levenshtein Distance
+#> 10 Ogou          Ogou            Main admin name from geodata  100         Levenshtein Distance
+#> 11 Sotouboua     Sotouboua       Main admin name from geodata  100         Levenshtein Distance
+#> 12 Tchamaba      Tchamba         Main admin name from geodata  100         Soundex             
+#> 13 Vo            Vo Prefecture   Main admin name from geodata  100         Levenshtein Distance
+#> 14 Yotto         Yoto            Main admin name from geodata  100         Soundex    
+#> 15 Zioo          Zio Prefecture  Main admin name from geodata  100         Soundex         
 
 # If we are happy with the names, we can update the old names with the new ones
 # Otherwise we can further clean the names manually
