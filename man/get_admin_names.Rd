@@ -39,6 +39,6 @@ both country names and various country coding schemes.
 
 }
 \seealso{
-\url{https://geonames.org} for the source of admin
+`Geonames` website for the source of admin
 names data
 }

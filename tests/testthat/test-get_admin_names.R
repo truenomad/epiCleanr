@@ -42,8 +42,8 @@ testthat::test_that(
   "get_admin_names handles different naming/code conventions",
   {
     result_iso3 <- get_admin_names("JAM") # Jamaica 3-digit ISO code
-    result_iso2 <- get_admin_names("JM") # Kenya 2-digit ISO code
-    result_un <- get_admin_names(388) # Kenya UN code
+    result_iso2 <- get_admin_names("JM") # Jamaica 2-digit ISO code
+    result_un <- get_admin_names(388) # Jamaica UN code
     result_name <- get_admin_names("Jamaica") # Using full name
     # All results should be non-empty lists
     testthat::expect_true(all(sapply(
