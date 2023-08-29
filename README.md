@@ -16,19 +16,20 @@ management and cleaning. These include:
 - `export()` exports files of any formats.
 - `get_admin_names()` downloads admin names using various country codes and naming conventions.
 - `clean_admin_names()` cleans admin names using both user-provided and downloaded admin data.
-- `create_test()` creates a unit test functions to perform various data validation.
-- `consistency_check()` plot to see certain variables exceed others (i.e., tests vs cases).
-- `handling_outliers()` detects outliers using various approaches, and offers functionality to manage outliers in a number of ways.
+- `create_test()` creates a unit-testing functions to perform various data validation.
+- `consistency_check()` plot to see if certain variables exceed others (i.e., tests vs cases).
+- `handling_outliers()` detects outliers using various approaches, and offers functionality to manage them.
 - `missing_plot()` plots missing data or reporting rate for given variable(s) by different factors.
 
 
 ## Installation ##
 
-The package is available on Cran and can be installed 
+The package is (yet to) available on Cran and can be installed 
 directly in R using:
 
 ```R
-install.packages("epiCleanr")
+# The way to install it via CRAN once available
+# install.packages("epiCleanr")
 ```
 
 You can install the latest development version from GitHub by using:
@@ -72,12 +73,13 @@ list(my_data = my_data1, my_data2 = my_data2), "path/to/your/file.xlsx")
 ### Download administrative names
 
 You can download administrative names (such as districts, provinces, etc.,) for 
-a given country via the `GeoNames` website using country name or codes. 
+a given country via the `GeoNames` website using country name or codes to pull the data. 
 
 ```R
+# Get admin names for Togo
 admin_names <- get_admin_names(country_name_or_code = "Togo")
 
-# different admin levels are saved as a list
+# Different admin levels are saved as a list
 str(admin_names$adm2)
 
 #>'data.frame':	30 obs. of  7 variables:
@@ -93,16 +95,16 @@ str(admin_names$adm2)
 ### Clean administrative names
 
 You can clean administrative names using them `clean_admin_names` function, 
-which use various matching and string distance algorithms to match you admin 
-data using your own provided data and admin names data from `GeoNames`.
+which uses various matching and string distance algorithms to match your admin 
+data, using your own list of admin names as well admin names from `GeoNames` website.
 
 ```R
-# get simulated data
+# Get simulated epi data for Togo
 data(fake_epi_df_togo)
-# referecne dataset with clean admin names
+# Referecne dataset with clean admin names
 data(togo_admin_df) 
 
-# lets check how the matching looks 
+# Lets check how the matching looks 
 clean_admin_names(
      country_code = "Togo",
      admin_names_to_clean = fake_epi_df_togo$district,  
@@ -130,7 +132,7 @@ clean_admin_names(
 #> 15 Zioo          Zio Prefecture  Main admin name from geonames  100         Soundex         
 
 # If we are happy with the names, we can update the old names with the new ones
-# Otherwise we can further clean the names manually
+# otherwise we can further clean the names manually
 fake_epi_df_togo$district <- 
 clean_admin_names(
         country_code = "Togo",
@@ -141,27 +143,27 @@ clean_admin_names(
 
 ### Create unit testing functions
 
-The `create_test` exists to help user create their function in which they can 
-use for unit testing when working datasets that require lots of manipulation and
-wrangling. This function plus the `tidylog` package will save the headache of 
+The `create_test` is there users create their own functions in which they can 
+use for unit-testing when working with datasets that require lots of manipulation and
+wrangling. This function (plus the `tidylog` package) will save users from the headache 
 of troubleshooting issues related to data joins and transformations.
 
 ```R
-# set up a unit-testing fucntion
+# Set up a unit-testing fucntion
 my_tests <- create_test(
-        # for dimension of data
+        # For checking the dimension of the data
         dimension_test = c(900, 9), 
-        # for expected numer of cominations in data
+        # For expected number of combinations in data
         combinations_test = list(
         variables = c("month", "year", "district"),
         expectation = 12 * 5 * 15),
-        # repeated cols, rows and max and min thresholds
+        # Check repeated cols, rows and max and min thresholds
         row_duplicates = TRUE, col_duplicates = TRUE,
         max_threshold_test = list(malaria_tests = 1000, cholera_tests = 1000),
         min_threshold_test = list(cholera_cases = 0, cholera_cases = 0)
         )
 
-# apply your test on your data
+# Apply your unit-test on your data
 my_tests(fake_epi_df_togo)
 
 #> Test passed! You have the correct number of dimensions!
@@ -178,12 +180,13 @@ my_tests(fake_epi_df_togo)
 
 ### Consistency check
 
-The `consistency_check` function serves as a quick tool for validating the logical 
+The `consistency_check` function serves as a function for validating the logical 
 relationships between variables. For instance, if you know that the number of 
-cases cannot exceed the number of tests conducted, this function helps confirm 
+disease cases cannot exceed the number of tests for that disease, this function helps inspect 
 such expected behaviours in your data.
 
 ```R
+# Run checks using Togo data
 consistency_check(fake_epi_df_togo, 
                   tests = c("malaria_tests", "cholera_tests"),
                   cases = c("cholera_cases", "malaria_cases"))
@@ -205,18 +208,16 @@ detection, the function offers various options for handling outliers, including
 removal or replacement with mean, median, grouped means, or quantiles. 
 
 ```R
-data("fake_epi_df_togo")
-
-# select the variables
+# Select the variables
 variables <- c("malaria_tests", "malaria_cases",
                "cholera_tests", "cholera_cases")
 
-# get outliers report
+# Get outliers report
 outliers <- handle_outliers(
     fake_epi_df_togo, vars = variables,
     method = "zscore", report_mode = TRUE)
 
-# get the report
+# Get the report
 outliers$report
 
 #>   variable      test    outliers prop_outliers
@@ -226,14 +227,14 @@ outliers$report
 #> 3 cholera_tests Z-Score 2/900    <1%          
 #> 4 cholera_cases Z-Score 1/900    <1%          
 
-# get the plot
+# Get the plot
 outliers$plot
 
-# you can even save it if you want
+# You can even save the plot if you want
 # ggplot2::ggsave("man/figures/outliers_plot.png", width = 10, 
 #                height = 7, scale = 0.95, dpi = 400)
 
-# if happy, create a dataframe with the outliers handled 
+# If happy, create a dataframe with the outliers handled 
 fake_epi_df_togo_no_outliers <- handle_outliers(
                                        fake_epi_df_togo, vars = variables, 
                                        method = "zscore", report_mode = FALSE, 
@@ -252,7 +253,7 @@ when you're dealing with epidemiological data that might have varying degrees
 of completeness across different times or locations.
 
 ```R
-# make date columns
+# Make date columns
 fake_epi_df_togo2 <- fake_epi_df_togo |> 
    dplyr::mutate(date = lubridate::as_date(paste0(year, month, "/01")))  
 
