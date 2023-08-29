@@ -106,9 +106,9 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
   # select relevant cols
   admin_data <- admin_data |>
     dplyr::select(
-      -"country_code", -"adm2", -"latitude", -"longitude", -"last_updated"
-    )
-
+      -"country_code", tidyselect::all_of(admin_level), -"latitude", 
+      -"longitude", -"last_updated")
+      
   # Separate 'alternatenames' into multiple columns
   max_cols <- max(stringr::str_count(admin_data$alternatenames, ", ")) + 1
   col_names <- paste0("alt_admin_name_", seq_len(max_cols))
