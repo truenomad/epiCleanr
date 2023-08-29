@@ -92,7 +92,7 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
   # Helper Function to clean names
   clean_names <- function(names) {
     cleaned_names <- names |>
-      vapply(function(x) ifelse(is.na(x), NA, remove_words(x))) |>
+      sapply(function(x) ifelse(is.na(x), NA, remove_words(x))) |>
       tolower() |>
       stringi::stri_trans_general("latin-ascii") |>
       stringr::str_remove_all("[[:punct:][:space:]]")
@@ -199,7 +199,7 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
   # Calculate matching scores for each column of the geonames ---------------------
   # Function for the geonames
   calculate_column_distance <- function(column, method) {
-    cleaned_column <- vapply(column, remove_words) |>
+    cleaned_column <- sapply(column, remove_words) |>
       tolower() |>
       stringi::stri_trans_general("latin-ascii") |>
       stringr::str_remove_all("[[:punct:][:space:]]")
