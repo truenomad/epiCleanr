@@ -12,6 +12,3 @@
 ^images$
 ^togo_admin\.R$
 ^simulated_data\.R$
-^_pkgdown\.yml$
-^docs$
-^pkgdown$

@@ -186,10 +186,10 @@ disease cases cannot exceed the number of tests for that disease, this function 
 such expected behaviours in your data.
 
 ```R
-# Run checks using Togo data
-consistency_check(fake_epi_df_togo, 
+# Run checks using Togo data
+consistency_check(fake_epi_df_togo,
                   tests = c("malaria_tests", "cholera_tests"),
-                  cases = c("cholera_cases", "malaria_cases"))
+                  cases = c("malaria_cases", "cholera_cases"))
 
 #> Consistency test passed for malaria_tests vs cholera_cases: There are more tests than there are cases!
 #> Consistency test failed for cholera_tests vs malaria_cases: There are 3 (0.33%) rows where cases are greater than tests.                  
