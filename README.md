@@ -4,11 +4,11 @@
 <!-- badges: start -->
 [![R build status](https://github.com/truenomad/epicleanr/workflows/R-CMD-check/badge.svg)](https://github.com/truenomad/epicleanr/actions)
 [![CodeFactor](https://www.codefactor.io/repository/github/truenomad/epicleanr/badge)](https://www.codefactor.io/repository/github/truenomad/epicleanr)
-[![Codecov test coverage](https://codecov.io/gh/truenomad/epiCleanr/branch/main/graph/badge.svg)](https://codecov.io/gh/truenomad/epiCleanr?branch=main)
+[![Codecov test coverage](https://app.codecov.io/gh/truenomad/epiCleanr?branch=main/graph/badge.svg)](https://codecov.io/gh/truenomad/epiCleanr?branch=main)
 
 ## Description 
 
-**epiCleanr** offers a tidy solution for epidemiological data. It houses a range
+This package offers a tidy solution for epidemiological data. It houses a range
 of functions for epidemiologists and public health data wizards for data 
 management and cleaning. These include:
 
@@ -24,8 +24,7 @@ management and cleaning. These include:
 
 ## Installation ##
 
-The package is available on 
-[CRAN](http://cran.r-project.org/web/packages/epiCleanr/) and can be installed 
+The package is available on Cran and can be installed 
 directly in R using:
 
 ```R

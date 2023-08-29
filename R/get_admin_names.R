@@ -27,7 +27,7 @@
 #'   usa_admis <-  get_admin_names("United States") # using full names
 #' }
 #'
-#' @seealso \url{https://geonames.org} for the source of admin
+#' @seealso `Geonames` website for the source of admin
 #' names data
 #'
 #' @importFrom dplyr select filter mutate all_of
