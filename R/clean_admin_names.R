@@ -99,7 +99,7 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
     return(cleaned_names)
   }
 
-  # Get admin names from geodata -----------------------------------------------
+  # Get admin names from geonames -----------------------------------------------
 
   admin_data <- get_admin_names(country_code)[[admin_level]]
 
@@ -196,8 +196,8 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
       )
   }
 
-  # Calculate matching scores for each column of the geodata ---------------------
-  # Function for the geodata
+  # Calculate matching scores for each column of the geonames ---------------------
+  # Function for the geonames
   calculate_column_distance <- function(column, method) {
     cleaned_column <- sapply(column, remove_words) |>
       tolower() |>
@@ -231,7 +231,7 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
     )
   }
 
-  # Match with geodata admin names
+  # Match with geonames admin names
   calculate_distance_for_column <- function(column) {
     do.call(
       rbind,
@@ -333,16 +333,16 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
         stringr::str_detect(admin_cols, "user_base_admin_names") ~
           "User base admin names",
         stringr::str_detect(admin_cols, "alt_admin_name") ~
-          "Alternative name from geodata",
+          "Alternative name from geonames",
         stringr::str_detect(admin_cols, "asciiname") ~
-          "Main admin name from geodata",
+          "Main admin name from geonames",
         stringr::str_detect(
           admin_cols,
           stringr::fixed("ADM2H",
                          ignore_case = TRUE
           )
         ) ~
-          "Historical name from geodata",
+          "Historical name from geonames",
         TRUE ~ admin_cols
       )
     ) |>
