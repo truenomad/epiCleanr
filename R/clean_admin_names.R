@@ -92,7 +92,7 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
   # Helper Function to clean names
   clean_names <- function(names) {
     cleaned_names <- names |>
-      sapply(function(x) ifelse(is.na(x), NA, remove_words(x))) |>
+      vapply(function(x) ifelse(is.na(x), NA, remove_words(x))) |>
       tolower() |>
       stringi::stri_trans_general("latin-ascii") |>
       stringr::str_remove_all("[[:punct:][:space:]]")
@@ -187,7 +187,7 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
       dplyr::distinct() |>
       dplyr::rename(match_prop_user_base_admin_names = match_prop) |>
       tidyr::pivot_wider(
-        id_cols = c("admin_names_to_clean"),
+        id_cols = "admin_names_to_clean",
         names_from = "method",
         values_from = c(
           "match_prop_user_base_admin_names",
@@ -199,7 +199,7 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
   # Calculate matching scores for each column of the geonames ---------------------
   # Function for the geonames
   calculate_column_distance <- function(column, method) {
-    cleaned_column <- sapply(column, remove_words) |>
+    cleaned_column <- vapply(column, remove_words) |>
       tolower() |>
       stringi::stri_trans_general("latin-ascii") |>
       stringr::str_remove_all("[[:punct:][:space:]]")
@@ -258,7 +258,7 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
     dplyr::mutate(column_names = paste(column_names, method, sep = "_")) |>
     dplyr::select(-"method") |>
     tidyr::pivot_wider(
-      id_cols = c("admin_names_to_clean"),
+      id_cols = "admin_names_to_clean",
       names_from = "column_names",
       values_from = c("geo_admins", "match_prop")
     )
@@ -279,7 +279,7 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
       tidyselect::contains("match_prop"), "admin_names_to_clean"
     ) |>
     tidyr::pivot_longer(
-      cols = -c("admin_names_to_clean"),
+      cols = -("admin_names_to_clean"),
       values_to = "match_prop",
       names_to = "admin_cols"
     ) |>
@@ -297,7 +297,7 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
       -tidyselect::contains("match_prop"), "admin_names_to_clean"
     ) |>
     tidyr::pivot_longer(
-      cols = -c("admin_names_to_clean"),
+      cols = -("admin_names_to_clean"),
       values_to = "final_cleaned_column",
       names_to = "admin_cols"
     ) |>
