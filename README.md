@@ -4,7 +4,7 @@
 <!-- badges: start -->
 [![R build status](https://github.com/truenomad/epicleanr/workflows/R-CMD-check/badge.svg)](https://github.com/truenomad/epicleanr/actions)
 [![CodeFactor](https://www.codefactor.io/repository/github/truenomad/epicleanr/badge)](https://www.codefactor.io/repository/github/truenomad/epicleanr)
-[![codecov](https://app.codecov.io/gh/truenomad/epiCleanr/graph/badge.svg?token=F0H9LLAXAX)](https://app.codecov.io/gh/truenomad/epiCleanr?branch=main)
+[![codecov](https://codecov.io/gh/truenomad/epiCleanr/graph/badge.svg?token=F0H9LLAXAX)](https://app.codecov.io/gh/truenomad/epiCleanr?branch=main)
 
 ## Description 
 
