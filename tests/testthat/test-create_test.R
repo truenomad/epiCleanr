@@ -389,32 +389,38 @@ suppressMessages({
     }
   )
 
-  testthat::test_that("create_test returns praise emoji when all tests pass", {
-    # Test data and parameters
-    test_data <- data.frame(a = 1:3, b = 4:6)
-    dimension_test <- c(3, 2)
+ 
 
-    # Create the test function
-    my_tests <- create_test(dimension_test = dimension_test)
+  if (Sys.info()['sysname'] != 'Linux' || grepl("UTF-8", Sys.getenv("LANG"))) {
 
-    # Capture the messages
-    messages <- as.character(capture_messages(my_tests(test_data)[2]))
+    testthat::test_that("create_test returns praise emoji when all tests pass", {
+      # Test data and parameters
+      test_data <- data.frame(a = 1:3, b = 4:6)
+      dimension_test <- c(3, 2)
 
-    # Extract the final message
-    final_message <- messages[length(messages)]
+      # Create the test function
+      my_tests <- create_test(dimension_test = dimension_test)
 
-    # Expected emojis
-    expected_emojis <- c(
-      "\U0001f600", # smile
-      "\U0001f973", # party face
-      "\U0001f638", # cat grin
-      "\U0001f308", # rainbow
-      "\U0001f947", # gold medal
-      "\U0001f389", # party popper
-      "\U0001f38a" # confetti ball
-    )
+      # Capture the messages
+      messages <- as.character(capture_messages(my_tests(test_data)[2]))
 
-    # Check if the final message contains any of the expected emojis
-    testthat::expect_true(any(sapply(expected_emojis, grepl, final_message)))
-  })
+      # Extract the final message
+      final_message <- messages[length(messages)]
+
+      # Expected emojis
+      expected_emojis <- c(
+        "\U0001f600", # smile
+        "\U0001f973", # party face
+        "\U0001f638", # cat grin
+        "\U0001f308", # rainbow
+        "\U0001f947", # gold medal
+        "\U0001f389", # party popper
+        "\U0001f38a" # confetti ball
+      )
+
+      # Check if the final message contains any of the expected emojis
+      testthat::expect_true(any(sapply(expected_emojis, grepl, final_message)))
+    })
+
+  }
 })
