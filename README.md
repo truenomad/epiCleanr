@@ -143,7 +143,7 @@ clean_admin_names(
 
 ### Create unit testing functions
 
-The `create_test` is there users create their own functions in which they can 
+The `create_test` is there so users can create their own functions in which they can 
 use for unit-testing when working with datasets that require lots of manipulation and
 wrangling. This function (plus the `tidylog` package) will save users from the headache 
 of troubleshooting issues related to data joins and transformations.
