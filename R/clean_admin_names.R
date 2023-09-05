@@ -26,7 +26,6 @@
 #'        else a cleaned list of names is returned.
 #'
 #' @examples
-#' \dontrun{
 #' # Example with country code
 #' base_names <- c(
 #'   "Paris", "Marseille", "Lyon",
@@ -45,17 +44,15 @@
 #'   user_base_admin_names = base_names,
 #'   admin_names_to_clean = unclean_names
 #' )
-#' }
+#'
+#' print(france_new)
 #'
 #' @seealso [countrycode::codelist()]
 #' for the full list of codes and naming conventions.
 #' @importFrom dplyr select filter mutate all_of
 #' @importFrom tidyselect contains everything
 #' @importFrom tidyr separate pivot_longer pivot_wider
-#' @importFrom stringr str_count str_remove_all fixed
-#' @importFrom stringi stri_trans_general
 #' @importFrom purrr map
-#' @importFrom stringdist stringdistmatrix
 #' @importFrom rlang .data
 #' @importFrom tibble rownames_to_column
 #' @export
@@ -74,25 +71,27 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
   }
 
   # Helper Function to remove specific words from a string
-  remove_words <- function(string) {
-    string <- tolower(string)
-    string <- gsub(
-      paste0(
-        "\\bdistrict\\b|\\bcounty\\b|",
-        "\\bcity\\b|\\bprovince\\b|\\bregion\\b|",
-        "\\bmunicipality\\b|\\btownship\\b|",
-        "\\bvillage\\b|\\bward\\b|\\bsubdistrict",
-        "\\b|\\bdivision\\b|\\",
-        "bstate\\b|\\bprefecture\\b"
-      ), "", string
-    )
-    return(string)
-  }
+  # remove_words <- function(string) {
+  #   string <- tolower(string)
+  #   string <- gsub(
+  #     paste0(
+  #       "\\bdistrict\\b|\\bcounty\\b|",
+  #       "\\bcity\\b|\\bprovince\\b|\\bregion\\b|",
+  #       "\\bmunicipality\\b|\\btownship\\b|",
+  #       "\\bvillage\\b|\\bward\\b|\\bsubdistrict",
+  #       "\\b|\\bdivision\\b|\\",
+  #       "bstate\\b|\\bprefecture\\b"
+  #     ), "", string
+  #   )
+  #   return(string)
+  # }
 
   # Helper Function to clean names
   clean_names <- function(names) {
     cleaned_names <- names |>
-      sapply(function(x) ifelse(is.na(x), NA, remove_words(x))) |>
+      sapply(function(x) ifelse(is.na(x), NA,
+                                clean_names_strings(x,
+                                                    style = "simple_clean"))) |>
       tolower() |>
       stringi::stri_trans_general("latin-ascii") |>
       stringr::str_remove_all("[[:punct:][:space:]]")
@@ -106,9 +105,9 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
   # select relevant cols
   admin_data <- admin_data |>
     dplyr::select(
-      -"country_code", tidyselect::all_of(admin_level), -"latitude", 
+      -"country_code", tidyselect::all_of(admin_level), -"latitude",
       -"longitude", -"last_updated")
-      
+
   # Separate 'alternatenames' into multiple columns
   max_cols <- max(stringr::str_count(admin_data$alternatenames, ", ")) + 1
   col_names <- paste0("alt_admin_name_", seq_len(max_cols))
@@ -199,10 +198,7 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
   # Calculate matching scores for each column of the geonames ---------------------
   # Function for the geonames
   calculate_column_distance <- function(column, method) {
-    cleaned_column <- sapply(column, remove_words) |>
-      tolower() |>
-      stringi::stri_trans_general("latin-ascii") |>
-      stringr::str_remove_all("[[:punct:][:space:]]")
+    cleaned_column <- clean_names_strings(column, style = "simple_clean")
     suppressWarnings({
       scores <- stringdist::stringdistmatrix(
         cleaned_admin_names_to_clean,

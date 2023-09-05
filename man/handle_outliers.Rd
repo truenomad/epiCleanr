@@ -50,19 +50,21 @@ object. Otherwise, a dataframe with outliers treated according to
 treat_method.
 }
 \description{
-This function identifies and handles outliers in a given dataset using various
-methods including Z-Score, Modified Z-Score, and Inter-Quartile Range (IQR).
-It also provides options to treat the identified outliers, using mean,
-median, rolling mean by group and inter-quartile range. It also has the
-option to generate a summary report and a plot.
+This function identifies and handles outliers in a given dataset using
+various methods including Z-Score, Modified Z-Score, and Inter-Quartile Range
+ (IQR). It also provides options to treat the identified outliers, using
+ mean, median, rolling mean by group and inter-quartile range. It also has
+ the option to generate a summary report and a plot.
 }
 \examples{
-\dontrun{
 data("fake_epi_df_togo")
 variables <- c("malaria_tests", "malaria_cases",
                  "cholera_tests", "cholera_cases")
-handle_outliers(fake_epi_df_togo, vars = variables,
+result <- handle_outliers(fake_epi_df_togo, vars = variables,
                method = "zscore", report_mode = TRUE)
-               }
+
+result$report
+
+result$plot
 
 }

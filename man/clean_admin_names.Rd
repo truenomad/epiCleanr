@@ -45,7 +45,6 @@ with a base list provided by the user or fetched from `GeoNames`, which is a
 official repository of standard spellings of all foreign geographic names.
 }
 \examples{
-\dontrun{
 # Example with country code
 base_names <- c(
   "Paris", "Marseille", "Lyon",
@@ -64,7 +63,8 @@ france_new <- clean_admin_names(
   user_base_admin_names = base_names,
   admin_names_to_clean = unclean_names
 )
-}
+
+print(france_new)
 
 }
 \seealso{

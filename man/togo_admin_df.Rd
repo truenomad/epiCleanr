@@ -22,10 +22,10 @@ Togo. It is intended for testing the functionalities of the epiCleanr package,
 particularly those that relate to geographical subdivisions.
 }
 \examples{
-\dontrun{
 data("togo_admin_df")
+
 head(togo_admin_df)
-}
+
 
 }
 \keyword{datasets}

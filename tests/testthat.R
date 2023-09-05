@@ -1,4 +1,3 @@
 library(testthat)
-library(epiCleanr)
 
-test_check("epiCleanr")
+testthat::test_check("epiCleanr")

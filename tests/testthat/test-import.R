@@ -1,6 +1,11 @@
 
-# 1. Test for different file formats
 
+# Skip all tests on CRAN
+if (!identical(Sys.getenv("NOT_CRAN"), "true")) {
+  return()
+}
+
+# 1. Test for different file formats
 # Define the test cases for the 'import' function
 testthat::test_that("Function imports supported file formats correctly", {
   # List of supported file formats to test
@@ -12,7 +17,7 @@ testthat::test_that("Function imports supported file formats correctly", {
   # Loop through each supported format and test importing the file
   for (format in supported_formats) {
     # File path for the test data with the specific format
-    file_path <- paste0("testdata/test_data.", format)
+    file_path <- paste0("inst/extdata/test_data.", format)
 
     # Check if file exists before trying to import it
     if (!file.exists(file_path)) {
@@ -75,10 +80,14 @@ testthat::test_that("Function imports data from URLs correctly", {
 
   # The raw URL for the mtcars.csv file from GitHub
   github_url <- paste0("https://raw.githubusercontent.com/truenomad/",
-                       "epiCleanr/main/tests/testthat/testdata/mtcars.csv")
+                       "epiCleanr/main/inst/extdata/test_data.csv")
 
   imprt_data <- epiCleanr::import(github_url)
-  imprt_data_compare <- epiCleanr::import("testdata/mtcars.csv")
+
+  path <-  system.file("extdata", package = "epiCleanr")
+
+  imprt_data_compare <- epiCleanr::import(
+    file_path = file.path(path, "test_data.csv"))
 
   expect_identical(imprt_data, imprt_data_compare)
 })

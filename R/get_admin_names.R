@@ -1,13 +1,13 @@
 #' Retrieve Administrative Names from GeoNames
 #'
 #' This function grabs administrative region names (such as districts,
-#' provinces, etc.) for a given country from the GeoNames website. It accepts
+#' provinces, etc.) for a given country from the `GeoNames` website. It accepts
 #' both country names and various country coding schemes.
 #'
 #' @param country_name_or_code Character or numeric. The name or code of the
 #' country for which administrative names are to be retrieved. This can be in
 #' various formats such as country name, ISO codes, UN codes, etc., see
-#' [countrycode::codelist()] for the full list of codes and naming conventions
+#' `countrycode::codelist()` for the full list of codes and naming conventions
 #' used.
 #' @param silent_mode A logical indicating whether to suppress messages.
 #'         Default is TRUE.
@@ -19,19 +19,18 @@
 #'         name, alternate names, latitude, longitude, and date last updated.
 #'
 #' @examples
-#' \dontrun{
-#'   # example using different naming/code conventions
-#'   somalia_admins <- get_admin_names("SOM")       # using 3 digit iso codes
-#'   kenya_admins <- get_admin_names("KE")          # using 2 digit iso codes
-#'   albania_admins <- get_admin_names(008)         # using UN codes
-#'   usa_admis <-  get_admin_names("United States") # using full names
-#' }
+#' # example using different naming/code conventions
+#' three_digit <- get_admin_names("TGO")   # using 3 digit iso codes
+#' two_digit <- get_admin_names("TG")      # using 2 digit iso codes
+#' un_code <- get_admin_names(768)         # using UN codes
+#' full_name <-  get_admin_names("Togo")   # using full names
+#'
+#'str(full_name$adm2)
 #'
 #' @seealso `Geonames` website for the source of admin
 #' names data
 #'
 #' @importFrom dplyr select filter mutate all_of
-#' @importFrom stringr str_replace_all
 #' @importFrom tidyr pivot_wider
 #' @importFrom utils download.file unzip
 #' @importFrom rlang .data

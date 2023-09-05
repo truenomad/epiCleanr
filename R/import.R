@@ -14,37 +14,29 @@
 #' @return A data frame or appropriate R object containing the imported data.
 #'
 #' @examples
-#' \dontrun{
+#' # Locate test data directory
+#' path <-  system.file("extdata",
+#'                      package = "epiCleanr")
+#'
 #' # Import a CSV file
-#' data_csv <- import("path/to/your/file.csv")
+#' data_csv <- import(file_path = file.path(path, "test_data.csv"))
 #'
 #' # Import an Excel file
-#' data_excel <- import("path/to/your/file.xlsx")
+#' data_excel <- import(file_path = file.path(path, "test_data.xlsx"))
 #'
 #' # Import a Stata DTA file
-#' data_dta <- import("path/to/your/file.dta")
+#' data_dta <- import(file_path = file.path(path, "test_data.dta"))
 #'
 #' # Import an RDS file
-#' data_rds <- import("path/to/your/file.rds")
+#' data_rds <- import(file_path = file.path(path, "test_data.rds"))
 #'
 #' # Import an RData file
-#' data_rdata <- import("path/to/your/file.RData")
-#'
-#' # Import a JSON file
-#' data_json <- import("path/to/your/file.json")
+#' data_rdata <- import(file_path = file.path(path, "test_data.RData"))
 #'
 #' # Import an SPSS file
-#' data_spss <- import("path/to/your/file.sav")
+#' data_spss <- import(file_path = file.path(path, "test_data.sav"))
 #'
-#' # Import a data.table file
-#' data_dt <- import("path/to/your/file.dt")
-#'
-#' # Import a dataset from a website (e.g., GitHub)
-#' data_web <- import("https://github.com/your_username/your_dataset.xlsx")
-#'}
-#'
-#' @seealso [rio::import()],  which this function
-#' is based on.
+#' @seealso `rio::import()`,  which this function is based on.
 #'
 #' @importFrom rio import
 #' @importFrom rio install_formats

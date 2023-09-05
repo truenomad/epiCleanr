@@ -1,6 +1,13 @@
 suppressMessages({
+
+  # Skip all tests on CRAN
+  if (!identical(Sys.getenv("NOT_CRAN"), "true")) {
+    return()
+  }
+
   # Test 1: Basic functionality works
   testthat::test_that("Basic functionality works", {
+
     unclean_names <- c("Pariis", "Marseill", "Lyone", "Toulous", "Niice")
     base_names <- c("Paris", "Marseille", "Lyon", "Toulouse", "Nice")
 

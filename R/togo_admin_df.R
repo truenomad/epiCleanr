@@ -15,10 +15,10 @@
 #' @usage data("togo_admin_df")
 #'
 #' @examples
-#' \dontrun{
 #' data("togo_admin_df")
+#'
 #' head(togo_admin_df)
-#'}
+#'
 #'
 #' @name togo_admin_df
 #' @docType data

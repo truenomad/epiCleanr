@@ -18,24 +18,17 @@
 #' line shows where the number of tests equals the number of cases.
 #'
 #' @examples
-#' \dontrun{
-#' dummy_data <- data.frame(
-#'       malaria_rdt_test = rnorm(1000, mean = 0, sd = 50),
-#'       malaria_micro_test = rnorm(1000, mean = 0, sd = 10),
-#'       malaria_rdt_cases = rnorm(1000, mean = 0, sd = 50),
-#'       malaria_micro_cases = rnorm(1000, mean = 1, sd = 10))
+#' # check the consistency between malaria tests and cases
+#' data("fake_epi_df_togo")
+#' consistency_check(fake_epi_df_togo,
+#'                   tests = c("malaria_tests","cholera_tests"),
+#'                   cases = c("malaria_cases", "cholera_cases"))
 #'
-#' consistency_check(dummy_data,
-#'               tests = c("malaria_rdt_test","malaria_micro_test"),
-#'               cases = c("malaria_rdt_cases", "malaria_micro_cases"))
-#' }
 #'
 #' @importFrom ggplot2 ggplot geom_point geom_abline theme_bw facet_wrap labs
 #' theme_minimal theme scale_x_continuous scale_y_continuous element_text margin
 #' @importFrom glue glue
 #' @importFrom crayon green red
-#' @importFrom scales comma
-#' @importFrom ggtext element_markdown
 #'
 #' @export
 consistency_check <- function(data, tests, cases) {

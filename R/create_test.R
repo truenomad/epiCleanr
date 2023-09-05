@@ -17,24 +17,30 @@
 #' specified columns.
 #' @return A function to be applied to the dataset.
 #' @examples
-#' \dontrun{
+#'
+#' data("fake_epi_df_togo")
+#' # Set up unit-test function
 #' my_tests <- create_test(
-#'   dimension_test = c(14400, 3),
-#'   combinations_test = list(
-#'     variables = c("month", "year", "state"),
-#'     expectation = 13 * 24 * 51
-#'   ),
+#'   # For checking the dimension of the data
+#'   dimension_test = c(900, 9),
+#'   # For expected number of combinations in data
+#'  combinations_test = list(
+#'    variables = c("month", "year", "district"),
+#'    expectation = 12 * 5 * 15),
+#'   # Check repeated cols, rows and max and min thresholds
 #'   row_duplicates = TRUE, col_duplicates = TRUE,
-#'   max_threshold_test = list(polio_tests = 12),
-#'   min_threshold_test = list(polio_tests = 221)
+#'   max_threshold_test = list(malaria_tests = 1000, cholera_tests = 1000),
+#'  min_threshold_test = list(cholera_cases = 0, cholera_cases = 0)
 #' )
-#' result <- my_tests(fake_epi_data)
-#' }
+#'
+# Apply your unit-test on your data
+#' result <- my_tests(fake_epi_df_togo)
+#'
 #' @importFrom glue glue
 #' @importFrom crayon red green blue
 #' @export
 create_test <- function(dimension_test = NULL, combinations_test = NULL,
-                        row_duplicates = F, col_duplicates = F,
+                        row_duplicates = FALSE, col_duplicates = FALSE,
                         min_threshold_test = NULL, max_threshold_test = NULL) {
 
 

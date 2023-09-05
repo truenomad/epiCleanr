@@ -1,4 +1,8 @@
 
+# Skip all tests on CRAN
+if (!identical(Sys.getenv("NOT_CRAN"), "true")) {
+  return()
+}
 
 # get dataset
 data("fake_epi_df_togo")

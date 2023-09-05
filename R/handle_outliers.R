@@ -1,10 +1,10 @@
 #' Detect and Handle Outliers in Dataset
 #'
-#' This function identifies and handles outliers in a given dataset using various
-#' methods including Z-Score, Modified Z-Score, and Inter-Quartile Range (IQR).
-#' It also provides options to treat the identified outliers, using mean,
-#' median, rolling mean by group and inter-quartile range. It also has the
-#' option to generate a summary report and a plot.
+#' This function identifies and handles outliers in a given dataset using
+#' various methods including Z-Score, Modified Z-Score, and Inter-Quartile Range
+#'  (IQR). It also provides options to treat the identified outliers, using
+#'  mean, median, rolling mean by group and inter-quartile range. It also has
+#'  the option to generate a summary report and a plot.
 #'
 #' @param data Dataframe containing the variables to be checked for outliers.
 #' @param vars Character vector of variable names to check for outliers. Default
@@ -31,25 +31,23 @@
 #' treat_method.
 #'
 #' @examples
-#' \dontrun{
 #' data("fake_epi_df_togo")
 #' variables <- c("malaria_tests", "malaria_cases",
 #'                  "cholera_tests", "cholera_cases")
-#' handle_outliers(fake_epi_df_togo, vars = variables,
+#' result <- handle_outliers(fake_epi_df_togo, vars = variables,
 #'                method = "zscore", report_mode = TRUE)
-#'                }
+#'
+#' print(result$report)
+#'
+#' print(result$plot)
 #'
 #' @importFrom dplyr select mutate across where row_number summarise left_join
 #'             everything all_of arrange group_by bind_cols
 #' @importFrom tidyr pivot_longer
 #' @importFrom ggplot2 ggplot aes geom_jitter labs theme_bw theme_minimal theme
 #'              scale_color_manual scale_x_continuous guides
-#' @importFrom ggdist stat_halfeye
-#' @importFrom scales percent comma
 #' @importFrom glue glue
 #' @importFrom stringr str_replace_all str_replace
-#' @importFrom ggtext element_markdown
-#' @importFrom zoo rollapply
 #' @importFrom stats mad median quantile
 #' @export
 
@@ -242,7 +240,8 @@ handle_outliers <- function(data, vars = NULL, method = NULL,
               names_to = "Variable",
               values_to = "is_outlier"
             ) |>
-            mutate(Variable = stringr::str_replace(Variable, "_outlier_bool", "")),
+            mutate(Variable = stringr::str_replace(Variable,
+                                                   "_outlier_bool", "")),
           by = c("Variable", "id")
         ) |>
         dplyr::select("Variable", "Values", "is_outlier")
@@ -285,8 +284,10 @@ handle_outliers <- function(data, vars = NULL, method = NULL,
             color = "grey10",
             linewidth = 0.6
           ),
-          axis.title.y = ggplot2::element_text(margin = ggplot2::margin(r = 10)),
-          axis.title.x = ggplot2::element_text(margin = ggplot2::margin(t = 12)),
+          axis.title.y = ggplot2::element_text(
+            margin = ggplot2::margin(r = 10)),
+          axis.title.x = ggplot2::element_text(
+            margin = ggplot2::margin(t = 12)),
           axis.text.x = ggplot2::element_text(
             size = 8, angle = 45, hjust = 1,
             margin = ggplot2::margin(t = 2, b = 2)

@@ -1,5 +1,11 @@
 library(testthat)
 
+
+# Skip all tests on CRAN
+if (!identical(Sys.getenv("NOT_CRAN"), "true")) {
+  return()
+}
+
 suppressMessages(
   suppressWarnings(
     testthat::test_that("consistency_check function works correctly", {

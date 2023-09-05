@@ -1,3 +1,9 @@
+
+# Skip all tests on CRAN
+if (!identical(Sys.getenv("NOT_CRAN"), "true")) {
+  return()
+}
+
 # Create a fake data frame for testing purposes
 fake_epi_data <- data.frame(
   month = rep(1:12, 1200),
@@ -15,12 +21,12 @@ suppressMessages({
       my_tests(fake_epi_data)
     })[1]
 
-    act <- trimws(as.character(result$message))
+    act <- spsUtil::remove_ANSI(result$message)
 
     # Expected message for passing test
     expt_pass <- paste(
       "Test passed! You have the correct",
-      "number of dimensions!"
+      "number of dimensions!\n"
     )
 
     testthat::expect_equal(act, expt_pass)
@@ -34,20 +40,15 @@ suppressMessages({
       my_tests(fake_epi_data)
     })[1]
 
-    act <- gsub("\\n", "", as.character(result$message))
-    act <- trimws(act)
+    act <- spsUtil::remove_ANSI(result$message)
 
     expt_pass <- paste(
       "Warning! Test failed. Duplicate rows",
-      "found. See output$duplicate_rows."
+      "found. See output$duplicate_rows.\n"
     )
-    expt_pass <- trimws(expt_pass)
 
     testthat::expect_equal(act, expt_pass)
   })
-
-
-
 
 
   testthat::test_that("create_test handles column duplicates correctly", {
@@ -57,11 +58,9 @@ suppressMessages({
       my_tests(fake_epi_data)
     })[1]
 
-    act <- gsub("\\n", "", as.character(result$message))
-    act <- trimws(act)
+    act <- spsUtil::remove_ANSI(result$message)
 
-    expt_pass <- paste("Test passed! No repeated columns found!")
-    expt_pass <- trimws(expt_pass)
+    expt_pass <- paste("Test passed! No repeated columns found!\n")
 
     testthat::expect_equal(act, expt_pass)
   })
@@ -77,14 +76,12 @@ suppressMessages({
       my_tests(fake_epi_data)
     })[1]
 
-    act <- gsub("\\n", "", as.character(result$message))
-    act <- trimws(act)
+    act <- spsUtil::remove_ANSI(result$message)
 
     expt_pass <- paste(
       "Warning! Test failed. Expected 288",
-      "combinations but found 144 for month, year."
+      "combinations but found 144 for month, year.\n"
     )
-    expt_pass <- trimws(expt_pass)
 
     testthat::expect_equal(act, expt_pass)
   })
@@ -99,14 +96,12 @@ suppressMessages({
       my_tests(fake_epi_data)
     })[1]
 
-    act <- gsub("\\n", "", as.character(result$message))
-    act <- trimws(act)
+    act <- spsUtil::remove_ANSI(result$message)
 
     expt_pass <- paste(
       "Test passed! Values in column polio_tests",
-      "are above the threshold."
+      "are above the threshold.\n"
     )
-    expt_pass <- trimws(expt_pass)
 
     testthat::expect_equal(act, expt_pass)
   })
@@ -119,14 +114,12 @@ suppressMessages({
       my_tests(fake_epi_data)
     })[1]
 
-    act <- gsub("\\n", "", as.character(result$message))
-    act <- trimws(act)
+    act <- spsUtil::remove_ANSI(result$message)
 
     expt_pass <- paste(
       "Test passed! Values in column polio_tests",
-      "are below the threshold."
+      "are below the threshold.\n"
     )
-    expt_pass <- trimws(expt_pass)
 
     testthat::expect_equal(act, expt_pass)
   })
@@ -139,31 +132,48 @@ suppressMessages({
 
     messages <- capture_messages(my_tests(test_data))[1]
 
+    exp <- spsUtil::remove_ANSI(messages)
+
     actual <- paste(
-      "\033[31mWarning! Test failed. Expected 100,001 rows",
-      "and 2 columns, but got 10,000 rows and 2 columns.\033[39m\n"
+      "Warning! Test failed. Expected 100,001 rows",
+      "and 2 columns, but got 10,000 rows and 2 columns.\n"
     )
 
-    testthat::expect_equal(writeLines(actual), writeLines(messages))
+    testthat::expect_equal(actual, exp)
   })
 
 
-  testthat::test_that("create_test detects and warns about duplicate rows", {
-    # Create a data frame with duplicate rows
-    test_data <- data.frame(x = c(1, 1, 2), y = c(3, 3, 4))
-
-    my_tests <- create_test(row_duplicates = TRUE)
-
-    messages <- capture_messages(my_tests(test_data))[1]
-
-    expected <-
-      paste(
-        "\033[31mWarning! Test failed. Duplicate rows found.",
-        "See output$duplicate_rows.\033[39m\n"
+  testthat::test_that(
+    "test the output for for correct number of combinations", {
+      # Test data with specific combinations
+      test_data <- data.frame(
+        column1 = c(1, 1, 2, 2),
+        column2 = c("a", "b", "a", "b"),
+        column3 = c(3, 3, 4, 4)
       )
 
-    testthat::expect_equal(writeLines(expected), writeLines(messages))
-  })
+      # Create the test function using the create_test function
+      test_func <- create_test(
+        combinations_test = list(
+          variables = c("column1", "column2"),
+          expectation = 4
+        )
+      )
+
+      actual_error <- as.character(capture_message(test_func(test_data))[1])
+
+      # Apply remove_ANSI to the captured message
+      act <- spsUtil::remove_ANSI(actual_error)
+
+      # Check if the test message is as expected
+      expected <- paste(
+        "Test passed! You have the correct number",
+        "of combinations for column1, column2!\n"
+      )
+
+      testthat::expect_equal(act, expected)
+    }
+  )
 
   testthat::test_that(
     "create_test detects no repeated columns and returns success message",
@@ -174,9 +184,12 @@ suppressMessages({
 
       messages <- capture_messages(my_tests(test_data))[1]
 
-      expected <- "\033[32mTest passed! No repeated columns found!\033[39m\n"
+      # Apply remove_ANSI to the captured message
+      act <- spsUtil::remove_ANSI(messages)
 
-      testthat::expect_equal(writeLines(expected), writeLines(messages))
+      expected <- "Test passed! No repeated columns found!\n"
+
+      testthat::expect_equal(expected, act)
     }
   )
 
@@ -190,8 +203,10 @@ suppressMessages({
       my_tests <- create_test(combinations_test = combinations_test)
 
       actual_error <- as.character(capture_error(my_tests(test_data))[1])
+
       expected_error <-
         "Error! The following variables do not exist in the dataset: x, y"
+
       testthat::expect_equal(actual_error, expected_error)
     }
   )
@@ -389,7 +404,7 @@ suppressMessages({
     }
   )
 
- 
+
 
   if (Sys.info()['sysname'] != 'Linux' || grepl("UTF-8", Sys.getenv("LANG"))) {
 

@@ -8,9 +8,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "mohamedayusuf87@gmail.com",
            comment = c(ORCID = "0000-0002-9339-4613")))
-Description: This package offers a tidy solution for epidemiological data. It 
-             houses a range of functions for epidemiologists and public health 
-             data wizards for data management and cleaning.
+Description: Offers a tidy solution for epidemiological data. It houses a range of functions for epidemiologists and public health data wizards for data management and cleaning.
 License: MIT + file LICENSE
 URL: https://github.com/truenomad/epiCleanr
 BugReports: https://github.com/truenomad/epiCleanr/issues
@@ -19,8 +17,6 @@ Depends: R (>= 3.6)
 Imports:
   rio, 
   dplyr, 
-  tibble,
-  scales,
   tidyr, 
   tools, 
   withr,
@@ -32,29 +28,34 @@ Imports:
   crayon,
   countrycode,
   purrr, 
+  tibble
+Suggests: 
+  testthat, 
+  knitr,
+  haven,
+  readxl,
+  openxlsx,
+  foreign,
+  yaml,
+  clipr,
+  xml2,  
+  readODS, 
+  rmatio, 
+  jsonlite, 
+  fst, 
+  feather,
+  arrow,
+  xts,
+  data.table,
+  R.utils,
   stringdist, 
   stringi,
   ggtext,
   ggdist,
   zoo,
-  wesanderson
-Suggests: 
-    testthat, 
-    knitr,
-    haven,
-    readxl,
-    openxlsx,
-    foreign,
-    yaml,
-    clipr,
-    xml2,  
-    readODS, 
-    rmatio, 
-    jsonlite, 
-    fst, 
-    feather,
-    arrow, 
-    data.table
+  wesanderson,
+  scales,
+  spsUtil
 RoxygenNote: 7.2.3
-Config/testthat/edition: 3
-Config/testthat/parallel: true
+VignetteBuilder: knitr
+

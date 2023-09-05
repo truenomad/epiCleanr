@@ -44,10 +44,10 @@
 #' @usage data("fake_epi_df_togo")
 #'
 #' @examples
-#' \dontrun{
 #' data('fake_epi_df_togo')
+#'
 #' head(fake_epi_df_togo)
-#'}
+#'
 #'
 #' @name fake_epi_df_togo
 #' @docType data
@@ -55,8 +55,7 @@
 #' @export
 
 # Create the initial data frame
-set.seed(42)  # for reproducibility
-
+set.seed(42)  # for reproducibility (need this here for tests)
 fake_epi_df_togo <-
   # set up state and
   tidyr::expand_grid(

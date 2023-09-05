@@ -25,22 +25,26 @@ file formats supported by the [rio::export()] function. The format is
 automatically detected from the file extension to simplify the exporting process.
 }
 \examples{
-\dontrun{
+# Create temporary account
+tmpdir <- tempfile()
+dir.create(tmpdir)
+
 # Export a CSV file
-export(mtcars, "path/to/your/file.csv")
+export(mtcars, file_path = file.path(tmpdir, "file.csv"))
 
 # Export an Excel file
-export(mtcars, "path/to/your/file.xlsx")
+export(mtcars, file_path = file.path(tmpdir, "file.xlsx"))
 
 # Export a Stata DTA file
-export(mtcars, "path/to/your/file.dta")
+export(mtcars, file_path = file.path(tmpdir, "file.dta"))
 
 # Export an RDS file
-export(mtcars, "path/to/your/file.rds")
+export(mtcars, file_path = file.path(tmpdir, "file.rds"))
 
 # Export an RData file
-export(list(mtcars = mtcars, iris = iris), "path/to/your/file.RData")
-}
+export(list(mtcars = mtcars, iris = iris),
+       file_path = file.path(tmpdir, "file.RData"))
 
-
+# Remove the temporary directory and its contents
+unlink(tmpdir, recursive = TRUE)
 }

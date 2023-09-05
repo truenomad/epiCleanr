@@ -28,16 +28,11 @@ is greater than the number of cases for given columns in a dataset. It
 returns a ggplot2::ggplot object visualizing the results.
 }
 \examples{
-\dontrun{
-dummy_data <- data.frame(
-      malaria_rdt_test = rnorm(1000, mean = 0, sd = 50),
-      malaria_micro_test = rnorm(1000, mean = 0, sd = 10),
-      malaria_rdt_cases = rnorm(1000, mean = 0, sd = 50),
-      malaria_micro_cases = rnorm(1000, mean = 1, sd = 10))
+# check the consistency between malaria tests and cases
+data("fake_epi_df_togo")
+consistency_check(fake_epi_df_togo,
+                  tests = c("malaria_tests","cholera_tests"),
+                  cases = c("malaria_cases", "cholera_cases"))
 
-consistency_check(dummy_data,
-              tests = c("malaria_rdt_test","malaria_micro_test"),
-              cases = c("malaria_rdt_cases", "malaria_micro_cases"))
-}
 
 }

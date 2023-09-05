@@ -1,3 +1,8 @@
+# Skip all tests on CRAN
+if (!identical(Sys.getenv("NOT_CRAN"), "true")) {
+  return()
+}
+
 # Sample data for testing
 fake_data <- tidyr::expand_grid(
   state = state.name,
@@ -136,3 +141,4 @@ testthat::test_that("Title construction when there are too many variables", {
     "The proportion of missing data for various variables by year"
   )
 })
+

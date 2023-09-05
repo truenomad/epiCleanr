@@ -12,3 +12,6 @@
 ^images$
 ^togo_admin\.R$
 ^simulated_data\.R$
+^lastMiKTeXException$
+^doc$
+^Meta$

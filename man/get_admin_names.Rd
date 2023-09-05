@@ -29,13 +29,13 @@ provinces, etc.) for a given country from the GeoNames website. It accepts
 both country names and various country coding schemes.
 }
 \examples{
-\dontrun{
-  # example using different naming/code conventions
-  somalia_admins <- get_admin_names("SOM")       # using 3 digit iso codes
-  kenya_admins <- get_admin_names("KE")          # using 2 digit iso codes
-  albania_admins <- get_admin_names(008)         # using UN codes
-  usa_admis <-  get_admin_names("United States") # using full names
-}
+# example using different naming/code conventions
+three_digit <- get_admin_names("TGO")   # using 3 digit iso codes
+two_digit <- get_admin_names("TG")      # using 2 digit iso codes
+un_code <- get_admin_names(768)         # using UN codes
+full_name <-  get_admin_names("Togo")   # using full names
+
+str(full_name$adm2)
 
 }
 \seealso{

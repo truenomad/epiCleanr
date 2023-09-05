@@ -1,3 +1,10 @@
+
+
+# Skip all tests on CRAN
+if (!identical(Sys.getenv("NOT_CRAN"), "true")) {
+  return()
+}
+
 # Test 1: Test with Valid ISO Codes
 testthat::test_that(
   "get_admin_names returns correct data for valid ISO codes",

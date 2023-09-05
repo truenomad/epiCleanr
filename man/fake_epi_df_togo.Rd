@@ -52,10 +52,10 @@ The dataset was generated using various steps:
 }
 }
 \examples{
-\dontrun{
 data('fake_epi_df_togo')
+
 head(fake_epi_df_togo)
-}
+
 
 }
 \keyword{datasets}

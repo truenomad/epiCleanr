@@ -2,7 +2,7 @@
 #'
 #' This function visualizes the proportion of missing data or reporting rate for
 #' specified variables in a dataset. It creates a tile plot using
-#' [ggplot2::ggplot()]; where the x-axis can
+#' `ggplot2::ggplot()`; where the x-axis can
 #' represent any categorical time such as time (e.g., year, month), and the
 #' y-axis can represents either variables or groupings (e.g., state). The
 #' output can further be manipulated to one's needs.
@@ -22,6 +22,17 @@
 #' Defaults to FALSE
 #' @return A ggplot2 object representing the tile plot.
 #'
+#' @export
+#'
+#' @examples
+#'
+#' # Check misisng data by year
+#' data("fake_epi_df_togo")
+#'
+#' result <- missing_plot(fake_epi_df_togo,
+#'              x_var = "year", use_rep_rate = FALSE)
+#'
+#'
 #' @importFrom ggplot2 ggplot aes geom_tile scale_fill_viridis_c labs theme_bw
 #' theme scale_x_discrete scale_y_discrete guides guide_legend unit
 #' @importFrom dplyr select mutate across group_by summarise
@@ -30,37 +41,7 @@
 #' @importFrom stringr str_remove
 #' @importFrom tools toTitleCase
 #' @importFrom rlang sym .data
-#' @importFrom wesanderson wes_palette
-#'
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' # Create a data frame with all combinations of states and years
-#' fake_data <- expand_grid(
-#'  state = state.name,
-#'  month = 1:12, year = 2000:2023
-#' ) |>
-#'  mutate(
-#'    measles = sample(0:1000, size = n(), replace = TRUE),
-#'    polio = sample(0:500, size = n(), replace = TRUE),
-#'    malaria = sample(0:300, size = n(), replace = TRUE),
-#'    cholera = sample(0:700, size = n(), replace = TRUE)
-#'  ) |>
-#'  # Randomly set 10% of the data in each disease column to NA
-#'  mutate(across(
-#'    c(measles, polio, malaria, cholera),
-#'    ~ replace(., sample(1:n(), size = n() * 0.4), NA)
-#'  ))
-#'
-#' # Example function usage
-#' missing_plot(fake_data,
-#'  x_var = "year",
-#'  miss_vars = "polio",
-#'  y_var = "state",
-#'  use_rep_rate = T
-#' )
-#' }
+
 missing_plot <- function(data, x_var, y_var = NULL,
                          miss_vars = NULL, use_rep_rate = FALSE) {
   # Check if 'x_var' is provided and exists in the data
@@ -181,7 +162,7 @@ missing_plot <- function(data, x_var, y_var = NULL,
 
 
   # Plot the data using ggplot2
-  ggplot2::ggplot(
+  plot <- ggplot2::ggplot(
     plot_data,
     aes(
       x = as.factor(!!rlang::sym(x_var)),
@@ -237,4 +218,7 @@ missing_plot <- function(data, x_var, y_var = NULL,
       key.height = ggplot2::unit(1, "lines"),
       key.width = ggplot2::unit(1, "lines")
     ))
+
+  return(plot)
 }
+
