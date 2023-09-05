@@ -1,11 +1,4 @@
----
-title: "Get started"
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
-# epiCleanr <img src="man/figures/logo.png" align="right" height="128" style="float:right; height:110px;"/>
+# epiCleanr <img src="../man/figures/logo.png" align="right" height="128" style="float:right; height:110px;"/>
 
 <!-- badges: start -->
 
