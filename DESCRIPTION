@@ -29,7 +29,7 @@ Imports:
   countrycode,
   purrr, 
   tibble,
-  rmarkdown
+  janitor
 Suggests: 
   testthat, 
   knitr,
@@ -56,6 +56,7 @@ Suggests:
   zoo,
   wesanderson,
   scales,
-  spsUtil
+  spsUtil,
+  rmarkdown
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr

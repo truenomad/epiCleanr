@@ -1,4 +1,7 @@
 url: https://truenomad.github.io/epiCleanr/
 template:
   bootstrap: 5
-
+navbar:
+  structure:
+    left: [home, articles, reference]
+    right: [github]

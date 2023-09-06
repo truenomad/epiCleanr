@@ -20,8 +20,8 @@ The object with cleaned names.
 \description{
 This function transforms variable names or column names into one of the
 standard cleaned formats specified by the `style` argument. It offers more
-flexibility than `janitor::clean_names` by supporting individual strings and
-providing multiple naming styles.
+flexibility than \code{\link[=janitor]{janitor::clean_names()}}
+function by supporting individual strings and providing multiple naming styles.
 }
 \examples{
 
@@ -60,6 +60,7 @@ xts_obj <- xts(x = matrix(1:4, ncol = 2),
 colnames(xts_obj) <- c("Some Column", "Another Column")
 cleaned_xts <- clean_names_strings(xts_obj)
 print(colnames(cleaned_xts))
+
 zoo_obj <- zoo(matrix(1:4, ncol = 2), order.by = 1:2)
 colnames(zoo_obj) <- c("Some Column", "Another Column")
 cleaned_zoo <- clean_names_strings(zoo_obj)
@@ -72,5 +73,5 @@ print(names(cleaned_dt))
 
 }
 \seealso{
-[janitor::clean_names()]
+\code{\link[=janitor]{janitor::clean_names()}}
 }

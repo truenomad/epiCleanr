@@ -2,7 +2,7 @@
 #'
 #' This function visualizes the proportion of missing data or reporting rate for
 #' specified variables in a dataset. It creates a tile plot using
-#' `ggplot2::ggplot()`; where the x-axis can
+#' \code{\link[=ggplot2]{ggplot2}}; where the x-axis can
 #' represent any categorical time such as time (e.g., year, month), and the
 #' y-axis can represents either variables or groupings (e.g., state). The
 #' output can further be manipulated to one's needs.

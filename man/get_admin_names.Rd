@@ -10,7 +10,7 @@ get_admin_names(country_name_or_code, silent_mode = TRUE)
 \item{country_name_or_code}{Character or numeric. The name or code of the
 country for which administrative names are to be retrieved. This can be in
 various formats such as country name, ISO codes, UN codes, etc., see
-[countrycode::codelist()] for the full list of codes and naming conventions
+`countrycode::codelist()` for the full list of codes and naming conventions
 used.}
 
 \item{silent_mode}{A logical indicating whether to suppress messages.
@@ -25,7 +25,7 @@ A list containing administrative region names and details for
 }
 \description{
 This function grabs administrative region names (such as districts,
-provinces, etc.) for a given country from the GeoNames website. It accepts
+provinces, etc.) for a given country from the `GeoNames` website. It accepts
 both country names and various country coding schemes.
 }
 \examples{

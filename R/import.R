@@ -1,8 +1,8 @@
 #' Import Data from Various File Formats
 #'
 #' This function provides a unified interface for importing data from various
-#' file formats supported by the `rio` package. The format is automatically
-#' detected from the file extension to simplify the importing process.
+#' file formats supported by the \code{\link[=rio]{rio}} package. The format is
+#' automatically detected from the file extension to simplify the importing process.
 #'
 #' @param file_path Character string specifying the path to the input file or
 #'   a URL pointing to the dataset.
@@ -36,7 +36,7 @@
 #' # Import an SPSS file
 #' data_spss <- import(file_path = file.path(path, "test_data.sav"))
 #'
-#' @seealso `rio::import()`,  which this function is based on.
+#' @seealso \code{\link[=rio]{rio::import()}},  which this function is based on.
 #'
 #' @importFrom rio import
 #' @importFrom rio install_formats

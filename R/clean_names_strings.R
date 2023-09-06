@@ -2,8 +2,8 @@
 #'
 #' This function transforms variable names or column names into one of the
 #' standard cleaned formats specified by the `style` argument. It offers more
-#' flexibility than `janitor::clean_names()` by supporting individual strings and
-#' providing multiple naming styles.
+#' flexibility than \code{\link[=janitor]{janitor::clean_names()}}
+#' function by supporting individual strings and providing multiple naming styles.
 #'
 #' @param input A data frame, tibble, matrix, list, or character vector
 #'        representing the names to be cleaned.
@@ -62,10 +62,10 @@
 #' cleaned_dt <- clean_names_strings(dt)
 #' print(names(cleaned_dt))
 #'
-#' @seealso `janitor::clean_names()`
-#'
+#' @seealso \code{\link[=janitor]{janitor::clean_names()}}
 #' @importFrom purrr map_chr
 #' @importFrom tibble is_tibble
+#' @importFrom janitor clean_names
 #'
 #' @export
 
