@@ -42,14 +42,14 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/using_epicleanr.html">Using epiCleanr</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -84,17 +84,14 @@
 
     
     
-<div class="section level2">
-<h2 id="section">
-<img src="../reference/figures/logo.png" align="right" height="128" style="float:right; height:110px;"><a class="anchor" aria-label="anchor" href="#section"></a>
-</h2>
+<!-- #  <img src="../man/figures/logo.png" align="right" height="128" style="float:right; height:110px;"> -->
 <!-- <!-- badges: start -->
 <!-- [![R build status](https://github.com/truenomad/epicleanr/workflows/R-CMD-check/badge.svg)](https://github.com/truenomad/epicleanr/actions) -->
 <!-- [![CodeFactor](https://www.codefactor.io/repository/github/truenomad/epicleanr/badge)](https://www.codefactor.io/repository/github/truenomad/epicleanr) -->
 <!-- [![codecov](https://codecov.io/gh/truenomad/epiCleanr/graph/badge.svg?token=F0H9LLAXAX)](https://app.codecov.io/gh/truenomad/epiCleanr?branch=main) -->
-<div class="section level3">
-<h3 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
-</h3>
+<div class="section level2">
+<h2 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
+</h2>
 <p>This package offers a tidy solution for epidemiological data. It
 houses a range of functions for epidemiologists and public health data
 wizards for data management and cleaning. These include:</p>
@@ -123,9 +120,9 @@ approaches, and offers functionality to manage them.</li>
 given variable(s) by different factors.</li>
 </ul>
 </div>
-<div class="section level3">
-<h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h3>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>The package is yet to be available on Cran, but can be installed
 using devtools in R.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -138,12 +135,12 @@ using:</p>
 <span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"truenomad/epiCleanr"</span><span class="op">)</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
 <div class="section level3">
-<h3 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+<h3 id="import-and-export">Import and export<a class="anchor" aria-label="anchor" href="#import-and-export"></a>
 </h3>
-<div class="section level4">
-<h4 id="import-and-export">Import and export<a class="anchor" aria-label="anchor" href="#import-and-export"></a>
-</h4>
 <p>Inspired by <code>rio</code>, the import function allows you to read
 data from a wide range of file formats. Additional reading options
 specific to each format can be passed through the ellipsis (…) argument.
@@ -169,9 +166,9 @@ various formats.</p>
 <span><span class="fu"><a href="../reference/export.html">export</a></span><span class="op">(</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>my_data <span class="op">=</span> <span class="va">my_data1</span>, my_data2 <span class="op">=</span> <span class="va">my_data2</span><span class="op">)</span>, <span class="st">"path/to/your/file.xlsx"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="clean-strings">Clean strings<a class="anchor" aria-label="anchor" href="#clean-strings"></a>
-</h4>
+<div class="section level3">
+<h3 id="clean-strings">Clean strings<a class="anchor" aria-label="anchor" href="#clean-strings"></a>
+</h3>
 <p>The <code><a href="../reference/clean_names_strings.html">clean_names_strings()</a></code> function offers additional
 flexibility by allowing you to clean not just strings within columns but
 also the column names themselves.</p>
@@ -185,9 +182,9 @@ also the column names themselves.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">cleaned_iris</span><span class="op">)</span></span>
 <span><span class="co"># &gt; "sepal_length" "sepal_width"  "petal_length" "petal_width"  "species"</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="download-administrative-names">Download administrative names<a class="anchor" aria-label="anchor" href="#download-administrative-names"></a>
-</h4>
+<div class="section level3">
+<h3 id="download-administrative-names">Download administrative names<a class="anchor" aria-label="anchor" href="#download-administrative-names"></a>
+</h3>
 <p>You can download administrative names (such as districts, provinces,
 etc.,) for a given country via the <code>GeoNames</code> website using
 country name or codes to pull the data.</p>
@@ -207,9 +204,9 @@ country name or codes to pull the data.</p>
 <span><span class="co">#&gt; $ longitude     : num  1.5 1.17 1.17 1.42 1.5 ...</span></span>
 <span><span class="co">#&gt; $ last_updated  : IDate, format: "2019-01-08" "2019-01-08" "2022-02-17" "2022-02-17" ...</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="clean-administrative-names">Clean administrative names<a class="anchor" aria-label="anchor" href="#clean-administrative-names"></a>
-</h4>
+<div class="section level3">
+<h3 id="clean-administrative-names">Clean administrative names<a class="anchor" aria-label="anchor" href="#clean-administrative-names"></a>
+</h3>
 <p>You can clean administrative names using them
 <code>clean_admin_names</code> function, which uses various matching and
 string distance algorithms to match your admin data, using your own list
@@ -257,9 +254,9 @@ website.</p>
 <span>        user_base_admin_names <span class="op">=</span> <span class="va">togo_admin_df</span><span class="op">$</span><span class="va">district</span>, </span>
 <span>        report_mode <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> </span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="create-unit-testing-functions">Create unit testing functions<a class="anchor" aria-label="anchor" href="#create-unit-testing-functions"></a>
-</h4>
+<div class="section level3">
+<h3 id="create-unit-testing-functions">Create unit testing functions<a class="anchor" aria-label="anchor" href="#create-unit-testing-functions"></a>
+</h3>
 <p>The <code>create_test</code> is there so users can create their own
 functions in which they can use for unit-testing when working with
 datasets that require lots of manipulation and wrangling. This function
@@ -295,9 +292,9 @@ transformations.</p>
 <span></span>
 <span><span class="co">#&gt; Congratulations! All tests passed: 8/8 (100%) 😀</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="consistency-check">Consistency check<a class="anchor" aria-label="anchor" href="#consistency-check"></a>
-</h4>
+<div class="section level3">
+<h3 id="consistency-check">Consistency check<a class="anchor" aria-label="anchor" href="#consistency-check"></a>
+</h3>
 <p>The <code>consistency_check</code> function serves as a function for
 validating the logical relationships between variables. For instance, if
 you know that the number of disease cases cannot exceed the number of
@@ -318,9 +315,9 @@ behaviours in your data.</p>
 <span>                  </span></code></pre></div>
 <p><img src="../reference/figures/consistency_plot.png" align="center" height="545"></p>
 </div>
-<div class="section level4">
-<h4 id="detecting-and-handling-outliers">Detecting and handling outliers<a class="anchor" aria-label="anchor" href="#detecting-and-handling-outliers"></a>
-</h4>
+<div class="section level3">
+<h3 id="detecting-and-handling-outliers">Detecting and handling outliers<a class="anchor" aria-label="anchor" href="#detecting-and-handling-outliers"></a>
+</h3>
 <p>The <code>handle_outliers</code> function is designed for both
 identifying and addressing outliers in your dataset. It supports
 multiple statistical methods for outlier detection, such as Z-score,
@@ -361,9 +358,9 @@ or replacement with mean, median, grouped means, or quantiles.</p>
 <span>                                       treat_method <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="../reference/figures/outliers_plot.png" align="center" height="575"></p>
 </div>
-<div class="section level4">
-<h4 id="checking-missing-data-and-reporting-rates-over-factors">Checking missing data and reporting rates over factors<a class="anchor" aria-label="anchor" href="#checking-missing-data-and-reporting-rates-over-factors"></a>
-</h4>
+<div class="section level3">
+<h3 id="checking-missing-data-and-reporting-rates-over-factors">Checking missing data and reporting rates over factors<a class="anchor" aria-label="anchor" href="#checking-missing-data-and-reporting-rates-over-factors"></a>
+</h3>
 <p>The <code>missing_plot</code> function allows you to visualize
 missing data across different variables, either by a single factor like
 time or district, or by two factors simultaneously like date and
@@ -384,7 +381,6 @@ across different times or locations.</p>
 <span><span class="fu"><a href="../reference/missing_plot.html">missing_plot</a></span><span class="op">(</span><span class="va">fake_epi_df_togo2</span>, miss_vars <span class="op">=</span> <span class="st">"malaria_cases"</span>, </span>
 <span>              x_var <span class="op">=</span> <span class="st">"date"</span>, y_var <span class="op">=</span> <span class="st">"district"</span>, use_rep_rate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <p><img src="../reference/figures/missing_plot_b.png" align="center" height="635"></p>
-</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
