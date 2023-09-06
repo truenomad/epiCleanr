@@ -21,8 +21,9 @@ No return value, called for side effects.
 }
 \description{
 This function provides a unified interface for exporting data to various
-file formats supported by the [rio::export()] function. The format is
-automatically detected from the file extension to simplify the exporting process.
+file formats supported by the \code{\link[=rio::export]{rio::export()}}
+function. The format is automatically detected from the file extension to
+simplify the exporting process.
 }
 \examples{
 # Create temporary account
@@ -47,4 +48,8 @@ export(list(mtcars = mtcars, iris = iris),
 
 # Remove the temporary directory and its contents
 unlink(tmpdir, recursive = TRUE)
+}
+\seealso{
+\code{\link[=rio::export]{rio::export()}}, which this function is
+based on.
 }

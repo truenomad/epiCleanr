@@ -63,8 +63,8 @@ variables <- c("malaria_tests", "malaria_cases",
 result <- handle_outliers(fake_epi_df_togo, vars = variables,
                method = "zscore", report_mode = TRUE)
 
-result$report
+print(result$report)
 
-result$plot
+print(result$plot)
 
 }

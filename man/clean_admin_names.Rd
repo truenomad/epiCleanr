@@ -68,6 +68,6 @@ print(france_new)
 
 }
 \seealso{
-[countrycode::codelist()]
+\code{\link[=countrycode::codelist]{countrycode::codelist()}}
 for the full list of codes and naming conventions.
 }

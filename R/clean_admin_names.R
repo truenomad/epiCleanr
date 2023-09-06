@@ -47,7 +47,7 @@
 #'
 #' print(france_new)
 #'
-#' @seealso [countrycode::codelist()]
+#' @seealso \code{\link[=countrycode::codelist]{countrycode::codelist()}}
 #' for the full list of codes and naming conventions.
 #' @importFrom dplyr select filter mutate all_of
 #' @importFrom tidyselect contains everything

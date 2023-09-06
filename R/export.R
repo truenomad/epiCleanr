@@ -1,8 +1,9 @@
 #' Export Data to Various File Formats
 #'
 #' This function provides a unified interface for exporting data to various
-#' file formats supported by the `rio::export()` function. The format is
-#' automatically detected from the file extension to simplify the exporting process.
+#' file formats supported by the \code{\link[=rio::export]{rio::export()}}
+#' function. The format is automatically detected from the file extension to
+#' simplify the exporting process.
 #'
 #' @param data The dataset to be exported.
 #' @param file_path Character string specifying the path to the output file.
@@ -13,7 +14,8 @@
 #'
 #' @return No return value, called for side effects.
 #'
-#' @seealso `rio::export()`,  which this function is based on.
+#' @seealso \code{\link[=rio::export]{rio::export()}}, which this function is
+#' based on.
 #'
 #' @examples
 #' # Create temporary account
