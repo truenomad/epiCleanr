@@ -10,7 +10,7 @@ Authors@R:
            comment = c(ORCID = "0000-0002-9339-4613")))
 Description: Offers a tidy solution for epidemiological data. It houses a range of functions for epidemiologists and public health data wizards for data management and cleaning.
 License: MIT + file LICENSE
-URL: https://github.com/truenomad/epiCleanr
+URL: https://github.com/truenomad/epiCleanr, https://truenomad.github.io/epiCleanr/
 BugReports: https://github.com/truenomad/epiCleanr/issues
 Encoding: UTF-8
 Depends: R (>= 3.6)
@@ -28,7 +28,8 @@ Imports:
   crayon,
   countrycode,
   purrr, 
-  tibble
+  tibble,
+  rmarkdown
 Suggests: 
   testthat, 
   knitr,
@@ -58,4 +59,3 @@ Suggests:
   spsUtil
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
-
