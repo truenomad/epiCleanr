@@ -26,6 +26,7 @@
 #'        else a cleaned list of names is returned.
 #'
 #' @examples
+#'  \donttest{
 #' # Example with country code
 #' base_names <- c(
 #'   "Paris", "Marseille", "Lyon",
@@ -46,6 +47,7 @@
 #' )
 #'
 #' print(france_new)
+#'}
 #'
 #' @seealso \code{\link[=countrycode]{countrycode::codelist()}}
 #' for the full list of codes and naming conventions.
