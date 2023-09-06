@@ -11,7 +11,8 @@ status](https://github.com/truenomad/epicleanr/workflows/R-CMD-check/badge.svg)]
 
 This package offers a tidy solution for epidemiological data. It houses
 a range of functions for epidemiologists and public health data wizards
-for data management and cleaning.
+for data management and cleaning. For more details on how to use this package, visit the 
+[epiCleanr website](https://truenomad.github.io/epiCleanr/articles/using_epicleanr.html).
 
 ## Installation
 
@@ -38,6 +39,11 @@ library(epiCleanr)
 ```
 
 ## Quick Workflow Overview
+
+`epiCleanr` could be used as a helper package for end-to-end epidemiological 
+data management, offering functionalities ranging from data importation and 
+quality assessment to cleaning and exporting files. Below are some of the 
+workflow steps this package streamlines:
 
 ### Import Data
 
