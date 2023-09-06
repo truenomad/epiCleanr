@@ -408,7 +408,8 @@ suppressMessages({
 
   if (Sys.info()['sysname'] != 'Linux' || grepl("UTF-8", Sys.getenv("LANG"))) {
 
-    testthat::test_that("create_test returns praise emoji when all tests pass", {
+    testthat::test_that(
+      "create_test returns praise emoji when all tests pass", {
       # Test data and parameters
       test_data <- data.frame(a = 1:3, b = 4:6)
       dimension_test <- c(3, 2)

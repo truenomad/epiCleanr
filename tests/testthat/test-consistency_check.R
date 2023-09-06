@@ -65,8 +65,9 @@ suppressMessages(
       )
 
       expected <- paste(
-        "Consistency test failed for malaria_micro_test vs malaria_micro_cases:",
-        "There are 513 (51.3%) rows where tests are less than cases."
+        "Consistency test failed for malaria_micro_test",
+        "vs malaria_micro_cases: There are 513 (51.3%) rows where tests",
+        "are less than cases."
       )
 
       testthat::expect_equal(writeLines(actual), writeLines(expected))

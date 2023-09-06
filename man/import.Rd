@@ -21,7 +21,8 @@ A data frame or appropriate R object containing the imported data.
 \description{
 This function provides a unified interface for importing data from various
 file formats supported by the \code{\link[=rio]{rio}} package. The format is
-automatically detected from the file extension to simplify the importing process.
+automatically detected from the file extension to simplify the importing
+process.
 }
 \examples{
 # Locate test data directory

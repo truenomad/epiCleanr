@@ -13,10 +13,14 @@
 #' @param admin_level A character string indicating the administrative level
 #'        (e.g., "adm2").
 #' @param country_code sed if `use_get_admin_names` is TRUE. A character string
-#'       or numerical value of the country code (e.g., 123"KE"). U This can be
+#'       or numerical value of the country code (e.g., "KE"). This can be
 #'       in various formats such as country name, ISO codes, UN codes, etc.,
 #'       see \code{\link[=countrycode]{countrycode::codelist()}} for the full
 #'       list of codes and naming conventions used.
+#' @param user_base_only A logical indicating whether to use only the
+#'       user-provided base administrative names (`user_base_admin_names`) for
+#'       matching. If TRUE, `country_code` and `admin_names_to_clean` are not
+#'       required. Default is FALSE.
 #' @param report_mode A logical indicating whether to return a detailed report.
 #'        Default is FALSE.
 #'
@@ -58,18 +62,27 @@
 #' @importFrom rlang .data
 #' @importFrom tibble rownames_to_column
 #' @export
-#'
+
 clean_admin_names <- function(admin_names_to_clean, country_code,
                               admin_level = "adm2",
                               user_base_admin_names = NULL,
+                              user_base_only = FALSE,
                               report_mode = FALSE) {
 
-  if (is.null(country_code) && is.null(admin_names_to_clean)) {
-    stop("Both 'country_code' and 'admin_names_to_clean' must be provided.")
-  } else if (is.null(country_code)) {
-    stop("'country_code' must be provided.")
-  } else if (is.null(admin_names_to_clean)) {
-    stop("'admin_names_to_clean' must be provided.")
+  if (!user_base_only) {
+    if (is.null(country_code) && is.null(admin_names_to_clean)) {
+      stop("Both 'country_code' and 'admin_names_to_clean' must be provided.")
+    } else if (is.null(country_code)) {
+      stop("'country_code' must be provided.")
+    } else if (is.null(admin_names_to_clean)) {
+      stop("'admin_names_to_clean' must be provided.")
+    }
+  } else {
+    if (is.null(user_base_admin_names)) {
+      stop(
+        "'user_base_admin_names' must be provided when ",
+        "'user_base_only' is TRUE.")
+    }
   }
 
   # Helper Function to remove specific words from a string
@@ -89,29 +102,33 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
     return(string)
   }
 
-  # Get admin names from geonames -----------------------------------------------
+  # Get admin names from geonames ---------------------------------------------
 
-  admin_data <- get_admin_names(country_code)[[admin_level]]
+  if (!user_base_only) {
 
-  # select relevant cols
-  admin_data <- admin_data |>
-    dplyr::select(
-      -"country_code", tidyselect::all_of(admin_level), -"latitude",
-      -"longitude", -"last_updated")
+    admin_data <- get_admin_names(country_code)[[admin_level]]
 
-  # Separate 'alternatenames' into multiple columns
-  max_cols <- max(stringr::str_count(admin_data$alternatenames, ", ")) + 1
-  col_names <- paste0("alt_admin_name_", seq_len(max_cols))
-
-  suppressWarnings({
+    # select relevant cols
     admin_data <- admin_data |>
-      tidyr::separate(.data$alternatenames,
-                      into = col_names, sep = ", ",
-                      extra = "merge"
-      )
-  })
+      dplyr::select(
+        -"country_code", tidyselect::all_of(admin_level), -"latitude",
+        -"longitude", -"last_updated")
 
-  # Match with base admin names  -------------------------------------------------
+    # Separate 'alternatenames' into multiple columns
+    max_cols <- max(stringr::str_count(admin_data$alternatenames, ", ")) + 1
+    col_names <- paste0("alt_admin_name_", seq_len(max_cols))
+
+    suppressWarnings({
+      admin_data <- admin_data |>
+        tidyr::separate(.data$alternatenames,
+                        into = col_names, sep = ", ",
+                        extra = "merge"
+        )
+    })
+
+  }
+
+  # Match with base admin names  ----------------------------------------------
 
   # List of methods to use for matching
   methods <- c("lv", "dl", "lcs", "qgram", "jw", "soundex")
@@ -186,192 +203,213 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
       )
   }
 
-  # Calculate matching scores for each column of the geonames ---------------------
+  # Calculate matching scores for each column of the geonames -----------------
   # Function for the geonames
-  calculate_column_distance <- function(column, method) {
-    cleaned_column <- clean_names_strings(column, style = "simple_clean")
-    suppressWarnings({
-      scores <- stringdist::stringdistmatrix(
-        cleaned_admin_names_to_clean,
-        cleaned_column,
-        method = method
+  if (!user_base_only) {
+    calculate_column_distance <- function(column, method) {
+      cleaned_column <- clean_names_strings(column, style = "simple_clean")
+      suppressWarnings({
+        scores <- stringdist::stringdistmatrix(
+          cleaned_admin_names_to_clean,
+          cleaned_column,
+          method = method
+        )
+      })
+
+
+      # Calculate proportion matched
+      max_distances <- apply(scores, 1, max, na.rm = TRUE)
+      min_distances <- apply(scores, 1, min, na.rm = TRUE)
+      matched_indices <- apply(scores, 1, which.min)
+      match_prop <- round((1 - (min_distances / max_distances)) * 100)
+      geo_admins <- column[matched_indices]
+
+      # drop any NA's
+      admin_names_to_clean <- admin_names_to_clean[!is.na(admin_names_to_clean)]
+
+
+      data.frame(method,
+                 admin_names_to_clean,
+                 country = toupper(country_code),
+                 admin_level = toupper(admin_level),
+                 geo_admins,
+                 match_prop
       )
-    })
+    }
 
-    # Calculate proportion matched
-    max_distances <- apply(scores, 1, max, na.rm = TRUE)
-    min_distances <- apply(scores, 1, min, na.rm = TRUE)
-    matched_indices <- apply(scores, 1, which.min)
-    match_prop <- round((1 - (min_distances / max_distances)) * 100)
-    geo_admins <- column[matched_indices]
+    # Match with geonames admin names
+    calculate_distance_for_column <- function(column) {
+      do.call(
+        rbind,
+        lapply(
+          methods,
+          function(method) calculate_column_distance(column, method)
+        )
+      )
+    }
 
-    # drop any NA's
-    admin_names_to_clean <- admin_names_to_clean[!is.na(admin_names_to_clean)]
-
-
-    data.frame(method,
-               admin_names_to_clean,
-               country = toupper(country_code),
-               admin_level = toupper(admin_level),
-               geo_admins,
-               match_prop
-    )
-  }
-
-  # Match with geonames admin names
-  calculate_distance_for_column <- function(column) {
-    do.call(
+    results <- do.call(
       rbind,
-      lapply(
-        methods,
-        function(method) calculate_column_distance(column, method)
-      )
-    )
-  }
-
-  results <- do.call(
-    rbind,
-    lapply(admin_data, calculate_distance_for_column)
-  )
-
-  # Join the results for base datasets
-  results_admin_data <- results |>
-    # remove index column
-    tibble::rownames_to_column("index") |>
-    dplyr::rename(column_names = 1) |>
-    dplyr::mutate(column_names = stringr::str_replace(
-      column_names, "\\..*", ""
-    )) |> dplyr::distinct() |>
-    dplyr::mutate(column_names = paste(column_names, method, sep = "_")) |>
-    dplyr::select(-"method") |>
-    tidyr::pivot_wider(
-      id_cols = "admin_names_to_clean",
-      names_from = "column_names",
-      values_from = c("geo_admins", "match_prop")
+      lapply(admin_data, calculate_distance_for_column)
     )
 
-  # if the user base data is provided then join together
-  if (!is.null(user_base_admin_names)) {
-    results_admin_data <- results_admin_data |>
-      # join the
-      dplyr::left_join(
-        user_base_results,
-        by = "admin_names_to_clean"
+    # Join the results for base datasets
+    results_admin_data <- results |>
+      # remove index column
+      tibble::rownames_to_column("index") |>
+      dplyr::rename(column_names = 1) |>
+      dplyr::mutate(column_names = stringr::str_replace(
+        column_names, "\\..*", ""
+      )) |> dplyr::distinct() |>
+      dplyr::mutate(column_names = paste(column_names, method, sep = "_")) |>
+      dplyr::select(-"method") |>
+      tidyr::pivot_wider(
+        id_cols = "admin_names_to_clean",
+        names_from = "column_names",
+        values_from = c("geo_admins", "match_prop")
       )
+
+    # if the user base data is provided then join together
+    if (!is.null(user_base_admin_names)) {
+      results_admin_data <- results_admin_data |>
+        # join the
+        dplyr::left_join(
+          user_base_results,
+          by = "admin_names_to_clean"
+        )
+    }
+
   }
 
-  # turn matching dataset long
-  best_match_result <- results_admin_data |>
-    dplyr::select(
-      tidyselect::contains("match_prop"), "admin_names_to_clean"
-    ) |>
-    tidyr::pivot_longer(
-      cols = -("admin_names_to_clean"),
-      values_to = "match_prop",
-      names_to = "admin_cols"
-    ) |>
-    dplyr::mutate(
-      admin_cols = stringr::str_replace(.data$admin_cols, "match_prop_", "")
-    ) |>
-    dplyr::group_by(.data$admin_names_to_clean) |>
-    # get the best results
-    dplyr::slice(which.max(.data$match_prop)) |>
-    dplyr::ungroup()
+    # function to get best match results
+    get_best_match_result <-  function(data) {
 
-  # take the best admin names as the final columns
-  best_names_long <- results_admin_data |>
-    dplyr::select(
-      -tidyselect::contains("match_prop"), "admin_names_to_clean"
-    ) |>
-    tidyr::pivot_longer(
-      cols = -("admin_names_to_clean"),
-      values_to = "final_cleaned_column",
-      names_to = "admin_cols"
-    ) |>
-    mutate(admin_cols = stringr::str_replace(admin_cols, "geo_admins_", ""))
+      # turn matching dataset long
+      best_match_result <- data |>
+        dplyr::select(
+          tidyselect::contains("match_prop"), "admin_names_to_clean"
+        ) |>
+        tidyr::pivot_longer(
+          cols = -("admin_names_to_clean"),
+          values_to = "match_prop",
+          names_to = "admin_cols"
+        ) |>
+        dplyr::mutate(
+          admin_cols = stringr::str_replace(.data$admin_cols, "match_prop_", "")
+        ) |>
+        dplyr::group_by(.data$admin_names_to_clean) |>
+        # get the best results
+        dplyr::slice(which.max(.data$match_prop)) |>
+        dplyr::ungroup()
 
+      # take the best admin names as the final columns
+      best_names_long <- data |>
+        dplyr::select(
+          -tidyselect::contains("match_prop"), "admin_names_to_clean"
+        ) |>
+        tidyr::pivot_longer(
+          cols = -("admin_names_to_clean"),
+          values_to = "final_cleaned_column",
+          names_to = "admin_cols"
+        ) |>
+        mutate(admin_cols = stringr::str_replace(admin_cols, "geo_admins_", ""))
 
-  # Finalise the best matching results report
-  best_match_result <- best_match_result |>
-    dplyr::left_join(
-      best_names_long,
-      by = c("admin_names_to_clean", "admin_cols")
-    ) |>
-    dplyr::select(
-      "admin_names_to_clean",
-      "final_cleaned_column",
-      "admin_cols",
-      "match_prop"
-    ) |>
-    # rename the matching alorigthem cols
-    dplyr::mutate(
-      matching_algorithm = dplyr::case_when(
-        stringr::str_detect(admin_cols, "qgram") ~ "Q-gram",
-        stringr::str_detect(admin_cols, "soundex") ~ "Soundex",
-        stringr::str_detect(admin_cols, "osa") ~ "Optimal String Alignment",
-        stringr::str_detect(admin_cols, "lv") ~ "Levenshtein Distance",
-        stringr::str_detect(admin_cols, "dl") ~ "Damerau-Levenshtein",
-        stringr::str_detect(admin_cols, "lcs") ~ "Longest Common Subsequence",
-        stringr::str_detect(admin_cols, "jw") ~ "Jaro-Winkler"
-      )
-    ) |>
-    dplyr::mutate(
-      admin_cols = dplyr::case_when(
-        stringr::str_detect(admin_cols, "user_base_admin_names") ~
-          "User base admin names",
-        stringr::str_detect(admin_cols, "alt_admin_name") ~
-          "Alternative name from geonames",
-        stringr::str_detect(admin_cols, "asciiname") ~
-          "Main admin name from geonames",
-        stringr::str_detect(
-          admin_cols,
-          stringr::fixed("ADM2H",
-                         ignore_case = TRUE
+      # Finalise the best matching results report
+      best_match_result <- best_match_result |>
+        dplyr::left_join(
+          best_names_long,
+          by = c("admin_names_to_clean", "admin_cols")
+        ) |>
+        dplyr::select(
+          "admin_names_to_clean",
+          "final_cleaned_column",
+          "admin_cols",
+          "match_prop"
+        ) |>
+        # rename the matching alorigthem cols
+        dplyr::mutate(
+          matching_algorithm = dplyr::case_when(
+            stringr::str_detect(admin_cols, "qgram") ~ "Q-gram",
+            stringr::str_detect(admin_cols, "soundex") ~ "Soundex",
+            stringr::str_detect(admin_cols, "osa") ~ "Optimal String Alignment",
+            stringr::str_detect(admin_cols, "lv") ~ "Levenshtein Distance",
+            stringr::str_detect(admin_cols, "dl") ~ "Damerau-Levenshtein",
+            stringr::str_detect(admin_cols, "lcs") ~
+              "Longest Common Subsequence",
+            stringr::str_detect(admin_cols, "jw") ~ "Jaro-Winkler"
           )
-        ) ~
-          "Historical name from geonames",
-        TRUE ~ admin_cols
+        ) |>
+        dplyr::mutate(
+          admin_cols = dplyr::case_when(
+            stringr::str_detect(admin_cols, "user_base_admin_names") ~
+              "User base admin names",
+            stringr::str_detect(admin_cols, "alt_admin_name") ~
+              "Alternative name from geonames",
+            stringr::str_detect(admin_cols, "asciiname") ~
+              "Main admin name from geonames",
+            stringr::str_detect(
+              admin_cols,
+              stringr::fixed("ADM2H",
+                             ignore_case = TRUE
+              )
+            ) ~
+              "Historical name from geonames",
+            TRUE ~ admin_cols
+          )
+        ) |>
+        dplyr::select("names_to_clean" = "admin_names_to_clean",
+                      "final_names" = "final_cleaned_column",
+                      "source_of_cleaned_name" = "admin_cols",
+                      "prop_matched" = "match_prop",
+                      "matching_algorithm"
+        ) |> dplyr::distinct()
+
+      return(best_match_result)
+
+    }
+
+
+    if (user_base_only) {
+      # Get the best match results if user base only
+      best_match_result <- get_best_match_result(user_base_results)
+    } else {
+      # Get the best match results  if user base and geonames data
+      best_match_result <- get_best_match_result(results_admin_data)
+    }
+
+    # Calculate matching stats
+    total_dist <- nrow(best_match_result[1])
+    perfect_match <- sum(best_match_result$prop_matched == 100)
+    prop <- round((perfect_match / total_dist) * 100)
+
+    # Common message part
+    common_message <- glue::glue(
+      crayon::blue(
+        "There are {scales::comma(perfect_match)}",
+        "out of {scales::comma(total_dist)} ({prop}%)",
+        "admins that have been perfectly matched!"
       )
-    ) |>
-    dplyr::select("names_to_clean" = "admin_names_to_clean",
-                  "final_names" = "final_cleaned_column",
-                  "source_of_cleaned_name" = "admin_cols",
-                  "prop_matched" = "match_prop",
-                  "matching_algorithm"
-    ) |> dplyr::distinct()
-
-  # Calculate matching stats
-  total_dist <- nrow(best_match_result[1])
-  perfect_match <- sum(best_match_result$prop_matched == 100)
-  prop <- round((perfect_match / total_dist) * 100)
-
-  # Common message part
-  common_message <- glue::glue(
-    crayon::blue(
-      "There are {scales::comma(perfect_match)}",
-      "out of {scales::comma(total_dist)} ({prop}%)",
-      "admins that have been perfectly matched!"
     )
-  )
 
-  # Return result based on report_mode
-  if (report_mode == TRUE) {
-    message(common_message)
+    # Return result based on report_mode
+    if (report_mode) {
+      message(common_message)
 
-    return(best_match_result)
-  } else {
-    message(paste(
-      common_message,
-      "\n Use `report_mode` to double check your matches."
-    ))
+      return(best_match_result)
+    } else {
+      message(paste(
+        common_message,
+        "\n Use `report_mode` to double check your matches."
+      ))
 
-    # Match the cleaned names with the original order
-    ordered_cleaned_names <-
-      best_match_result$final_names[match(
-        admin_names_to_clean,
-        best_match_result$names_to_clean
-      )]
+      # Match the cleaned names with the original order
+      ordered_cleaned_names <-
+        best_match_result$final_names[match(
+          admin_names_to_clean,
+          best_match_result$names_to_clean
+        )]
 
-    return(ordered_cleaned_names)
-  }
+      return(ordered_cleaned_names)
+    }
 }
+

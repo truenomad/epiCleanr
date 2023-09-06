@@ -5,7 +5,7 @@ suppressMessages({
     return()
   }
 
-  # Test 1: Basic functionality works
+  # Test 1A: Basic functionality works
   testthat::test_that("Basic functionality works", {
 
     unclean_names <- c("Pariis", "Marseill", "Lyone", "Toulous", "Niice")
@@ -13,6 +13,21 @@ suppressMessages({
 
     result <- clean_admin_names(
       country_code = "FR",
+      user_base_admin_names = base_names,
+      admin_names_to_clean = unclean_names
+    )
+
+    testthat::expect_equal(result, base_names)
+  })
+
+  # Test 1B: Basic functionality works
+  testthat::test_that("Basic functionality works", {
+
+    unclean_names <- c("Pariis", "Marseill", "Lyone", "Toulous", "Niice")
+    base_names <- c("Paris", "Marseille", "Lyon", "Toulouse", "Nice")
+
+    result <- clean_admin_names(
+      user_base_only = T,
       user_base_admin_names = base_names,
       admin_names_to_clean = unclean_names
     )
@@ -134,4 +149,25 @@ suppressMessages({
 
     testthat::expect_equal(writeLines(result), writeLines(expected))
   })
+
+  # Test 10: Test that 'remove_words' works indirectly via 'clean_admin_names'
+  testthat::test_that(
+    "'remove_words' works indirectly through 'clean_admin_names'", {
+
+      unclean_names <- c("Paris county", "Marseille city", "Lyon", NA, "Nice")
+      base_names <- c("Paris", "Marseille", "Lyon", "Toulouse", "Nice")
+
+
+    result <- clean_admin_names(
+      country_code = "FR",
+      user_base_admin_names = base_names,
+      admin_names_to_clean = unclean_names
+    )
+
+    expected_result <- c("Paris", "Marseille", "Lyon", NA, "Nice")
+
+    testthat::expect_equal(result, expected_result)
+  })
+
+
 })

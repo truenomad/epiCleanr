@@ -9,6 +9,7 @@ clean_admin_names(
   country_code,
   admin_level = "adm2",
   user_base_admin_names = NULL,
+  user_base_only = FALSE,
   report_mode = FALSE
 )
 }
@@ -17,7 +18,7 @@ clean_admin_names(
 clean.}
 
 \item{country_code}{sed if `use_get_admin_names` is TRUE. A character string
-or numerical value of the country code (e.g., 123"KE"). U This can be
+or numerical value of the country code (e.g., "KE"). This can be
 in various formats such as country name, ISO codes, UN codes, etc.,
 see \code{\link[=countrycode]{countrycode::codelist()}} for the full
 list of codes and naming conventions used.}
@@ -28,6 +29,11 @@ list of codes and naming conventions used.}
 \item{user_base_admin_names}{A character of of administrative names that the
 use would like to use as reference. This is no necessary, downloaded
  `GeoNames` will be used if missing.}
+
+\item{user_base_only}{A logical indicating whether to use only the
+user-provided base administrative names (`user_base_admin_names`) for
+matching. If TRUE, `country_code` and `admin_names_to_clean` are not
+required. Default is FALSE.}
 
 \item{report_mode}{A logical indicating whether to return a detailed report.
 Default is FALSE.}

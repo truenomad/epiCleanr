@@ -10,7 +10,7 @@
 #' @param vars Character vector of variable names to check for outliers. Default
 #'            is NULL, which selects all numeric columns.
 #' @param method Character indicating the method for outlier detection. Options
-#'                  are "zscore", "modified_zscore", and "iqr_method".
+#'                  are "zscore", "mod_zscore", and "iqr_method".
 #'                  Default is NULL, which applies all methods.
 #' @param zscore_threshold Numeric value for Z-Score threshold. Default is 3.
 #' @param mod_zscore_threshold Numeric value for Modified Z-Score threshold.
@@ -280,6 +280,9 @@ handle_outliers <- function(data, vars = NULL, method = NULL,
             "Non-outliers in <span style='color:#1E81B0'>blue</span></span>"
           )
         ) +
+        ggh4x::facet_grid2(
+          Variable ~ ., scales = "free", independent  = "all"
+        ) +
         ggplot2::theme_minimal() +
         ggplot2::theme(
           legend.position = "top",
@@ -301,11 +304,12 @@ handle_outliers <- function(data, vars = NULL, method = NULL,
             size = 8, angle = 45, hjust = 1,
             margin = ggplot2::margin(t = 2, b = 2)
           ),
-        ) +
+          strip.text.x = ggplot2::element_blank(),
+          strip.text.y = ggplot2::element_blank()
+        )  +
         ggplot2::guides(color = "none") +
         ggplot2::scale_x_continuous(
           labels = scales::comma_format(big.mark = ","))
-
 
       # Deal with the outliers -------------------------------------------------
 

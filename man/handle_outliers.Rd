@@ -23,7 +23,7 @@ handle_outliers(
 is NULL, which selects all numeric columns.}
 
 \item{method}{Character indicating the method for outlier detection. Options
-are "zscore", "modified_zscore", and "iqr_method".
+are "zscore", "mod_zscore", and "iqr_method".
 Default is NULL, which applies all methods.}
 
 \item{zscore_threshold}{Numeric value for Z-Score threshold. Default is 3.}

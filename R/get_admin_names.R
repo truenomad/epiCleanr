@@ -86,7 +86,8 @@ get_admin_names <- function(country_name_or_code, silent_mode = TRUE) {
 
   withr::with_dir(tmpdir, {
     # Construct the URL for the requested ISO code
-    url <- paste0("https://download.geonames.org/export/dump/", iso_code, ".zip")
+    url <- paste0(
+      "https://download.geonames.org/export/dump/", iso_code, ".zip")
 
     # Set the timeout option
     # old_options <- options(timeout = 320)

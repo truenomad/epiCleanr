@@ -24,7 +24,7 @@ fake_epi_df_togo <- fake_epi_df_togo |>
 # Test 1: Check if outliers are identified correctly with Z-Score
 testthat::test_that("Z-Score method identifies outliers correctly", {
 
-  res <- epiCleanr::handle_outliers(fake_epi_df_togo,
+  res <- handle_outliers(fake_epi_df_togo,
                                     vars = "malaria_cases",
                                     method = "zscore",
                                     report_mode = TRUE)
@@ -36,7 +36,7 @@ testthat::test_that("Z-Score method identifies outliers correctly", {
 # Test 2: Check if outliers are identified correctly with modified Z-Score
 testthat::test_that("Modified Z-Score method identifies outliers correctly", {
 
-  res <- epiCleanr::handle_outliers(fake_epi_df_togo,
+  res <- handle_outliers(fake_epi_df_togo,
                                     vars = "malaria_cases",
                                     method = "mod_zscore",
                                     report_mode = TRUE)
@@ -49,7 +49,7 @@ testthat::test_that("Modified Z-Score method identifies outliers correctly", {
 # Test 3: Check if outliers are identified correctly with IQR method
 testthat::test_that("IQR method identifies outliers correctly", {
 
-  res <- epiCleanr::handle_outliers(fake_epi_df_togo,
+  res <- handle_outliers(fake_epi_df_togo,
                                     vars = "malaria_cases",
                                     method = "iqr_method",
                                     report_mode = TRUE)
@@ -66,7 +66,7 @@ testthat::test_that("Outliers are removed correctly", {
     tidyr::drop_na() |>
     summarise(max(malaria_cases)) |> dplyr::pull()
 
-  res <- epiCleanr::handle_outliers(fake_epi_df_togo,
+  res <- handle_outliers(fake_epi_df_togo,
                                     method = "zscore",
                                     treat_method = "remove")
 
@@ -78,10 +78,11 @@ testthat::test_that("Outliers are removed correctly", {
 })
 
 
-# Test 5: Check if report_mode returns a list with a dataframe and a ggplot object
+# Test 5: Check if report_mode returns a list with a dataframe and a ggplot
+# object
 testthat::test_that("Report mode returns correct types", {
 
-  res <- epiCleanr::handle_outliers(fake_epi_df_togo, report_mode = TRUE)
+  res <- handle_outliers(fake_epi_df_togo, report_mode = TRUE)
 
   testthat::expect_equal(typeof(res), as.character("list"))
   testthat::expect_equal(typeof(res$report), "list")
@@ -92,7 +93,7 @@ testthat::test_that("Report mode returns correct types", {
 # Test 5: Check if function correctly handles non-numeric columns
 testthat::test_that("Function handles non-numeric columns", {
 
-  res <- epiCleanr::handle_outliers(fake_epi_df_togo2,
+  res <- handle_outliers(fake_epi_df_togo2,
                                     vars = c("district", "malaria_tests"),
                                     report_mode = TRUE)
 
@@ -105,7 +106,7 @@ testthat::test_that(
   "Outliers are replaced with NA when treat_method is 'remove'", {
 
 
-    res <- epiCleanr::handle_outliers(fake_epi_df_togo2, method = "zscore",
+    res <- handle_outliers(fake_epi_df_togo2, method = "zscore",
                                       treat_method = "remove")
 
     testthat::expect_true(any(is.na(res$malaria_tests)))
@@ -117,7 +118,7 @@ testthat::test_that(
   "Outliers are replaced with mean when treat_method is 'mean'", {
 
 
-    res <- epiCleanr::handle_outliers(fake_epi_df_togo2,
+    res <- handle_outliers(fake_epi_df_togo2,
                                       method = "zscore", treat_method = "mean")
 
     actual_mean_tests <- res |>
@@ -136,8 +137,9 @@ testthat::test_that(
 testthat::test_that(
   "Outliers are replaced with median when treat_method is 'mean'", {
 
-    res <- epiCleanr::handle_outliers(fake_epi_df_togo2,
-                                      method = "zscore", treat_method = "median")
+    res <- handle_outliers(fake_epi_df_togo2,
+                                      method = "zscore",
+                           treat_method = "median")
 
     actual_mean_tests <- res |>
       dplyr::summarise(median(malaria_tests)) |> dplyr::pull()
@@ -155,7 +157,7 @@ testthat::test_that(
 testthat::test_that(
   "Outliers are replaced with median when treat_method is 'quantile'", {
 
-    res <- epiCleanr::handle_outliers(fake_epi_df_togo2,
+    res <- handle_outliers(fake_epi_df_togo2,
                                       method = "zscore",
                                       treat_method = "quantile")
 
@@ -176,7 +178,7 @@ testthat::test_that(
 testthat::test_that(
   "Outliers are replaced with median when treat_method is 'grouped_mean'", {
 
-    res <- epiCleanr::handle_outliers(
+    res <- handle_outliers(
       fake_epi_df_togo2,
       method = "zscore",
       grouping_vars = c("district", "year", "month"),
@@ -199,7 +201,7 @@ testthat::test_that(
   "Grouped_mean is declared but no groups are given'", {
 
     testthat::expect_error(
-      epiCleanr::handle_outliers(fake_epi_df_togo,
+      handle_outliers(fake_epi_df_togo,
                                  method = "zscore",
                                  treat_method = "grouped_mean")
 
@@ -214,7 +216,7 @@ testthat::test_that(
   "Check for error when invalid treat method is given", {
 
     testthat::expect_error(
-      epiCleanr::handle_outliers(fake_epi_df_togo,
+      handle_outliers(fake_epi_df_togo,
                                  method = "zscore",
                                  treat_method = "multiple_imputation"),
       "Unknown treat_method: multiple_imputation"
@@ -226,7 +228,7 @@ testthat::test_that(
   "Check 'grouped_mean' treatment in handle_outliers function", {
 
     # Run the handle_outliers function with treat_method = "grouped_mean"
-    result <- epiCleanr::handle_outliers(
+    result <- handle_outliers(
       fake_epi_df_togo2,
       method = "zscore",
       vars = "malaria_cases",
@@ -253,10 +255,10 @@ testthat::test_that(
   "Check behavior when method is NULL or has length greater than 1", {
 
     # Execute the function with method = NULL
-    result1 <- epiCleanr::handle_outliers(fake_epi_df_togo, method = NULL,
+    result1 <- handle_outliers(fake_epi_df_togo, method = NULL,
                                           report_mode = TRUE)
 
-    title = paste0(
+    title <-  paste0(
       "<span style='font-size:12pt; color:#21130D'>",
       "<b>Outlier Plot (Method:  Modified Z-Score )",
       "</b>: Outliers in <span style='color:#B44B1C'>orange</span>",
@@ -270,11 +272,12 @@ testthat::test_that(
 
 
     # Execute the function with method having a length greater than 1
-    result2 <- epiCleanr::handle_outliers(fake_epi_df_togo,
-                                          method = c("zscore", "modified_zscore"),
+    result2 <- handle_outliers(fake_epi_df_togo,
+                                          method = c("zscore",
+                                                     "modified_zscore"),
                                           report_mode = TRUE)
 
-    title2 = paste0(
+    title2 <-  paste0(
       "<span style='font-size:12pt; color:#21130D'>",
       "<b>Outlier Plot (Method:  Z-Score )",
       "</b>: Outliers in <span style='color:#B44B1C'>orange</span>",

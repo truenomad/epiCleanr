@@ -21,7 +21,8 @@ The object with cleaned names.
 This function transforms variable names or column names into one of the
 standard cleaned formats specified by the `style` argument. It offers more
 flexibility than \code{\link[=janitor]{janitor::clean_names()}}
-function by supporting individual strings and providing multiple naming styles.
+function by supporting individual strings and providing multiple naming
+styles.
 }
 \examples{
 

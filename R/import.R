@@ -2,7 +2,8 @@
 #'
 #' This function provides a unified interface for importing data from various
 #' file formats supported by the \code{\link[=rio]{rio}} package. The format is
-#' automatically detected from the file extension to simplify the importing process.
+#' automatically detected from the file extension to simplify the importing
+#' process.
 #'
 #' @param file_path Character string specifying the path to the input file or
 #'   a URL pointing to the dataset.

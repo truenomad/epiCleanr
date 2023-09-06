@@ -57,6 +57,7 @@ Suggests:
   wesanderson,
   scales,
   spsUtil,
-  rmarkdown
+  rmarkdown,
+  ggh4x
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
