@@ -29,6 +29,7 @@ provinces, etc.) for a given country from the `GeoNames` website. It accepts
 both country names and various country coding schemes.
 }
 \examples{
+\donttest{
 # example using different naming/code conventions
 three_digit <- get_admin_names("TGO")   # using 3 digit iso codes
 two_digit <- get_admin_names("TG")      # using 2 digit iso codes
@@ -36,6 +37,7 @@ un_code <- get_admin_names(768)         # using UN codes
 full_name <-  get_admin_names("Togo")   # using full names
 
 str(full_name$adm2)
+}
 
 }
 \seealso{

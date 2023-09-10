@@ -38,11 +38,17 @@ output can further be manipulated to one's needs.
 }
 \examples{
 
-# Check misisng data by year
-data("fake_epi_df_togo")
 
+# get path
+path <- system.file(
+        "extdata",
+        "fake_epi_df_togo.rds",
+         package = "epiCleanr")
+
+fake_epi_df_togo <- import(path)
+
+# Check misisng data by year
 result <- missing_plot(fake_epi_df_togo,
              x_var = "year", use_rep_rate = FALSE)
-
 
 }

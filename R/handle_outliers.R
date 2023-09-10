@@ -31,7 +31,16 @@
 #' treat_method.
 #'
 #' @examples
-#' data("fake_epi_df_togo")
+#'
+#' # get path
+#' path <- system.file(
+#'         "extdata",
+#'         "fake_epi_df_togo.rds",
+#'          package = "epiCleanr")
+#'
+# # get example data
+#' fake_epi_df_togo <- import(path)
+#'
 #' variables <- c("malaria_tests", "malaria_cases",
 #'                  "cholera_tests", "cholera_cases")
 #' result <- handle_outliers(fake_epi_df_togo, vars = variables,

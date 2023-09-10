@@ -57,7 +57,15 @@ various methods including Z-Score, Modified Z-Score, and Inter-Quartile Range
  the option to generate a summary report and a plot.
 }
 \examples{
-data("fake_epi_df_togo")
+
+# get path
+path <- system.file(
+        "extdata",
+        "fake_epi_df_togo.rds",
+         package = "epiCleanr")
+
+fake_epi_df_togo <- import(path)
+
 variables <- c("malaria_tests", "malaria_cases",
                  "cholera_tests", "cholera_cases")
 result <- handle_outliers(fake_epi_df_togo, vars = variables,

@@ -30,7 +30,15 @@ returns a \code{\link[=ggplot2]{ggplot2}} object visualizing the results.
 }
 \examples{
 # check the consistency between malaria tests and cases
-data("fake_epi_df_togo")
+
+# get path
+path <- system.file(
+        "extdata",
+        "fake_epi_df_togo.rds",
+         package = "epiCleanr")
+
+fake_epi_df_togo <- import(path)
+
 consistency_check(fake_epi_df_togo,
                   tests = c("malaria_tests","cholera_tests"),
                   cases = c("malaria_cases", "cholera_cases"))

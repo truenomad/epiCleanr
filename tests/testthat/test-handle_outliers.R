@@ -4,8 +4,15 @@ if (!identical(Sys.getenv("NOT_CRAN"), "true")) {
   return()
 }
 
-# get dataset
-data("fake_epi_df_togo")
+
+# get path
+path <- system.file(
+  "extdata",
+  "fake_epi_df_togo.rds",
+  package = "epiCleanr")
+
+# get example data
+fake_epi_df_togo <- import(path)
 
 # drop na
 fake_epi_df_togo2 <-  fake_epi_df_togo |> tidyr::drop_na()
@@ -98,12 +105,12 @@ testthat::test_that(
   "Outliers are replaced with NA when treat_method is 'remove'", {
 
 
-  res <- epiCleanr::handle_outliers(fake_epi_df_togo2, method = "zscore",
-                                    treat_method = "remove")
+    res <- epiCleanr::handle_outliers(fake_epi_df_togo2, method = "zscore",
+                                      treat_method = "remove")
 
-  testthat::expect_true(any(is.na(res$malaria_tests)))
-  testthat::expect_true(any(is.na(res$malaria_cases)))
-})
+    testthat::expect_true(any(is.na(res$malaria_tests)))
+    testthat::expect_true(any(is.na(res$malaria_cases)))
+  })
 
 # Test 7: Check if outliers are replaced with mean when treat_method = "mean"
 testthat::test_that(
@@ -159,7 +166,7 @@ testthat::test_that(
       dplyr::summarise(median(malaria_tests)) |> dplyr::pull()
 
 
-  testthat::expect_equal(as.numeric(actual_mean_tests),
+    testthat::expect_equal(as.numeric(actual_mean_tests),
                            as.numeric(expected_mean_tests))
   })
 
@@ -218,28 +225,28 @@ testthat::test_that(
 testthat::test_that(
   "Check 'grouped_mean' treatment in handle_outliers function", {
 
-  # Run the handle_outliers function with treat_method = "grouped_mean"
-  result <- epiCleanr::handle_outliers(
-    fake_epi_df_togo2,
-                                       method = "zscore",
-                                       vars = "malaria_cases",
-                                       grouping_vars = c("district", "year", "month"),
-                                       treat_method = "grouped_mean")
+    # Run the handle_outliers function with treat_method = "grouped_mean"
+    result <- epiCleanr::handle_outliers(
+      fake_epi_df_togo2,
+      method = "zscore",
+      vars = "malaria_cases",
+      grouping_vars = c("district", "year", "month"),
+      treat_method = "grouped_mean")
 
-  # Create what you expect grouped_mean_vals to look like
-  expected_means <- fake_epi_df_togo2 %>%
-    dplyr::group_by(district, year, month) %>%
-    dplyr::reframe(
-      dplyr::across(malaria_cases, \(x) mean(x, na.rm = TRUE))) |>
-    dplyr::ungroup() |> dplyr::pull()
+    # Create what you expect grouped_mean_vals to look like
+    expected_means <- fake_epi_df_togo2 %>%
+      dplyr::group_by(district, year, month) %>%
+      dplyr::reframe(
+        dplyr::across(malaria_cases, \(x) mean(x, na.rm = TRUE))) |>
+      dplyr::ungroup() |> dplyr::pull()
 
 
-  exp <- as.numeric(mean(result$malaria_cases))
-  act <- as.numeric(mean(expected_means))
+    exp <- as.numeric(mean(result$malaria_cases))
+    act <- as.numeric(mean(expected_means))
 
-  testthat::expect_true(exp < act)
+    testthat::expect_true(exp < act)
 
-})
+  })
 
 # Test 14: Check behavior when method is NULL or has length greater than 1
 testthat::test_that(

@@ -18,7 +18,15 @@
 #' @return A function to be applied to the dataset.
 #' @examples
 #'
-#' data("fake_epi_df_togo")
+#' # get path
+#' path <- system.file(
+#'         "extdata",
+#'         "fake_epi_df_togo.rds",
+#'          package = "epiCleanr")
+#'
+# # get example data
+#' fake_epi_df_togo <- import(path)
+#'
 #' # Set up unit-test function
 #' my_tests <- create_test(
 #'   # For checking the dimension of the data

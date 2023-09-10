@@ -73,31 +73,19 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
   }
 
   # Helper Function to remove specific words from a string
-  # remove_words <- function(string) {
-  #   string <- tolower(string)
-  #   string <- gsub(
-  #     paste0(
-  #       "\\bdistrict\\b|\\bcounty\\b|",
-  #       "\\bcity\\b|\\bprovince\\b|\\bregion\\b|",
-  #       "\\bmunicipality\\b|\\btownship\\b|",
-  #       "\\bvillage\\b|\\bward\\b|\\bsubdistrict",
-  #       "\\b|\\bdivision\\b|\\",
-  #       "bstate\\b|\\bprefecture\\b"
-  #     ), "", string
-  #   )
-  #   return(string)
-  # }
-
-  # Helper Function to clean names
-  clean_names <- function(names) {
-    cleaned_names <- names |>
-      sapply(function(x) ifelse(is.na(x), NA,
-                                clean_names_strings(x,
-                                                    style = "simple_clean"))) |>
-      tolower() |>
-      stringi::stri_trans_general("latin-ascii") |>
-      stringr::str_remove_all("[[:punct:][:space:]]")
-    return(cleaned_names)
+  remove_words <- function(string) {
+    string <- tolower(string)
+    string <- gsub(
+      paste0(
+        "\\bdistrict\\b|\\bcounty\\b|",
+        "\\bcity\\b|\\bprovince\\b|\\bregion\\b|",
+        "\\bmunicipality\\b|\\btownship\\b|",
+        "\\bvillage\\b|\\bward\\b|\\bsubdistrict",
+        "\\b|\\bdivision\\b|\\",
+        "bstate\\b|\\bprefecture\\b"
+      ), "", string
+    )
+    return(string)
   }
 
   # Get admin names from geonames -----------------------------------------------
@@ -167,12 +155,12 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
 
   # Clean the admin names
   cleaned_admin_names_to_clean <-
-    clean_names(admin_names_to_clean[!is.na(admin_names_to_clean)])
+    clean_names_strings(admin_names_to_clean[!is.na(admin_names_to_clean)])
 
   # Match with base admin names (if provided)
   if (!is.null(user_base_admin_names)) {
     # Clean the admin names
-    cleaned_user_base_admin_names <- clean_names(user_base_admin_names)
+    cleaned_user_base_admin_names <- clean_names_strings(user_base_admin_names)
 
     user_base_results <- do.call(
       rbind,

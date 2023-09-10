@@ -26,12 +26,19 @@
 #'
 #' @examples
 #'
-#' # Check misisng data by year
-#' data("fake_epi_df_togo")
 #'
+#' # get path
+#' path <- system.file(
+#'         "extdata",
+#'         "fake_epi_df_togo.rds",
+#'          package = "epiCleanr")
+#'
+# # get example data
+#' fake_epi_df_togo <- import(path)
+#'
+#' # Check misisng data by year
 #' result <- missing_plot(fake_epi_df_togo,
 #'              x_var = "year", use_rep_rate = FALSE)
-#'
 #'
 #' @importFrom ggplot2 ggplot aes geom_tile scale_fill_viridis_c labs theme_bw
 #' theme scale_x_discrete scale_y_discrete guides guide_legend unit

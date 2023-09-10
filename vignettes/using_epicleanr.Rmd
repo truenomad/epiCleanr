@@ -125,9 +125,24 @@ website.
 
 ```R
 # Get simulated epi data for Togo
-data(fake_epi_df_togo)
-# Referecne dataset with clean admin names
-data(togo_admin_df) 
+
+# get path 
+path <- system.file(
+  "extdata", 
+  "fake_epi_df_togo.rds", 
+  package = "epiCleanr")
+
+# get example data
+fake_epi_df_togo <- import(path)
+
+# get path 
+path <- system.file(
+  "extdata", 
+  "fake_epi_df_togo.rds", 
+  package = "epiCleanr")
+
+# get referecne dataset with clean admin names
+fake_epi_df_togo <- import(path)
 
 # Lets check how the matching looks 
 clean_admin_names(

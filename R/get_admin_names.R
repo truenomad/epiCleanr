@@ -19,6 +19,7 @@
 #'         name, alternate names, latitude, longitude, and date last updated.
 #'
 #' @examples
+#' \donttest{
 #' # example using different naming/code conventions
 #' three_digit <- get_admin_names("TGO")   # using 3 digit iso codes
 #' two_digit <- get_admin_names("TG")      # using 2 digit iso codes
@@ -26,6 +27,7 @@
 #' full_name <-  get_admin_names("Togo")   # using full names
 #'
 #'str(full_name$adm2)
+#'}
 #'
 #' @seealso `Geonames` website for the source of admin
 #' names data
