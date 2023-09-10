@@ -73,7 +73,7 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
   }
 
   # Helper Function to remove specific words from a string
-  remove_words <- function(string) {
+  parse_strings <- function(string) {
     string <- tolower(string)
     string <- gsub(
       paste0(
@@ -84,7 +84,8 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
         "\\b|\\bdivision\\b|\\",
         "bstate\\b|\\bprefecture\\b"
       ), "", string
-    )
+    ) |> clean_names_strings()
+
     return(string)
   }
 
@@ -155,12 +156,12 @@ clean_admin_names <- function(admin_names_to_clean, country_code,
 
   # Clean the admin names
   cleaned_admin_names_to_clean <-
-    clean_names_strings(admin_names_to_clean[!is.na(admin_names_to_clean)])
+    parse_strings(admin_names_to_clean[!is.na(admin_names_to_clean)])
 
   # Match with base admin names (if provided)
   if (!is.null(user_base_admin_names)) {
     # Clean the admin names
-    cleaned_user_base_admin_names <- clean_names_strings(user_base_admin_names)
+    cleaned_user_base_admin_names <- parse_strings(user_base_admin_names)
 
     user_base_results <- do.call(
       rbind,
