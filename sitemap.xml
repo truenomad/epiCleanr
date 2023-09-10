@@ -37,9 +37,6 @@
     <loc>https://truenomad.github.io/epiCleanr/reference/export.html</loc>
   </url>
   <url>
-    <loc>https://truenomad.github.io/epiCleanr/reference/fake_epi_df_togo.html</loc>
-  </url>
-  <url>
     <loc>https://truenomad.github.io/epiCleanr/reference/get_admin_names.html</loc>
   </url>
   <url>
@@ -53,8 +50,5 @@
   </url>
   <url>
     <loc>https://truenomad.github.io/epiCleanr/reference/missing_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/reference/togo_admin_df.html</loc>
   </url>
 </urlset>

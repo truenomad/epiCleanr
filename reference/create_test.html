@@ -114,7 +114,14 @@ specified columns.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"fake_epi_df_togo"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># get path</span></span></span>
+<span class="r-in"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="st">"extdata"</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"fake_epi_df_togo.rds"</span>,</span></span>
+<span class="r-in"><span>         package <span class="op">=</span> <span class="st">"epiCleanr"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fake_epi_df_togo</span> <span class="op">&lt;-</span> <span class="fu"><a href="import.html">import</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Set up unit-test function</span></span></span>
 <span class="r-in"><span><span class="va">my_tests</span> <span class="op">&lt;-</span> <span class="fu">create_test</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="co"># For checking the dimension of the data</span></span></span>
@@ -138,7 +145,7 @@ specified columns.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">Test passed! Values in column cholera_cases are above the threshold.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">Test passed! Values in column malaria_tests are below the threshold.</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">Test passed! Values in column cholera_tests are below the threshold.</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Congratulations! All tests passed: 8/8 (100%) 😸</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Congratulations! All tests passed: 8/8 (100%) 🥇</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
