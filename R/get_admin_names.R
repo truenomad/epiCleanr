@@ -90,7 +90,7 @@ get_admin_names <- function(country_name_or_code, silent_mode = TRUE) {
       "https://download.geonames.org/export/dump/", iso_code, ".zip")
 
     # Set the timeout option
-    # old_options <- options(timeout = 320)
+    old_options <- options(timeout = 600)
 
     # Download the ZIP file
     download.file(url, "geonames.zip", quiet = silent_mode, mode = "wb")

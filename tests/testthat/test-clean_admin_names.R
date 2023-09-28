@@ -35,6 +35,23 @@ suppressMessages({
     testthat::expect_equal(result, base_names)
   })
 
+  # Test 1B: error when 'user_base_only' is TRUE and 'user_base_admin_names'
+  #  is not provided
+  testthat::test_that(
+    "when 'user_base_only' is TRUE provide admin_names_to_clean", {
+
+      unclean_names <- c("Pariis", "Marseill", "Lyone", "Toulous", "Niice")
+      base_names <- c("Paris", "Marseille", "Lyon", "Toulouse", "Nice")
+
+      testthat::expect_error(
+        result <- clean_admin_names(
+          user_base_only = T,
+          admin_names_to_clean = unclean_names
+        ),
+        "user_base_admin_names' must be provided when 'user_base_only' is TRUE."
+      )
+    })
+
   # Test 2: Handles special characters and punctuation
   testthat::test_that("Handles special characters and punctuation", {
     unclean_names <- c("Par!is", "Marseill.", "Lyon@", "Tou'lous", "Nice#")
@@ -168,6 +185,5 @@ suppressMessages({
 
     testthat::expect_equal(result, expected_result)
   })
-
 
 })
