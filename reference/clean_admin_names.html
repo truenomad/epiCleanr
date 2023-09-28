@@ -71,6 +71,7 @@ official repository of standard spellings of all foreign geographic names.</p>
 <span>  <span class="va">country_code</span>,</span>
 <span>  admin_level <span class="op">=</span> <span class="st">"adm2"</span>,</span>
 <span>  user_base_admin_names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  user_base_only <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  report_mode <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -84,7 +85,7 @@ clean.</p></dd>
 
 <dt>country_code</dt>
 <dd><p>sed if `use_get_admin_names` is TRUE. A character string
-or numerical value of the country code (e.g., 123"KE"). U This can be
+or numerical value of the country code (e.g., "KE"). This can be
 in various formats such as country name, ISO codes, UN codes, etc.,
 see <code><a href="https://vincentarelbundock.github.io/countrycode/reference/codelist.html" class="external-link">countrycode::codelist()</a></code> for the full
 list of codes and naming conventions used.</p></dd>
@@ -99,6 +100,13 @@ list of codes and naming conventions used.</p></dd>
 <dd><p>A character of of administrative names that the
 use would like to use as reference. This is no necessary, downloaded
  `GeoNames` will be used if missing.</p></dd>
+
+
+<dt>user_base_only</dt>
+<dd><p>A logical indicating whether to use only the
+user-provided base administrative names (`user_base_admin_names`) for
+matching. If TRUE, `country_code` and `admin_names_to_clean` are not
+required. Default is FALSE.</p></dd>
 
 
 <dt>report_mode</dt>
