@@ -9,6 +9,7 @@
 
 ## Description
 
+
 This package offers a tidy solution for epidemiological data. It houses
 a range of functions for epidemiologists and public health data wizards
 for data management and cleaning. For more details on how to use this package, visit the 
