@@ -1,54 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/404.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/articles/using_epicleanr.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/index.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/reference/clean_admin_names.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/reference/clean_names_strings.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/reference/consistency_check.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/reference/create_test.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/reference/export.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/reference/get_admin_names.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/reference/handle_outliers.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/reference/import.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://truenomad.github.io/epiCleanr/reference/missing_plot.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://truenomad.github.io/epiCleanr/404.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/LICENSE-text.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/LICENSE.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/articles/index.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/articles/using_epicleanr.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/authors.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/index.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/reference/clean_admin_names.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/reference/clean_names_strings.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/reference/consistency_check.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/reference/create_test.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/reference/export.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/reference/get_admin_names.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/reference/handle_outliers.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/reference/import.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/reference/index.html</loc></url>
+<url><loc>https://truenomad.github.io/epiCleanr/reference/missing_plot.html</loc></url>
 </urlset>
+
